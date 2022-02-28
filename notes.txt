@@ -63,6 +63,8 @@ git init
 
 git add .  add all to staging
 
+git commit -m 'comment about the commit'
+
   on windows you get this warning about line endings
     warning: LF will be replaced by CRLF in package-lock.json.
     The file will have its original line endings in your working directory
