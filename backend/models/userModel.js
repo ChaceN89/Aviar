@@ -4,11 +4,11 @@ const mongoose = require('mongoose');
 const collectionSchema = mongoose.Schema({ // schema for a individual collection
     collectionName:{ // a collection
         type:String, 
-        requiered:[true, "Please add a collection title"]
+        required:[true, "Please add a collection title"]
     },
     PostList:[{ // array of posts
         type:mongoose.Schema.Types.ObjectId,
-        requiered:false,
+        required:false,
         ref: "Post"   // reference to a model of Post
         }
     ],
@@ -18,17 +18,17 @@ const userSchema = mongoose.Schema({
     //id is created automatically
     name:{
         type:String,
-        requiered:[true, "Please add name"]
+        required:[true, "Please add name"]
     },
 
     password:{
         type:String,
-        requiered:[true, "Please add a password"]
+        required:[true, "Please add a password"]
     },
 
     userPosts:[{ // array of posts
         type:mongoose.Schema.Types.ObjectId,
-        requiered:false,
+        required:false,
         ref: "Post"   // reference to a model of Post
         }
     ], // array of user post ids
@@ -39,6 +39,6 @@ const userSchema = mongoose.Schema({
            
 },{
     timestamps :true // automatically creates time stamps for updated and created
-});
+}); //end userSchema
 
 module.exports = mongoose.model("User", userSchema); //export userSchema as User

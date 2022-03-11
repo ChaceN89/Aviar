@@ -54,17 +54,47 @@ need to change"scripts": {
   },
 
 
+other instals
+
+
+npm instal jsonwebtoken   //instals the jwt for sending tokens 
+
+npm instal bcrypt  // for encryption
+
+
+npm instal express-async-handler  // not sure but important for the controller
+
+
 npm run server
   runs the server 
 
 
-git init  
-  sets up git assuming its downbloaded
+----------------
+git
 
-git add .  add all to staging
+for personal use locally
+  git init  
+    sets up git assuming its downloaded
 
-git commit -m 'comment about the commit'
+  git add .  add all to staging
 
+  git commit -m 'comment about the commit'
+
+ 
+
+but other than that you will clone the repoitory 
+https://github.com/kar2fast/Aviar.git
+
+and use it to work on
+you will need to instal the modules and make your own .env file
+
+
+
+
+===========================================================================================
+
+other information about Linux vs windows withte json package files 
+---------------------------------------------------------------
   on windows you get this warning about line endings
     warning: LF will be replaced by CRLF in package-lock.json.
     The file will have its original line endings in your working directory
@@ -108,6 +138,7 @@ git commit -m 'comment about the commit'
 
       $ git config --global core.autocrlf false
 
+===========================================================================================
 
 
 

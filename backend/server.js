@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000; // or 8000 if the enviroment variable in 
 const app = express();
 
 //routes/endpoints
-
+app.use('/api/users', require('./routes/userRoutes'));
 
 
 app.use(errorHandler); // override default error handlers
