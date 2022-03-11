@@ -4,12 +4,8 @@ const colors= require('colors'); // can use this anywhere since its in the serve
 const dotenv = require('dotenv').config(); // need for using process.env.MONGO_URI
 // not sure why this isn't just imported from server.js but this currently works
 
-
-var startTime = performance.now()
-
-    
-
-
+var startTime = performance.now() // for timing
+   
 const connectDB = async() => {
     console.log("Connecting to MongoAtlas database with mongoose".grey.underline);
     try {
