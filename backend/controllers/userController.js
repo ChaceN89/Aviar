@@ -17,11 +17,10 @@ const registerUser = asyncHandler( async (req, res) => {
     //only need to username and password to sign in 
     if(!username || !password){ // these aren't included
         res.status(400); //400 Bad Request
-        console.log("Please Add All Fields");
         throw new Error('Please Add All Fields');
     }
     
-    
+    //chekc to see if it already exisits
     const userExists = await User.findOne({username}); // access database to see if user already exists
     if(userExists){
         res.status(400);
@@ -54,7 +53,7 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new Error('Could Not Create User - Invalid Entry'); 
     }
 
-})//end route
+})//end registerUser route
 
 
 
@@ -98,7 +97,7 @@ const getMe  = asyncHandler( async (req, res) => {
     const{ _id, username, userPosts, savedPosts } = await User.findById(req.user.id)
 
     res.status(200).json({ // return user
-        id:_id,
+        _id:_id,
         username,
         userPosts, 
         savedPosts
@@ -113,21 +112,15 @@ const getMe  = asyncHandler( async (req, res) => {
  * for when a user is already loged in
  * need jwt in the authorization to access
  * 
- * error chekcing is handles by authMiddleWare
+ * error check taken care of by authMiddleware.js
  * 
  * @access private
  */
 const deleteMe  = asyncHandler( async (req, res) => {
- 
-   
-    //could use some way to error check if user exists
-    //  but token should already handle that 
-    // and should never get tothis part without being a real client
-    //with a token
 
-    const deletedUser = await User.findOneAndDelete({ _id: req.user.id })
+    const deletedUser = await User.findOneAndDelete({ _id: req.user.id }) // delete one user and return info
 
-    res.status(200).json({
+    res.status(200).json({ // return information
         message:'User Deleted',
         deletedUser
     }); 
@@ -142,21 +135,37 @@ const deleteMe  = asyncHandler( async (req, res) => {
  * //need token to access
  * for when a user is already loged in
  * need jwt in the authorization to access
- *                  
+ *             
+ * error check taken care of by authMiddleware.js
+ *      
  * @access private
  */
 const updateUsername  = asyncHandler( async (req, res) => {
-    res.json({
-        message:'Update Username',
+    
+    const {username} = req.body;
+    if(!username){
+        res.status(400);
+        throw new Error("Please Add New Username");
+    }
+
+    //set up fields to update
+    const filter = { _id: req.user.id };
+    const update = { username: username };
+
+    const updatedUser = await User.findByIdAndUpdate(filter, update, {new: true} ); // updatew trhe user
+
+    res.status(200).json({ //retrun object
+        message:'Updated Username',
+        updatedUser
         
-    }); // very siomple data
+    }); 
 
 }) //end updateUsername
 
 
 /**
  * @desc update password
- * @route PUT /api/users/id
+ * @route PUT /api/users/password
  * //need token to access
  * for when a user is already loged in
  * need jwt in the authorization to access
@@ -164,10 +173,27 @@ const updateUsername  = asyncHandler( async (req, res) => {
  * @access private
  */
 const updatePassword  = asyncHandler( async (req, res) => {
-    res.json({
-        message:'Update password',
-        
-    }); // very siomple data
+    
+    const {password} = req.body;
+    if(!password){
+        res.status(400);
+        throw new Error("Please Add New Password");
+    }
+
+    //hash password using bcyrptjs
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    //set up fields to update 
+    const filter = { _id: req.user.id };
+    const update = { password: hashedPassword };
+
+    const updatedUser = await User.findByIdAndUpdate(filter, update, {new: true} ); //update the users password
+
+    res.status(200).json({ //retrun object
+        message:'Updated Username',
+        updatedUser
+    }); 
 
 }) //end updateUsername
 
