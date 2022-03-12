@@ -16,12 +16,11 @@ app.use(express.json()); // very important to parse requests from Post, Get etc
 app.use(express.urlencoded({extended: false})); // need this for the type coming accross 
 
 //routes/endpoints
-app.use('/api/users', require('./routes/userRoutes'));
-
+app.use('/api/users', require('./routes/userRoutes')); // all user routes
 
 app.use(errorHandler); // override default error handlers
 
 //listen() function is used to bind and listen the connections on the specified host and port.
-app.listen(port, ()=> console.log("server started on http://localhost:" + port));
+app.listen(port, ()=> console.log("server started on http://localhost:" + port .blue.bold));
 
-console.log("End of server.js code");
+console.log("Server is Active".blue.bold);

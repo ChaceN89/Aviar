@@ -29,12 +29,12 @@
 - Get current user info by JWT
 - Login
 - Delete current user by JWT
-- Update User
-- 
+- Update Username
+- Update Password
 
 ---------------------------------------------------------------------
 
-#### Create Account/Register an Account
+#### Create Account/Register an Account - Public
 	POST http://localhost:8000/api/users
 	-Fields: username, password 
 	-Authorization: none
@@ -49,7 +49,7 @@
 	  	or	{"message": "Please Add All Fields": "....."}			
 
 ---------------------------------------------------------------------
-#### Get current user info  // protected so don't need to use user id but you need the jwt from login or register
+#### Get current user info - Private  
 	GET http://localhost:8000/api/users/me
 	- Fields: none
 	- Authorization: JWT
@@ -63,7 +63,7 @@
 		or  {"message": "Access Not Authorized - No Token","stack": "....."}	
 
 ----------------------------------------------------------------
-#### Login
+#### Login - Public
 	POST http://localhost:8000/api/users/login
 	- Fields: username, password 
 	- Authorization: none
@@ -77,25 +77,44 @@
 		or  {"message": "Invalid Credentials","stack": "....."}	
 			
 ----------------------------------------------------------------
-#### Delete User
+#### Delete User - Private
 	DELETE http://localhost:8000/api/users/id
-	- Fields: id
+	- Fields: none
 	- Authorization: JWT 
 	- Returns:{
-
-
+    		"message": "User Deleted",
+    		"deletedUser": {
+				"_id": "622c29fa2331db3d76b7e8ba",
+				"username": "daven",
+				"password": "$2a$10$gynU4G7fUM8dNidRv7nTM.sxXZwojSI5Oo3PxnuqUYhJl62.PlZIm",
+				"userPosts": [],
+				"savedPosts": [],
+				"createdAt": "2022-03-12T05:04:58.406Z",
+				"updatedAt": "2022-03-12T05:04:58.406Z",
+				"__v": 0
+    			}
 			}
+		or  {"message": "Access Not Authorized - Token Invlaid","stack": "....."}	
+		or  {"message": "Access Not Authorized - No Token","stack": "....."}	
+		or 	{"message": "Cannot read properties of null (reading 'id')","stack": "...." } // should never get this one unless you use a real token with a already deleted account
+
 ----------------------------------------------------------------
-#### Update User
-	PUT http://localhost:8000/api/users/id
-	- Fields:  
-	- Authorization: 
+#### Update Username - Private
+	PUT http://localhost:8000/api/users/username
+	- Fields:
+	- Authorization: JWT
 	- Returns:{
 
 			}
 
+----------------------------------------------------------------
+#### Update Password - Private
+	PUT http://localhost:8000/api/users/password
+	- Fields: 
+	- Authorization: JWT
+	- Returns:{
 
-
+			}
 
 
 <br/><br/>

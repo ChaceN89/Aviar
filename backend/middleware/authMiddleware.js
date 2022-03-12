@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const User = require("../models/userModel");
 
+//Authenticate Middleware
 
 /**
  * protect using the JWT assigned during login and accout creation

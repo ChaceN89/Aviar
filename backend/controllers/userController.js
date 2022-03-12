@@ -10,18 +10,17 @@ const User = require("../models/userModel"); // import usermodel
  * @access public
  */
 const registerUser = asyncHandler( async (req, res) => {
-    // res.json({message:"need to create user"});
+    // res.status(200).json({message:"need to create user"});
     
-    console.log("here");
     const {username, password} = req.body  // destruct data
-    console.log("here2");
+   
     //only need to username and password to sign in 
     if(!username || !password){ // these aren't included
         res.status(400); //400 Bad Request
         console.log("Please Add All Fields");
         throw new Error('Please Add All Fields');
     }
-    console.log("here3");
+    
     
     const userExists = await User.findOne({username}); // access database to see if user already exists
     if(userExists){
@@ -29,7 +28,6 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new Error('User Already Exists');   
     }
     
-    console.log("here4");
     //hash password using bcyrptjs
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -88,7 +86,6 @@ const loginUser = asyncHandler( async (req, res) => {
 
 })//end loginUser
 
-
 /**
  * @desc get User data
  * @route GET /api/users/me
@@ -99,7 +96,6 @@ const loginUser = asyncHandler( async (req, res) => {
  */
 const getMe  = asyncHandler( async (req, res) => {
     const{ _id, username, userPosts, savedPosts } = await User.findById(req.user.id)
-    // const{ _id, username, userPosts, savedPosts } = await User.findById(req.user.id)
 
     res.status(200).json({ // return user
         id:_id,
@@ -108,6 +104,74 @@ const getMe  = asyncHandler( async (req, res) => {
         savedPosts
     });
 }) //end getMe
+
+
+/**
+ * @desc DELETE a user
+ * @route DELETE /api/users/id
+ * //need token to access
+ * for when a user is already loged in
+ * need jwt in the authorization to access
+ * 
+ * error chekcing is handles by authMiddleWare
+ * 
+ * @access private
+ */
+const deleteMe  = asyncHandler( async (req, res) => {
+ 
+   
+    //could use some way to error check if user exists
+    //  but token should already handle that 
+    // and should never get tothis part without being a real client
+    //with a token
+
+    const deletedUser = await User.findOneAndDelete({ _id: req.user.id })
+
+    res.status(200).json({
+        message:'User Deleted',
+        deletedUser
+    }); 
+
+}) //end deleteMe
+
+
+
+/**
+ * @desc update username
+ * @route PUT /api/users/username
+ * //need token to access
+ * for when a user is already loged in
+ * need jwt in the authorization to access
+ *                  
+ * @access private
+ */
+const updateUsername  = asyncHandler( async (req, res) => {
+    res.json({
+        message:'Update Username',
+        
+    }); // very siomple data
+
+}) //end updateUsername
+
+
+/**
+ * @desc update password
+ * @route PUT /api/users/id
+ * //need token to access
+ * for when a user is already loged in
+ * need jwt in the authorization to access
+ *                  
+ * @access private
+ */
+const updatePassword  = asyncHandler( async (req, res) => {
+    res.json({
+        message:'Update password',
+        
+    }); // very siomple data
+
+}) //end updateUsername
+
+
 
 
 
@@ -126,4 +190,7 @@ module.exports = {
     registerUser,
     loginUser,
     getMe,
+    deleteMe,
+    updateUsername,
+    updatePassword
 }
