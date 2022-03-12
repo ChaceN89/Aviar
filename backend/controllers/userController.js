@@ -18,15 +18,15 @@ const registerUser = asyncHandler( async (req, res) => {
     //only need to username and password to sign in 
     if(!username || !password){ // these aren't included
         res.status(400); //400 Bad Request
-        console.log("please add all fields");
-        throw new Error('Please add all fields');
+        console.log("Please Add All Fields");
+        throw new Error('Please Add All Fields');
     }
     console.log("here3");
     
     const userExists = await User.findOne({username}); // access database to see if user already exists
     if(userExists){
         res.status(400);
-        throw new Error('user already exists');   
+        throw new Error('User Already Exists');   
     }
     
     console.log("here4");
@@ -53,7 +53,7 @@ const registerUser = asyncHandler( async (req, res) => {
         });
     }else{
         res.status(400);
-        throw new Error('could not create user - Invalid data'); 
+        throw new Error('Could Not Create User - Invalid Entry'); 
     }
 
 })//end route
@@ -66,9 +66,25 @@ const registerUser = asyncHandler( async (req, res) => {
  * @route POST /api/users/login
  * @access public
  */
- const loginUser = asyncHandler( async (req, res) => {
+const loginUser = asyncHandler( async (req, res) => {
+    const {username, password} = req.body;
 
+    const user = await User.findOne({username}); /// find by username
 
+     //password is hashed need to bcyrpt method called compare
+     if(user && (await bcrypt.compare(password, user.password))){
+        res.status(200).json({ // return current withthe jwt
+            _id: user.id,  // the created id
+            username: user.username,
+            userPosts: user.userPosts,
+            savedPosts: user.savedPosts,
+            token: generateToken(user._id) //also send token to user
+        });
+
+    }else{
+        res.status(400);
+        throw new Error('Invalid Credentials'); 
+    }
 
 })//end loginUser
 
@@ -82,8 +98,6 @@ const registerUser = asyncHandler( async (req, res) => {
  * @access private
  */
 const getMe  = asyncHandler( async (req, res) => {
-    // res.json({message:'get  me'}); // very siomple data
-
     const{ _id, username, userPosts, savedPosts } = await User.findById(req.user.id)
     // const{ _id, username, userPosts, savedPosts } = await User.findById(req.user.id)
 
