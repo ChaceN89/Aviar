@@ -16,7 +16,7 @@ const collectionSchema = mongoose.Schema({ // schema for a individual collection
 
 const userSchema = mongoose.Schema({
     //id is created automatically
-    name:{
+    username:{
         type:String,
         required:[true, "Please add name"]
     },
@@ -34,7 +34,7 @@ const userSchema = mongoose.Schema({
     ], // array of user post ids
     
     //could add liked posts in here if we want
-   
+    
     savedPosts:[ collectionSchema ] // saved posts is array of 
            
 },{

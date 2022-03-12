@@ -37,9 +37,10 @@ npm install express dotnev mongoose colors
     mongoose
     for connecting to the database
 
+install with npm install <name> (of the 4 things above)
 
 npm i -D nodemon
-    so you don't have top restar the server afte every change
+    so you don't have to restart the server afte every change
     except for large changes
 
 
@@ -54,23 +55,40 @@ need to change"scripts": {
   },
 
 
-other instals
+other installs
 
+npm install jsonwebtoken   //instals the jwt for sending tokens 
 
-npm instal jsonwebtoken   //instals the jwt for sending tokens 
+npm install bcryptjs  // for encryption
 
-npm instal bcryptjs  // for encryption
-npm instal bcrypt  // aciddentally installed but shouldn't do anything
-
-
-npm instal express-async-handler  // not sure but important for the controller
+npm install express-async-handler  // not sure but important for the controller
 
 
 npm run server
   runs the server 
 
 
-----------------
+
+---------------------------------------------------
+front end communicating with backend
+
+
+x-www-form-urlencoded  is the body of requests
+
+authorization will be jwt using a bearer token
+need to send jwt for somerequests
+
+
+could also make authorization a field 
+https://www.youtube.com/watch?v=enopDSs3DRw&list=PLx5VofXGboI3keWyKVqmEDXT4Fk-utH2P&index=2
+  38:50
+
+
+
+
+
+
+---------------------------------------------------
 git
 
 for personal use locally

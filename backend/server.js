@@ -11,7 +11,9 @@ const dotenv = require('dotenv').config(); // use dotenv to load environment var
 const{errorHandler} = require('./middleware/errorMiddleware'); // my errorhandler system that replaces the defualt
 
 const port = process.env.PORT || 8000; // or 8000 if the enviroment variable in .env isn't available
-const app = express();
+const app = express(); // app represents express stuff
+app.use(express.json()); // very important to parse requests from Post, Get etc
+app.use(express.urlencoded({extended: false})); // need this for the type coming accross 
 
 //routes/endpoints
 app.use('/api/users', require('./routes/userRoutes'));
