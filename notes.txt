@@ -59,7 +59,8 @@ other instals
 
 npm instal jsonwebtoken   //instals the jwt for sending tokens 
 
-npm instal bcrypt  // for encryption
+npm instal bcryptjs  // for encryption
+npm instal bcrypt  // aciddentally installed but shouldn't do anything
 
 
 npm instal express-async-handler  // not sure but important for the controller
