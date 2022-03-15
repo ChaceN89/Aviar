@@ -16,6 +16,7 @@
 
 
 ## General Information
+- Git Hub Repository -> https://github.com/kar2fast/Aviar
 - Provide general information about your project here.
 - What problem does it (intend to) solve?
 - What is the purpose of your project?
@@ -25,10 +26,15 @@
 
 ## Technologies Used
 - MERN Stack
-- Nodejs 
-- Expressjs
-- MongoDB
-- React
+    - Nodejs
+    - Expressjs
+    - MongoDB
+    - React
+    - JavaScript
+    - HTML
+    - CSS
+    - GitHub
+    - Git
 
 
 ## Features

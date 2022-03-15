@@ -1,0 +1,28 @@
+User Endpoint
+
+add collection (verifies user with jwt)
+
+delete collection (verifies user with jwt)
+
+Add post to user collection (verifies user with jwt)
+
+remove a post from user collection (verifies user with jwt)
+
+UserPost Endpoints
+
+add a new post (updates user, verifies user with jwt)
+
+remove post (updates user, verifies user with jwt)
+
+Posts Endpoint
+
+get post public
+
+get all posts
+
+get post by search term
+
+add comment
+
+remove comment
+
