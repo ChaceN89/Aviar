@@ -1,7 +1,7 @@
 //entry point to server
 console.log("Aviar server.js running");
 
-
+const colors= require('colors');
 const connectDB = require('./config/db'); // require the db file to acces mongodb
 connectDB(); //set up a donnection to the database 
 
