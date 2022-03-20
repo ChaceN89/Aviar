@@ -1,0 +1,148 @@
+======================================================================
+Summary
+
+    fontend folder 
+        npm i react-router-dom
+        npm i react-icons
+        npm i axios react-toastify
+
+    backend folder
+        npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler
+
+    RUNNING THE PROJECT    always i nroot folder
+        npm run server
+        npm run client
+        npm run dev // runs both with one command
+
+======================================================================
+
+
+
+redux extension on chrome is very useful
+
+make sure you are in the right folder (root or frontend)
+for each install i say which folder you are in
+
+
+stuff you need to do is a bit further down
+
+/*
+you can skip this part
+    don't need to do this since project is already started
+    from root folder
+    npx create-react-app frontend --template redux
+                                    // add template flag
+                -- including redux flag create an example project in fornt end folder
+        this gives a bunch of examplke code snippets and a smallaexample porject
+
+*/
+
+    helpful command in case you make a mistake
+    npm uninstall <name of thing you don't want>
+
+    **for specific new installs you do need to be  in the frontend folder**
+
+        npx create-react-app frontend --template redux 
+            installs redex toolkit and react redux package
+
+        generates  in frontend folder
+        nodemodules
+        public
+        scr
+        gitignore
+        two package .json files
+        readme
+
+        many files are installed
+        with lots of example code
+
+    added "client": "npm start --prefix frontend" to 
+    scritps in package.json in root folder for 
+
+*****running client
+    npm run client     now run the frontend
+*****
+
+    app.js contains main code
+    added pages folder in src
+
+    .jsx files are used
+
+    easy tool to use is est + react/redux .....  native  .....
+    extension 
+
+    rfce enter on the pages sets things up for a blank page 
+
+
+======================================================================
+Summary
+
+    fontend folder 
+        npm i react-router-dom
+        npm i react-icons
+        npm i axios react-toastify
+
+    backend folder
+        npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler
+
+    RUNNING THE PROJECT    always i nroot folder
+        npm run server
+        npm run client
+        npm run dev // runs both with one command
+
+======================================================================
+
+when in doubt check the package.json files to see what you need
+
+
+
+***dependencies***
+
+cd into frontend folder
+
+            //for routing
+        npm i react-router-dom  // set up routes for pages
+
+            //for icons 
+        npm i react-icons // set up 
+
+Root folder
+
+can jsut 
+
+    for running server and cleint as same time, can run two command prompt same
+    or
+    add    npm i -D concurrently in the root folder   (just makes things easier)
+
+
+
+in package.json in root 
+ass to scripts 
+"dev": "concurrently \"npm run server\" \"npm run client\"",
+
+npm run dev  to run both
+
+
+in fontr end folder for authentication
+
+install axios
+npm i axios react-toastify 
+//show alerts
+
+add to package.json in front end
+"proxy": "http://localhost:5000",
+to get corrent endpooint in authservice
+
+
+
+
+make sure to set to production before builod
+NODE_ENV = production 
+
+npm run build      in the front end folder to create build folder
+
+heroku for setting up application 
+
+last video shows how to set up
+
+

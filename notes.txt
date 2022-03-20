@@ -20,7 +20,7 @@ node_modules
 
 setup dependencies
 
-npm install express dotnev mongoose colors
+npm install express dotenv mongoose colors
 
     express
     minimal and flexible Node.js web application 
