@@ -35,25 +35,29 @@ function Header() {
           <Link to ='/post'>
             <GrAdd/> Add Post
           </Link>
+        </li>
+        <li>
+          
+            {/* needs functionality to finsih search  */}
+            <FaSearch/> Search
           
         </li>
         <li>
-          <FaSearch/> Search
-          
+          <Link to ='/myCollections'>
+            <BsCardList/> My Collections
+          </Link>
         </li>
         <li>
-          <BsCardList/> My Collection
-          
-        </li>
-        <li>
-          <FaUser/> My Account
+          <Link to='/myAccount'>
+            <FaUser/> My Account
+          </Link>
           
         </li>
         
         <li>
           <button className='btn' onClick={onLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
+            <FaSignOutAlt /> Logout
+          </button>
         </li>
         <li>
           <Link to='/login'>
@@ -61,7 +65,10 @@ function Header() {
           </Link>
         </li>
         <li>
-          <BsPersonPlusFill /> Register
+        <Link to='/register'>
+            <BsPersonPlusFill /> Register
+          </Link>
+
         </li>
 
       </ul>
