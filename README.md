@@ -17,7 +17,7 @@
 
 ## General Information
 - Git Hub Repository -> https://github.com/kar2fast/Aviar
-- Provide general information about your project here.
+- Instagram clone.
 - What problem does it (intend to) solve?
 - What is the purpose of your project?
 - Why did you undertake it?
