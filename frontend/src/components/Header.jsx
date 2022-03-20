@@ -10,8 +10,8 @@ import { useSelector, useDispatch } from 'react-redux' // for logout
 import { Link, useNavigate} from 'react-router-dom' // routing
 
 function Header() {
-    // const navigate = useNavigate()
-    // const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     // const { user } = useSelector((state) => state.auth) // get user
 
     const onLogout = () => { // logoutfucntion
@@ -23,37 +23,42 @@ function Header() {
   return (
     <header className='header'>
       <div className='logo'>
-        Aviar
+        
+        <Link to="/">Aviar</Link>
+
+        {/* can add logo here */}
         {/* <img alt="Logo" src="aviarLogo.png"  />  */}
-        {/* <Link to='/'>Aviar</Link> */}
+      
       </div>
       <ul>
         <li>
-          <GrAdd/> Add Post
-          {/* need to add more so search can work */}
+          <Link to ='/post'>
+            <GrAdd/> Add Post
+          </Link>
+          
         </li>
         <li>
           <FaSearch/> Search
-          {/* need to add more so search can work */}
+          
         </li>
         <li>
           <BsCardList/> My Collection
-          {/* need to add more so search can work */}
+          
         </li>
         <li>
           <FaUser/> My Account
-          {/* need to add more so search can work */}
+          
         </li>
         
         <li>
-          <button className='btn' >
-            <FaSignOutAlt /> Logout
-          </button>
+          <button className='btn' onClick={onLogout}>
+              <FaSignOutAlt /> Logout
+            </button>
         </li>
         <li>
-          
-          <FaSignInAlt /> Login
-          
+          <Link to='/login'>
+            <FaSignInAlt /> Login
+          </Link>
         </li>
         <li>
           <BsPersonPlusFill /> Register
