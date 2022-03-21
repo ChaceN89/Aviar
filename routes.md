@@ -2,13 +2,23 @@
 
 ## Table of Contents
 * [Users Routes](#user-routes)
-  - a
-  - a
-  - a
+  - Create Account/Register an Account
+  - Get current user info 
+  - Login
+  - Delete User
+  - Update Username
+  - Update Password
+  - 
+  - 
+
 * [Goals Routes](#goals-routes)
-  - a
-  - a
-  - a
+	- create Post
+	- get Post by id
+	- deletePost
+	- getAllPosts
+	- getPostsByTerm
+	- addComment
+	- remove comment (not done and probbaly not needed)
 
 
 
@@ -20,8 +30,7 @@
 	username: chacen
 	password: 1234
 
-	username: daven
-	password: 1234
+
 	
 ---------------------------------------------------------------------
 
@@ -158,26 +167,225 @@
 
 <br/><br/>
 <br/><br/>
-## UserPosts Routes api/UserPosts/.... 
--  
-
----------------------------------------------------------------------
-
-<br/><br/>
-<br/><br/>
 ----------------------------------------------------------------
 
 ## Goals Routes api/posts/....
 
-- gets all posts
-- get post by post id
-- get post by user id
-- update post 
+- create Post
+- get Post by id
+- deletePost
+- getAllPosts
+- getPostsByTerm
+- addComment
+- remove comment (not done and probbaly not needed)
 
 
 ----------------------------------------------------------------
-#### Name
-	Method http://localhost:8000/api/users
+#### createPost - Private  (also update post id in userPost array of the user)
+	POST http://localhost:8000/api/post
+	- Fields: imgPath, caption, theme. medium  //can add more later  
+	- Authorization: JWT
+	- Returns:{    Status 200 OK   // creates post and updates userPost array
+			"user": "622c08211c919e1ccb135709",
+			"imgPath": "22.png",
+			"caption": "this is a caption",
+			"comments": [],
+			"ratings": [],
+			"numLikes": 0,
+			"theme": "space",
+			"medium": "photo",
+			"tags": [],
+			"_id": "6237f51d7c8743e31157bf1a",
+			"createdAt": "2022-03-21T03:46:37.034Z",
+			"updatedAt": "2022-03-21T03:46:37.034Z",
+			"__v": 0
+			}
+		
+		
+
+#### getPost - public
+	GET http://localhost:8000/api/posts/id
+	- Fields:  id
+	- Authorization: 
+	- Returns:{ Status 200 OK   // jsut gets a post
+			"_id": "6237fee84f63fab94eb8e146",
+			"user": "622c08211c919e1ccb135709",
+			"imgPath": "22.png22",
+			"caption": "this is a caption22",
+			"comments": [],
+			"ratings": [],
+			"numLikes": 0,
+			"theme": "space22",
+			"medium": "photo22",
+			"tags": [],
+			"createdAt": "2022-03-21T04:28:24.472Z",
+			"updatedAt": "2022-03-21T04:28:24.472Z",
+			"__v": 0
+			}
+		Status 400 Bad Request
+			{"message": "Please enter a Post id","stack": "... }
+		or	{"message": "Please enter valid Post id","stack": "... }
+		or	{"message": "post not found","stack": "... }
+
+
+
+#### deletePost - Private
+	DELETE http://localhost:8000/api/posts/id
+	- Fields:  id
+	- Authorization: jwt
+	- Returns:{
+				"message": "post deleted",
+				"post": {
+					"_id": "623801aea2fb01496181dae3",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png22",
+					"caption": "this is a caption22",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space22",
+					"medium": "photo22",
+					"tags": [],
+					"createdAt": "2022-03-21T04:40:14.825Z",
+					"updatedAt": "2022-03-21T04:40:14.825Z",
+					"__v": 0
+				},
+				"user": {
+					"_id": "622c08211c919e1ccb135709",
+					"username": "chacen",
+					"password": "$2a$10$QtqlLftGfxoMbREZXp3UH.26IgazwxouXmQmRGhJWVX6EtiCFoE..",
+					"userPosts": [
+						"6237fba241e253a12b1a4085",
+						"623801aea2fb01496181dae3"
+					],
+					"savedPosts": [],
+					"createdAt": "2022-03-12T02:40:33.416Z",
+					"updatedAt": "2022-03-21T04:40:14.870Z",
+					"__v": 0
+				}
+			}
+		Status 400 Bad Request
+			{"message": "post not found","stack": "... }
+
+		Status 401 notAuthorized 
+			{"message": "User not found","stack": "... }
+		or	{"message": "User not authorized","stack": "... }
+		
+
+
+#### getAllPosts - Public
+	GET http://localhost:8000/api/posts
+	- Fields:  none
+	- Authorization: none
+	- Returns:[  // array of posts returns empty array [] if there are no posts
+				{
+					"_id": "623803231d1f4a44c1429e47",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png22",
+					"caption": "this is a caption22",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space22",
+					"medium": "photo22",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:27.419Z",
+					"updatedAt": "2022-03-21T04:46:27.419Z",
+					"__v": 0
+				},
+				{
+					"_id": "623803401d1f4a44c1429e4d",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png",
+					"caption": "this is a caption",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space",
+					"medium": "photo",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:56.328Z",
+					"updatedAt": "2022-03-21T04:46:56.328Z",
+					"__v": 0
+				}
+			]
+
+
+
+
+#### getPostsByTerm
+	GET http://localhost:8000/api/posts/search
+	- Fields: term
+	- Authorization: none 
+	- Returns:[  // array of returned posts
+				{
+					"_id": "623803231d1f4a44c1429e47",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png22",
+					"caption": "this is a caption22",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space22",
+					"medium": "photo22",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:27.419Z",
+					"updatedAt": "2022-03-21T04:46:27.419Z",
+					"__v": 0
+				},
+				{
+					"_id": "623803401d1f4a44c1429e4d",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png",
+					"caption": "this is a caption",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space",
+					"medium": "photo",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:56.328Z",
+					"updatedAt": "2022-03-21T04:46:56.328Z",
+					"__v": 0
+				}
+			]
+		Status 400 Bad Request
+			{"message": "no search Term","stack": "... }
+
+
+#### addComment
+	POST http://localhost:8000/api/posts/comment/id
+	- Fields:  id, comment
+	- Authorization: JWT
+	- Returns:{  200 status ok  // doens't retrun latest object but updates database
+								// if you do 3rd comment it will return the folowing
+				"_id": "62380b392ccc8b476ca10a12",
+				"user": "622c08211c919e1ccb135709",
+				"imgPath": "22.png",
+				"caption": "this",
+				"comments": [
+					"1st comment",
+					"2nd comment"
+				],
+				"ratings": [],
+				"numLikes": 0,
+				"theme": "space",
+				"medium": "photo",
+				"tags": [],
+				"createdAt": "2022-03-21T05:20:57.702Z",
+				"updatedAt": "2022-03-21T05:45:32.895Z",
+				"__v": 0
+			}
+		Status 400 Bad Request
+			{"message": "Need Post information","stack": "... }
+		or	{"message": "Post not found","stack": "... }
+
+
+
+
+
+#### name
+	Method http://localhost:8000/api/posts
 	- Fields:  
 	- Authorization: 
 	- Returns:{

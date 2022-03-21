@@ -8,21 +8,21 @@ User Endpoint
 
     remove a post from user collection (verifies user with jwt)
 
-UserPost Endpoints
+UserPost Endpoints - just part of Posts
 
-    add a new post (updates user, verifies user with jwt)
+    add a new post (updates user, verifies user with jwt)  post  -- done
 
-    remove post (updates user, verifies user with jwt)
+    remove post (updates user, verifies user with jwt) -- done
 
 Posts Endpoint
 
-    get post public
+    get post public -- done
 
-    get all posts
+    get all posts -- done
 
-    get post by search term  // least important
+    get post by search term  // least important  -done
 
-    add comment // least important
+    add comment // least important   -- done
 
-    remove comment // least important
+    remove comment // least important  not needed
 

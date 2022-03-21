@@ -17,6 +17,7 @@ app.use(express.urlencoded({extended: false})); // need this for the type coming
 
 //routes/endpoints
 app.use('/api/users', require('./routes/userRoutes')); // all user routes
+app.use('/api/posts', require('./routes/postRoutes')); // all user routes
 
 app.use(errorHandler); // override default error handlers
 
