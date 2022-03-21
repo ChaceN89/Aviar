@@ -2,13 +2,23 @@
 
 ## Table of Contents
 * [Users Routes](#user-routes)
-  - a
-  - a
-  - a
+  - Create Account/Register an Account
+  - Get current user info 
+  - Login
+  - Delete User
+  - Update Username
+  - Update Password
+  - 
+  - 
+
 * [Goals Routes](#goals-routes)
-  - a
-  - a
-  - a
+	- create Post
+	- get Post by id
+	- deletePost
+	- getAllPosts
+	- getPostsByTerm
+	- addComment
+	- remove comment (not done and probbaly not needed)
 
 
 
@@ -20,8 +30,7 @@
 	username: chacen
 	password: 1234
 
-	username: daven
-	password: 1234
+
 	
 ---------------------------------------------------------------------
 
@@ -162,10 +171,13 @@
 
 ## Goals Routes api/posts/....
 
-- gets all posts
-- get post by post id
-- get post by user id
-- update post 
+- create Post
+- get Post by id
+- deletePost
+- getAllPosts
+- getPostsByTerm
+- addComment
+- remove comment (not done and probbaly not needed)
 
 
 ----------------------------------------------------------------

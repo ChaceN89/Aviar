@@ -20,9 +20,9 @@ Posts Endpoint
 
     get all posts -- done
 
-    get post by search term  // least important
+    get post by search term  // least important  -done
 
-    add comment // least important
+    add comment // least important   -- done
 
-    remove comment // least important
+    remove comment // least important  not needed
 
