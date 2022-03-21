@@ -10,15 +10,15 @@ User Endpoint
 
 UserPost Endpoints - just part of Posts
 
-    add a new post (updates user, verifies user with jwt)  post
+    add a new post (updates user, verifies user with jwt)  post  -- done
 
-    remove post (updates user, verifies user with jwt)
+    remove post (updates user, verifies user with jwt) -- done
 
 Posts Endpoint
 
-    get post public
+    get post public -- done
 
-    get all posts
+    get all posts -- done
 
     get post by search term  // least important
 

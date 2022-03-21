@@ -4,23 +4,21 @@ const { // way of importing things
     createPost,
     getPost,
     deletePost,
-    getAllPosts
+    getAllPosts,
+    addComment,
+    getPostsByTerm,
+    removeComment
     
 } = require('../controllers/postController');
 
 const {protect} = require('../middleware/authMiddleware');
 
 router.route('/').post(protect, createPost)
+router.route('/comment/id').post(protect, addComment)
+router.route('/comment/id').delete(protect, removeComment)
+router.route('/search').get( getPostsByTerm)
 router.route('/').get(getAllPosts)
 router.route('/id').get(getPost)
 router.route('/id').delete(protect, deletePost)
-
-//protected verison of the same thing
-// router.route('/').get(protect, function)
-// router.route('/:id').put(protect, updateGoal)
-
-//functions from controller and sending to certian endpoints
-
-
 
 module.exports = router;

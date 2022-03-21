@@ -32,7 +32,9 @@ const createPost = asyncHandler(async(req, res) => {
     const user = await User.findOneAndUpdate({ _id: req.user.id },{
          $push: { userPosts: post._id } , //add to array 
     },{
-        upsert: false // don't create new obeject
+        upsert: false, // don't create new obeject
+    },{
+        new: true
     })
    
     console.log("New Post created "+ req.body.caption );
@@ -119,18 +121,73 @@ const getPost = asyncHandler(async(req, res) => {
 
 })
 
+//@desc aff comment
+//@route  post /api/posts/comment/id
+//@access private
+const addComment = asyncHandler(async(req, res) => {
+    console.log(req.body.id)
+    console.log(req.body.comment)
+    
+    if(!req.body.id || !req.body.comment){
+        res.status(400);
+        throw new Error("Need Post information");
+    }
+    const post1 = await Post.findById(req.body.id);
+    if(!post1){
+        res.status(400);
+        throw new Error("Post not found");
+    }
 
-//maybe add these
-// get post by search term  // least important
-// add comment // least important
-// remove comment // least important
+    const post = await Post.findOneAndUpdate({ _id: req.body.id },{
+        $push: { comments: req.body.comment } , //add to array 
+    },{
+       upsert: false // don't create new obeject
+    })
 
 
+    res.status(200).json(post) // returns old object before update object 
+})
+
+//@desc remove comment
+//@route  delete /api/posts/comment/id
+//@access private
+const removeComment = asyncHandler(async(req, res) => {
+    if(!req.body.id){
+        res.status(400);
+        throw new Error("Need ID");
+    }
+
+
+    
+    res.status(200).json({
+        message: "removeComment"
+    })
+
+
+})
+
+
+//@desc aff comment
+//@route  get /api/posts/search
+//@access public
+const getPostsByTerm = asyncHandler(async(req, res) => {
+    if(!req.body.term){
+        res.status(400);
+        throw new Error("no search Term");
+    }
+
+    const post = await Post.find({ caption: { $regex: `${req.body.term}` } });
+    
+    res.status(200).json(post)
+})
 
 
 module.exports = {
     createPost,
     getPost,
     deletePost,
-    getAllPosts
+    getAllPosts,
+    addComment,
+    getPostsByTerm,
+    removeComment
 }

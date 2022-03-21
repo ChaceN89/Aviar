@@ -170,7 +170,7 @@
 
 ----------------------------------------------------------------
 #### createPost - Private  (also update post id in userPost array of the user)
-	Method http://localhost:8000/api/post
+	POST http://localhost:8000/api/post
 	- Fields: imgPath, caption, theme. medium  //can add more later  
 	- Authorization: JWT
 	- Returns:{    Status 200 OK   // creates post and updates userPost array
@@ -192,7 +192,7 @@
 		
 
 #### getPost - public
-	Method http://localhost:8000/api/posts/id
+	GET http://localhost:8000/api/posts/id
 	- Fields:  id
 	- Authorization: 
 	- Returns:{ Status 200 OK   // jsut gets a post
@@ -218,7 +218,7 @@
 
 
 #### deletePost - Private
-	Method http://localhost:8000/api/posts/id
+	DELETE http://localhost:8000/api/posts/id
 	- Fields:  id
 	- Authorization: jwt
 	- Returns:{
@@ -262,7 +262,7 @@
 
 
 #### getAllPosts - Public
-	Method http://localhost:8000/api/posts
+	GET http://localhost:8000/api/posts
 	- Fields:  none
 	- Authorization: none
 	- Returns:[  // array of posts returns empty array [] if there are no posts
@@ -301,9 +301,78 @@
 
 
 
+#### getPostsByTerm
+	GET http://localhost:8000/api/posts/search
+	- Fields: term
+	- Authorization: none 
+	- Returns:[  // array of returned posts
+				{
+					"_id": "623803231d1f4a44c1429e47",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png22",
+					"caption": "this is a caption22",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space22",
+					"medium": "photo22",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:27.419Z",
+					"updatedAt": "2022-03-21T04:46:27.419Z",
+					"__v": 0
+				},
+				{
+					"_id": "623803401d1f4a44c1429e4d",
+					"user": "622c08211c919e1ccb135709",
+					"imgPath": "22.png",
+					"caption": "this is a caption",
+					"comments": [],
+					"ratings": [],
+					"numLikes": 0,
+					"theme": "space",
+					"medium": "photo",
+					"tags": [],
+					"createdAt": "2022-03-21T04:46:56.328Z",
+					"updatedAt": "2022-03-21T04:46:56.328Z",
+					"__v": 0
+				}
+			]
+		Status 400 Bad Request
+			{"message": "no search Term","stack": "... }
 
 
-#### Name
+#### addComment
+	POST http://localhost:8000/api/posts/comment/id
+	- Fields:  id, comment
+	- Authorization: JWT
+	- Returns:{  200 status ok  // doens't retrun latest object but updates database
+								// if you do 3rd comment it will return the folowing
+				"_id": "62380b392ccc8b476ca10a12",
+				"user": "622c08211c919e1ccb135709",
+				"imgPath": "22.png",
+				"caption": "this",
+				"comments": [
+					"1st comment",
+					"2nd comment"
+				],
+				"ratings": [],
+				"numLikes": 0,
+				"theme": "space",
+				"medium": "photo",
+				"tags": [],
+				"createdAt": "2022-03-21T05:20:57.702Z",
+				"updatedAt": "2022-03-21T05:45:32.895Z",
+				"__v": 0
+			}
+		Status 400 Bad Request
+			{"message": "Need Post information","stack": "... }
+		or	{"message": "Post not found","stack": "... }
+
+
+
+
+
+#### name
 	Method http://localhost:8000/api/posts
 	- Fields:  
 	- Authorization: 
