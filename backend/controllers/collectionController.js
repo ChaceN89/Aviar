@@ -2,13 +2,6 @@ const asyncHandler = require('express-async-handler');
 const Post = require('../models/postModel');  // models
 const User = require('../models/userModel');
 const valid = require('../middleware/validateID');
-const { find, collection } = require('../models/postModel');
-
-//req.user.id  from protection middleware
-//collection
-    //collectionName
-    //PostList
-
 
 //@desc add collection and post
 //@route  POST collection /api/collections/
@@ -40,8 +33,7 @@ const addCollectionAndPost = asyncHandler(async(req, res) => {
         postid : req.body.id,
         user
     });
-
-})
+}) //end
 
 //@desc add collection and post
 //@route  POST collection /api/collections/
@@ -67,8 +59,7 @@ const addCollection = asyncHandler(async(req, res) => {
         message: `collection added`,
         user
     });
-
-})
+}) //end
 
 //@desc delete collection
 //@route  DELETE collection /api/collections
@@ -98,7 +89,7 @@ const deleteCollection = asyncHandler(async(req, res) => {
     res.status(200).json({
         message: "delete collection"
     });
-})
+}) //end
 
 
 
@@ -131,8 +122,7 @@ const addPostToCollection = asyncHandler(async(req, res) => {
         message: `post added to collection`,
         user
     });
-
-})
+})//end
 
 //@desc Remove Post to Collection
 //@route  DELETE collection /api/collections/id
@@ -163,12 +153,7 @@ const removePostFromCollection = asyncHandler(async(req, res) => {
         message: `post removed to collection`,
         user
     });
-
-
-    res.status(200).json({
-        message: "remove Post From Collection"
-    });
-})
+}) //end
 
 
 
@@ -180,24 +165,24 @@ const removePostFromCollection = asyncHandler(async(req, res) => {
 //@desc Get my Collection array of names/or ids if that is amde for me
 //@route  GET collection /api/collections/
 //@access private
-const getCollectionNames = asyncHandler(async(req, res) => {
-    
-    res.status(200).json({
-        message: "get Collection Names"
-    });
-    
-})
+    const getCollectionNames = asyncHandler(async(req, res) => {
+        
+        res.status(200).json({
+            message: "get Collection Names"
+        });
+        
+    })
 
-//@desc Get my Collection
-//@route  GET collection /api/collections/posts
-//@access private
-const getCollectionPosts = asyncHandler(async(req, res) => {
-    
-    res.status(200).json({
-        message: "get Collection Posts"
-    });
-    
-})
+    //@desc Get my Collection
+    //@route  GET collection /api/collections/posts
+    //@access private
+    const getCollectionPosts = asyncHandler(async(req, res) => {
+        
+        res.status(200).json({
+            message: "get Collection Posts"
+        });
+        
+    })
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
