@@ -8,8 +8,6 @@
   - Delete User
   - Update Username
   - Update Password
-  - 
-  - 
 
 * [Goals Routes](#goals-routes)
 	- create Post
@@ -19,6 +17,7 @@
 	- getPostsByTerm
 	- addComment
 	- remove comment (not done and probbaly not needed)
+	- increase likes on post
 
 
 
@@ -384,10 +383,132 @@
 
 
 
-#### name
-	Method http://localhost:8000/api/posts
-	- Fields:  
-	- Authorization: 
-	- Returns:{
+## Collection Routes api/Collections/.... 
+
+
+
+
+#### Add Collection and Post
+	POST http://localhost:8000/api/Collections/post
+	- Fields:  name, id
+	- Authorization: JWT
+	- Returns:{   200 status ok    // adds post id to 
+				"message": "collection added",
+				"postid": "623803231d1f4a44c1429e47",
+				"user": {
+					"_id": "622c08211c919e1ccb135709",
+					"username": "chacen",
+					"password": "$2a$10$QtqlLftGfxoMbREZXp3UH.26IgazwxouXmQmRGhJWVX6EtiCFoE..",
+					"userPosts": [
+						"623803231d1f4a44c1429e47",
+						"623803401d1f4a44c1429e4d",
+						"62380b242ccc8b476ca10a0c",
+						"62380b392ccc8b476ca10a12"
+					],
+					"savedPosts": [
+						{
+							"collectionName": "collection1",
+							"PostList": [
+								"623803231d1f4a44c1429e47"
+							],
+							"_id": "6238fcdf95e9a340f292e8d2"
+						}
+					],
+					"createdAt": "2022-03-12T02:40:33.416Z",
+					"updatedAt": "2022-03-21T22:31:59.781Z",
+					"__v": 0
+				}
+			}
+		Status 400 Bad Request
+			{"message": "Need to add name or id","stack": "... }
+		or	{"message": "Please enter valid Post id","stack": "... }			
+
+#### Add Collection 
+	POST http://localhost:8000/api/Collections/post
+	- Fields:  name, id
+	- Authorization: JWT
+	- Returns:{   200 status ok    
+				"message": "collection added",
+				"user": {
+					"_id": "622c08211c919e1ccb135709",
+					"username": "chacen",
+					"password": "$2a$10$QtqlLftGfxoMbREZXp3UH.26IgazwxouXmQmRGhJWVX6EtiCFoE..",
+					"userPosts": [
+						"623803231d1f4a44c1429e47",
+						"623803401d1f4a44c1429e4d",
+						"62380b242ccc8b476ca10a0c",
+						"62380b392ccc8b476ca10a12"
+					],
+					"savedPosts": [
+						{
+							"collectionName": "collection1",
+							"PostList": [],
+							"_id": "6238fcdf95e9a340f292e8d2"
+						}
+					],
+					"createdAt": "2022-03-12T02:40:33.416Z",
+					"updatedAt": "2022-03-21T22:31:59.781Z",
+					"__v": 0
+				}
+			}
+		Status 400 Bad Request
+			{"message": "Need to add name or id","stack": "... }
+
+
+
+
+#### Delete Collection
+	DELETE http://localhost:8000/api/Collections
+	- Fields:  id
+	- Authorization: JWT
+	- Returns:{  200 status ok
+
+			}
+
+
+
+#### add Post To Collection
+	POST http://localhost:8000/api/Collections/id
+	- Fields:  id
+	- Authorization: JWT
+	- Returns:{  200 status ok
+
+			}
+
+
+#### remove Post From Collection
+	DELETE http://localhost:8000/api/Collections/id
+	- Fields:  name
+	- Authorization: JWT
+	- Returns:{  200 status ok
+
+			}
+
+
+
+
+
+#### get collection names  //the names of all collections
+	GET http://localhost:8000/api/Collections
+	- Fields:  none
+	- Authorization: JWT
+	- Returns:{  200 status ok  // the names of all collections
+
+			}
+
+
+#### get collection posts   //all posts of a collection
+	GEt http://localhost:8000/api/Collections/posts
+	- Fields:  id
+	- Authorization: JWT
+	- Returns:{  200 status ok  // all posts of a collection(id)
+
+			}
+
+#### get collection posts   //all posts of a collection
+	METHOD http://localhost:8000/api/Collections/posts
+	- Fields:  id
+	- Authorization: JWT
+	- Returns:{  200 status ok  // all posts of a collection(id)
 
 			}

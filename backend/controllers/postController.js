@@ -19,7 +19,10 @@ const createPost = asyncHandler(async(req, res) => {
     // create post
     const post = await Post.create({
         user: req.user.id, // set user as well
-        imgPath :req.body.imgPath,
+
+        imgPath :req.body.imgPath, // might need to change to 
+            // image handling
+
         caption :req.body.caption,
         //no comments to start
         numLikes: 0,
@@ -72,10 +75,7 @@ const deletePost = asyncHandler(async(req, res) => {
         res.status(401);
         throw new Error("User not authorized");
     }
-    if(post.user.toString() != req.user.id){
-        res.status(401);
-        throw new Error("User not authorized");
-    }
+  
     await post.remove()
 
     // delete from user array
@@ -141,7 +141,8 @@ const addComment = asyncHandler(async(req, res) => {
     const post = await Post.findOneAndUpdate({ _id: req.body.id },{
         $push: { comments: req.body.comment } , //add to array 
     },{
-       upsert: false // don't create new obeject
+        new:true,
+        upsert: false // don't create new obeject
     })
 
 
