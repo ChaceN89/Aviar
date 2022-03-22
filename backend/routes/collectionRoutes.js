@@ -28,10 +28,10 @@ router.put('/collections',protect, updateCollectionname) // jacob
 router.post('/id',protect, addPostToCollection)
 router.delete('/id',protect, removePostFromCollection) 
 
-router.get('/',protect, getCollectionNames)
+router.get('/names',protect, getCollectionNames)
 router.get('/posts',protect, getCollectionPosts)
 
 //get current user's collections
-router.get('/collections', protect, getCollections) // private/protected
+router.get('/', protect, getCollections) // private/protected
 
 module.exports = router;
