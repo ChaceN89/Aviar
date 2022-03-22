@@ -1,0 +1,37 @@
+Set up after clone
+    add the .env file
+
+npm install should set up all dependencies from 
+    - ***Run in both frontend folder and root folder ***
+
+===================================================================
+Summary for backend - all in root folder
+
+    npm i -D nodemon
+    npm i express
+    npm i dotenv
+    npm i colors
+    npm imongoose
+    npm install jsonwebtoken
+    npm install bcryptjs 
+    npm install express-async-handler
+
+===================================================================
+Summary for frontend
+
+    fontend folder 
+        npm i react-router-dom
+        npm i react-icons
+        npm i axios react-toastify
+        npm i react-accordion-with-header
+        npm i react-modal
+
+    root folder
+        npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler
+
+===================================================================
+
+    RUNNING THE PROJECT    always in root folder
+        npm run server
+        npm run client
+        npm run dev // runs both with one command
