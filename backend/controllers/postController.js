@@ -32,12 +32,12 @@ const createPost = asyncHandler(async(req, res) => {
     })
    
     // add post to user array 
-    const user = await User.findOneAndUpdate({ _id: req.user.id },{
-         $push: { userPosts: post._id } , //add to array 
+    const user = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        {$push: { userPosts: post._id } //add to array 
     },{
-        upsert: false, // don't create new obeject
-    },{
-        new: true
+        new: true,
+        upsert: false // don't create new obeject
     })
    
     console.log("New Post created "+ req.body.caption );
