@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/users/'
+const API_URL = '/api/collections/'
 
 // Get user's collections
 const getCollections = async token => {
