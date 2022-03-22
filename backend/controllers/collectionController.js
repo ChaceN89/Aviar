@@ -74,47 +74,96 @@ const addCollection = asyncHandler(async(req, res) => {
 //@route  DELETE collection /api/collections
 //@access private   takes id
 const deleteCollection = asyncHandler(async(req, res) => {
-    if(!req.body.id ){
+    if( !req.body.id ){
         res.status(400);
-        throw new Error("Need collection id");
+        throw new Error("Need new collection id");
     }
-
-    
-    if(!req.user){ // this user doesn't exist 
-        res.status(401);
-        throw new Error("User not found");
+    if(!valid.isValidObjectId(req.body.id)){
+        res.status(400);
+        throw new Error("Please enter valid collection id");
     }
-    
-    user.find({
-
-    })
-  
-    // await collection.remove()
-
-
-
-
+    const user = await User.findOneAndUpdate(
+        { _id:req.user.id  },
+        { $pull: { savedPosts :{ _id:req.body.id }  }},
+        {
+            new: true,
+            upsert: false // don't create new obeject
+        })
+        
+    res.status(200).json({
+        message: "Collection Deleted",
+        user
+    });
 
     res.status(200).json({
         message: "delete collection"
     });
 })
 
+
+
 //@desc add Post to Collection
 //@route  POST collection /api/collections/id
 //@access private
 const addPostToCollection = asyncHandler(async(req, res) => {
 
-    res.status(200).json({
-        message: "add Post To Collection"
-    });
-})
+    if(!req.body.pid || !req.body.cid){
+        res.status(400);
+        throw new Error("Need to add an id");
+    }
+    if(!valid.isValidObjectId(req.body.pid) || !valid.isValidObjectId(req.body.cid)){
+        res.status(400);
+        throw new Error("Please enter valid id");
+    }
 
+    const user = await User.findOneAndUpdate(
+        { _id: req.user.id, "savedPosts._id": req.body.cid  },
+        {$push: 
+            { 
+            "savedPosts.$.PostList":req.body.pid  
+            } , 
+        },{
+            new: true,
+            upsert: false // don't create new obeject
+        })
+    
+    res.status(200).json({  
+        message: `post added to collection`,
+        user
+    });
+
+})
 
 //@desc Remove Post to Collection
 //@route  DELETE collection /api/collections/id
 //@access private
 const removePostFromCollection = asyncHandler(async(req, res) => {
+
+    if(!req.body.pid || !req.body.cid){
+        res.status(400);
+        throw new Error("Need to add an id");
+    }
+    if(!valid.isValidObjectId(req.body.pid) || !valid.isValidObjectId(req.body.cid)){
+        res.status(400);
+        throw new Error("Please enter valid id");
+    }
+
+    const user = await User.findOneAndUpdate(
+        { _id: req.user.id, "savedPosts._id": req.body.cid  },
+        {$pull: 
+            { 
+            "savedPosts.$.PostList":req.body.pid  
+            } , 
+        },{
+            new: true,
+            upsert: false // don't create new obeject
+        })
+    
+    res.status(200).json({  
+        message: `post removed to collection`,
+        user
+    });
+
 
     res.status(200).json({
         message: "remove Post From Collection"
@@ -122,27 +171,38 @@ const removePostFromCollection = asyncHandler(async(req, res) => {
 })
 
 
+
+
+
+//-----------------------------------------------------------------
+//-------------------might not need theses two---------------------
+//-----------------------------------------------------------------
 //@desc Get my Collection array of names/or ids if that is amde for me
 //@route  GET collection /api/collections/
 //@access private
 const getCollectionNames = asyncHandler(async(req, res) => {
-
+    
     res.status(200).json({
         message: "get Collection Names"
     });
-
+    
 })
 
 //@desc Get my Collection
 //@route  GET collection /api/collections/posts
 //@access private
 const getCollectionPosts = asyncHandler(async(req, res) => {
-
+    
     res.status(200).json({
         message: "get Collection Posts"
     });
-
+    
 })
+
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+//-----------------------------------------------------------------
+
 
 /**
  * @desc get user's collections
@@ -154,17 +214,32 @@ const getCollectionPosts = asyncHandler(async(req, res) => {
  */
 const getCollections = asyncHandler(async (req, res) => {
     const user = await User.findById(req.user.id)
-
     res.status(200).json(user.savedPosts)
 }) //end getCollections
 
 
-//@desc Update colelction name
+//@desc Update colelction name  new name and colelction id
 //@route  PUT collection /api/collections
 //@access private
-const updateCollectionname = asyncHandler(async (req, res) => {
+const updateCollectionName = asyncHandler(async (req, res) => {
+    if(!req.body.name || !req.body.id ){
+        res.status(400);
+        throw new Error("Need new collection name");
+    }
+    if(!valid.isValidObjectId(req.body.id)){
+        res.status(400);
+        throw new Error("Please enter valid collection id");
+    }
+    const user = await User.findOneAndUpdate(
+        { _id:req.user.id , "savedPosts._id": req.body.id },
+        { $set: { "savedPosts.$.collectionName" : req.body.name }},
+        {
+            new: true,
+            upsert: false // don't create new obeject
+        })
     res.status(200).json({
-        message: "update Collection name"
+        message: "update name updated",
+        user
     });
 }) //end getCollections
 
@@ -179,5 +254,5 @@ module.exports = {
     getCollectionNames,
     getCollectionPosts,
     getCollections,
-    updateCollectionname
+    updateCollectionName
 }
