@@ -6,7 +6,7 @@ Summary
         npm i react-icons
         npm i axios react-toastify
 
-    backend folder
+    root folder
         npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler
 
     RUNNING THE PROJECT    always i nroot folder

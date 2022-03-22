@@ -17,11 +17,10 @@
 
 ## General Information
 - Git Hub Repository -> https://github.com/kar2fast/Aviar
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
+- Essentially an Instagram clone meant to let users display there various form or are through posts.
+- Lets people share posts about their personal art projects
+- For SENG 401 at the University of Calgary Winter 2022
+
 
 
 ## Technologies Used
@@ -30,6 +29,7 @@
     - Expressjs
     - MongoDB
     - React
+    - Redux
     - JavaScript
     - HTML
     - CSS
@@ -38,10 +38,10 @@
 
 
 ## Features
-List the ready features here:
-- Awesome feature 1
-- Awesome feature 2
-- Awesome feature 3
+- Password encryption for users
+- User of Json web tokens (JWT)
+- Use of a cloud database (MongoDB)
+- 
 
 
 ## Screenshots
@@ -50,7 +50,7 @@ List the ready features here:
 
 
 ## Setup
-What are the project requirements/dependencies? Where are they listed? A requirements.txt or a Pipfile.lock file perhaps? Where is it located?
+What are the project requirements/dependencies? Where are they listed? 
 
 Proceed to describe how to install / setup one's local environment / get started with the project.
 
@@ -67,22 +67,15 @@ Project is: _in progress_
 
 
 ## Room for Improvement
-Include areas you believe need improvement / could be improved. Also add TODOs for future development.
-
 Room for improvement:
 - Improvement to be done 1
 - Improvement to be done 2
 
-To do:
-- Feature to be added 1
-- Feature to be added 2
-
 
 ## Acknowledgements
 Give credit here.
-- This project was inspired by...
 - This project was based on [this tutorial](https://www.youtube.com/playlist?list=PLx5VofXGboI3keWyKVqmEDXT4Fk-utH2P).
-- Many thanks to...
+- Many thanks to Tim Reiner for the help with diagrams and advice for teh project
 
 
 

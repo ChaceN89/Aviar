@@ -200,8 +200,6 @@ const updatePassword  = asyncHandler( async (req, res) => {
 
 
 
-
-
 //Generate JWT Function
 const generateToken = (id) => {
     //an id, the enviroment variable secret      
