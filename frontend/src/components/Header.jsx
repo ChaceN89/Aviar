@@ -98,12 +98,6 @@ function Header() {
                 </div>
               </form>
 
-              <li>
-                <Link to='/home'>
-                  <FaUser /> H
-                </Link>
-              </li>
-
             </li>
             <li>
               <Link to='/myCollections'>
