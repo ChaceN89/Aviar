@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { FaUser } from 'react-icons/fa'
 import { uploadPost, reset } from '../features/uploadPosts/uploadPostsSlice'
-import Spinner from '../components/spinner'
+import Spinner from '../components/Spinner'
 import { GrAdd } from 'react-icons/gr' // icons
 
 function UploadPost() {
