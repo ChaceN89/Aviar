@@ -11,6 +11,7 @@ import Header from './components/Header'
 
 //page imports
 import Dashboard from './pages/Dashboard'
+import Home from './pages/Home';
 import Login from './pages/Login'
 import MyAccount from './pages/MyAccount'
 import MyCollections from './pages/MyCollections'
@@ -41,7 +42,8 @@ function App() {
             <Route path='/myCollections' element ={<MyCollections />} />
             <Route path='/post' element ={<Post />} />
             <Route path='/register' element ={<Register />} />
-            <Route path='/uploadPost' element ={<UploadPost />} />
+            <Route path='/uploadPost' element={<UploadPost />} />
+            <Route path='/home' element={<Home />} />
           </Routes>
         </div>
     </Router>

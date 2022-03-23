@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -6,8 +6,25 @@
   box-sizing: border-box;
 }
 
+/*This sets the starry background*/
+.App {
+  overflow: hidden; /* Hide scrollbars */
+  background-color: black;
+  background-image: url("./assets/starBack.png");
+  background-repeat: no-repeat, repeat;
+  /* Set a specific height */
+  min-height: 100vh;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   height: 100vh;
 }
 
@@ -217,4 +234,71 @@ h3 {
   .heading p {
     font-size: 1.5rem;
   }
+}
+
+.todayGallery {
+  text-align: center;
+  color: white;
+  padding: 75px;
+}
+
+.post {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: rgb(17, 10, 44);
+  max-width: 700px;
+  border: 1px solid lightgray;
+  margin-bottom: 200px;
+}
+
+.post:hover {
+  transform: scale(1.08);
+}
+
+.post__piece {
+  width: 100%;
+  object-fit: contain;
+  color: white;
+  border-top: 1px solid lightgray;
+}
+
+.post__text {
+  font-weight: normal;
+  color: white;
+}
+
+.post__bottom {
+  display: flex; /*make into a row */
+  align-items: center;
+  padding: 20px;
+  opacity: 1;
+}
+
+.post__avatar {
+  margin-right: 15px;
+}
+
+.post__commentBox {
+  color: white;
+  display: flex;
+  opacity: 0.3;
+}
+
+.post__input {
+  color: white;
+  flex: 1;
+  border: none;
+  padding: 10px;
+}
+
+.post__button {
+  color: white;
+  max-width: 70px;
+}
+
+.post__comments {
+  color: white;
+  padding: 20px;
 }
