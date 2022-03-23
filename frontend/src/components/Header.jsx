@@ -8,42 +8,26 @@ import { BsPersonPlusFill, BsCardList } from 'react-icons/bs' // icons
 import { useSelector, useDispatch } from 'react-redux' // for logout
 import { logout, reset } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom' // routing
-import Spinner from '../components/Spinner'
+// import Spinner from '../components/Spinner'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+// import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 
 function Header () {
   const [formData, setFormData] = useState({
-    search: '',
+    search: '', //defaul
   })
 
-  const { search  } = formData
+  const { search  } = formData // the data from search bar
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const { user } = useSelector((state) => state.auth) // get before adding search
+  const { user } = useSelector((state) => state.auth) // get before adding search
 
-
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    state => state.auth
-  )
   
-  //doens't really do much yet - need to make another fucntion
-  useEffect(() => {
-    if (isError) {
-      toast.error(message)
-    }
-    
-    if (isSuccess || user) {
-      navigate('/')
-    }
-    
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
-  
-  const onChange = e => {
+  const onChange = e => { // changing text in the form seacrh bar
     setFormData(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
@@ -51,7 +35,7 @@ function Header () {
   }
   
 
-  const onSubmit = e => {
+  const onSubmit = e => { // submitting the search form 
     e.preventDefault()
 
     const userData = {
@@ -62,21 +46,16 @@ function Header () {
     // probbaly set a local storage variable and use it in dashboard
     
 
-    toast.error("Searched for " +search)
+    toast.error("Searched for " + search + "|"+ userData.search)
 
-    // dispatch( search function using userData)
+    // dispatch( search function using userData) // not sure if i need to use this or do it all in header.jsx
   }
-
 
   const onLogout = () => {
     // logout function
     dispatch(logout()) // needed case in reducer
     dispatch(reset())
     navigate('/')
-  }
-  
-  if (isLoading) {
-    return <Spinner />
   }
 
 
