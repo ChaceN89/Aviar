@@ -23,6 +23,6 @@ app.use('/api/collections', require('./routes/collectionRoutes')); // all collec
 app.use(errorHandler); // override default error handlers
 
 //listen() function is used to bind and listen the connections on the specified host and port.
-app.listen(port, ()=> console.log("server started on http://localhost:" + port .blue.bold));
+app.listen(port, ()=> console.log("server started on http://localhost:" + port));
 
 console.log("Server is Active".blue.bold);
