@@ -31,7 +31,7 @@ function Header () {
       </div>
       <ul>
         <li>
-          <Link to='/post'>
+          <Link to='/uploadPost'>
             <GrAdd /> Add Post
           </Link>
         </li>

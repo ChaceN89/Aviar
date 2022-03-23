@@ -9,27 +9,26 @@ const {         //import functions from postcontroller
     getCollectionNames,
     getCollectionPosts,
     getCollections,
-    updateCollectionname
+    updateCollectionName
 } = require('../controllers/collectionController');
 
 const {protect} = require('../middleware/authMiddleware'); // to make routes private (need JWT)
 
-/*
-    router.get('/', protect, ); // private/protected
-*/
-router.post('/post',protect, addCollectionAndPost) // add collection and post
-router.post('/',protect, addCollection) // add a new collection with no posts
-router.delete('/',protect, deleteCollection) // jacob
+//create colelctions and delte collection
+router.post('/post', protect, addCollectionAndPost) // add collection and post
+router.post('/', protect, addCollection) // add a new collection with no posts
+router.delete('/', protect, deleteCollection) // jacob
 
 //update colelction
-router.put('/collections',protect, updateCollectionname) // jacob
+router.put('/', protect, updateCollectionName) // jacob
     
+//add or remove posts from a collection
+router.post('/id', protect, addPostToCollection)
+router.delete('/id', protect, removePostFromCollection) 
 
-router.post('/id',protect, addPostToCollection)
-router.delete('/id',protect, removePostFromCollection) 
-
-router.get('/names',protect, getCollectionNames)
-router.get('/posts',protect, getCollectionPosts)
+//get collections or posts of a collection  -- these aren't used since getCollections handles enough 
+router.get('/names', protect, getCollectionNames)
+router.get('/posts', protect, getCollectionPosts)
 
 //get current user's collections
 router.get('/', protect, getCollections) // private/protected

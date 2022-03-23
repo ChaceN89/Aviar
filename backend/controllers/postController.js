@@ -32,12 +32,12 @@ const createPost = asyncHandler(async(req, res) => {
     })
    
     // add post to user array 
-    const user = await User.findOneAndUpdate({ _id: req.user.id },{
-         $push: { userPosts: post._id } , //add to array 
+    const user = await User.findOneAndUpdate(
+        { _id: req.user.id },
+        {$push: { userPosts: post._id } //add to array 
     },{
-        upsert: false, // don't create new obeject
-    },{
-        new: true
+        new: true,
+        upsert: false // don't create new obeject
     })
    
     console.log("New Post created "+ req.body.caption );
@@ -176,11 +176,36 @@ const getPostsByTerm = asyncHandler(async(req, res) => {
         res.status(400);
         throw new Error("no search Term");
     }
-
+            //jsut change caption to tag or theme to change fucntionality
     const post = await Post.find({ caption: { $regex: `${req.body.term}` } });
     
     res.status(200).json(post)
 })
+
+
+//@desc add like post
+//@route  get /api/posts/
+//@access public
+const addLikeToPost = asyncHandler(async(req, res) => {
+    if(!req.body.id){
+        res.status(400);
+        throw new Error("Need post ID");
+    }
+
+    const post = await Post.updateOne({ 
+            _id:req.body.id // post of this id
+        },{
+            $inc:{
+                numLikes: 1
+            }
+        })
+
+    res.status(200).json({
+        message: "added like to post",
+        post
+    })
+})
+
 
 
 module.exports = {
@@ -190,5 +215,6 @@ module.exports = {
     getAllPosts,
     addComment,
     getPostsByTerm,
-    removeComment
+    removeComment,
+    addLikeToPost
 }
