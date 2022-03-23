@@ -8,11 +8,48 @@ import { BsPersonPlusFill, BsCardList } from 'react-icons/bs' // icons
 import { useSelector, useDispatch } from 'react-redux' // for logout
 import { logout, reset } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom' // routing
+// import Spinner from '../components/Spinner'
 
-function Header () {
+import { useState } from 'react'
+// import { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
+
+
+function Header() {
+  const [formData, setFormData] = useState({
+    search: '', //defaul
+  })
+
+  const { search } = formData // the data from search bar
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const { user } = useSelector((state) => state.auth) // get user
+  const { user } = useSelector((state) => state.auth) // get before adding search
+
+
+  const onChange = e => { // changing text in the form seacrh bar
+    setFormData(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+
+  const onSubmit = e => { // submitting the search form 
+    e.preventDefault()
+
+    const userData = {
+      search
+    }
+
+
+    // probbaly set a local storage variable and use it in dashboard
+
+
+    toast.error("Searched for " + search + "|" + userData.search)
+
+    // dispatch( search function using userData) // not sure if i need to use this or do it all in header.jsx
+  }
 
   const onLogout = () => {
     // logout function
@@ -20,6 +57,7 @@ function Header () {
     dispatch(reset())
     navigate('/')
   }
+
 
   return (
     <header className='header'>
@@ -30,68 +68,62 @@ function Header () {
         {/* <img alt="Logo" src="aviarLogo.png"  />  */}
       </div>
       <ul>
-        <li>
-          <Link to='/uploadPost'>
-            <GrAdd /> Add Post
-          </Link>
-        </li>
-        <li>
-          {/* needs functionality to finsih search  */}
-          <FaSearch /> Search
-        </li>
-        <li>
-          <Link to='/myCollections'>
-            <BsCardList /> My Collections
-          </Link>
-        </li>
-        <li>
-          <Link to='/myAccount'>
-            <FaUser /> My Account
-          </Link>
-        </li>
 
-        <li>
-          <Link to='/home'>
-            <FaUser /> H
-          </Link>
-        </li>
+        {user ? (
+          <>
+            <li>
+              <Link to='/uploadPost'>
+                <GrAdd /> Add Post
+              </Link>
+            </li>
+            <li>
 
-        <li>
-          <button className='btn' onClick={onLogout}>
-            <FaSignOutAlt /> Logout
-          </button>
-        </li>
-        <li>
-          <Link to='/login'>
-            <FaSignInAlt /> Login
-          </Link>
-        </li>
-        <li>
-          <Link to='/register'>
-            <BsPersonPlusFill /> Register
-          </Link>
-        </li>
-      </ul>
-    </header>
-  ) // end return
-}
 
-export default Header
 
-/**
- 
-<header className='header'>
-      <div className='logo'>
-        <Link to='/'>Aviar</Link>
-      </div>
-      <ul>
-        {user ? (  // like if statements   user already signed in
-          <li>
-            <button className='btn' onClick={onLogout}>
-              <FaSignOutAlt /> Logout
-            </button>
-          </li>
-        ) : ( // else
+              <form onSubmit={onSubmit}>
+                <div >
+                  <button className='search_symbol' type='submit' >
+                    <FaSearch />
+                  </button >
+                  <input
+                    className='search'
+                    type='search'
+                    id='search'
+                    name='search'
+                    value={search}
+                    placeholder='Search...'
+                    onChange={onChange}
+                  />
+
+                </div>
+              </form>
+
+              <li>
+                <Link to='/home'>
+                  <FaUser /> H
+                </Link>
+              </li>
+
+            </li>
+            <li>
+              <Link to='/myCollections'>
+                <BsCardList /> My Collections
+              </Link>
+            </li>
+            <li>
+              <Link to='/myAccount'>
+                <FaUser /> My Account
+              </Link>
+            </li>
+            <li>
+              <button className='btn' onClick={onLogout}>
+                <FaSignOutAlt /> Logout
+              </button>
+            </li>
+
+
+          </>
+        ) : (
           <>
             <li>
               <Link to='/login'>
@@ -100,13 +132,17 @@ export default Header
             </li>
             <li>
               <Link to='/register'>
-                <FaUser /> Register
+                <BsPersonPlusFill /> Register
               </Link>
             </li>
           </>
         )}
+
+
+
       </ul>
     </header>
+  ) // end return
+}
 
-
- */
+export default Header
