@@ -60,7 +60,7 @@ function Header() {
 
 
   return (
-    <header className='header'>
+    <header className='header '>
       <div className='logo'>
         <Link to='/'>Aviar</Link>
 
@@ -71,17 +71,16 @@ function Header() {
 
         {user ? (
           <>
-            <li>
+            <li className='pulseUpload'>
               <Link to='/uploadPost'>
                 <GrAdd /> Add Post
               </Link>
+
             </li>
-            <li>
 
-
-
+            <li className='pulseSearch'>
               <form onSubmit={onSubmit}>
-                <div >
+                <div  >
                   <button className='search_symbol' type='submit' >
                     <FaSearch />
                   </button >
@@ -94,39 +93,34 @@ function Header() {
                     placeholder='Search...'
                     onChange={onChange}
                   />
-
                 </div>
               </form>
 
-              <li>
-                <Link to='/home'>
-                  <FaUser /> H
-                </Link>
-              </li>
-
             </li>
-            <li>
+
+            <li className='pulseCollection'>
               <Link to='/myCollections'>
                 <BsCardList /> My Collections
               </Link>
             </li>
-            <li>
+
+            <li className='pulseAccount'>
               <Link to='/myAccount'>
                 <FaUser /> My Account
               </Link>
             </li>
+
             <li>
               <button className='btn' onClick={onLogout}>
                 <FaSignOutAlt /> Logout
               </button>
             </li>
 
-
           </>
         ) : (
           <>
             <li>
-              <Link to='/login'>
+              <Link to='/login '>
                 <FaSignInAlt /> Login
               </Link>
             </li>
