@@ -8,12 +8,9 @@ import { BsPersonPlusFill, BsCardList } from 'react-icons/bs' // icons
 import { useSelector, useDispatch } from 'react-redux' // for logout
 import { logout, reset } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom' // routing
-// import Spinner from '../components/Spinner'
 
 import { useState } from 'react'
-// import { useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
-
 
 function Header() {
   const [formData, setFormData] = useState({
@@ -26,14 +23,12 @@ function Header() {
   const dispatch = useDispatch()
   const { user } = useSelector((state) => state.auth) // get before adding search
 
-
   const onChange = e => { // changing text in the form seacrh bar
     setFormData(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
   }
-
 
   const onSubmit = e => { // submitting the search form 
     e.preventDefault()
@@ -58,9 +53,8 @@ function Header() {
     navigate('/')
   }
 
-
   return (
-    <header className='header'>
+    <header className='header '>
       <div className='logo'>
         <Link to='/'>Aviar</Link>
 
@@ -71,17 +65,16 @@ function Header() {
 
         {user ? (
           <>
-            <li>
+            <li className='pulseUpload'>
               <Link to='/uploadPost'>
                 <GrAdd /> Add Post
               </Link>
+
             </li>
-            <li>
 
-
-
+            <li className='pulseSearch'>
               <form onSubmit={onSubmit}>
-                <div >
+                <div  >
                   <button className='search_symbol' type='submit' >
                     <FaSearch />
                   </button >
@@ -94,36 +87,38 @@ function Header() {
                     placeholder='Search...'
                     onChange={onChange}
                   />
-
                 </div>
               </form>
 
             </li>
-            <li>
+
+            <li className='pulseCollection'>
               <Link to='/myCollections'>
                 <BsCardList /> My Collections
               </Link>
             </li>
-            <li>
+
+            <li className='pulseAccount'>
               <Link to='/myAccount'>
                 <FaUser /> My Account
               </Link>
             </li>
+
             <li>
               <button className='btn' onClick={onLogout}>
                 <FaSignOutAlt /> Logout
               </button>
             </li>
 
-
           </>
-        ) : (
+        ) : ( // no user logged in
           <>
             <li>
-              <Link to='/login'>
+              <Link to='/login '>
                 <FaSignInAlt /> Login
               </Link>
             </li>
+
             <li>
               <Link to='/register'>
                 <BsPersonPlusFill /> Register
@@ -131,8 +126,6 @@ function Header() {
             </li>
           </>
         )}
-
-
 
       </ul>
     </header>
