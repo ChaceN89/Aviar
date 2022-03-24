@@ -25,13 +25,6 @@ function App() {
       <Router>
         <div className='container'>
           <Header />
-          <h1> My App - Aviar</h1>
-          <p>This section will not be in finsihed product</p>
-          <p>not all nav bar elements will be on the screen at same time</p>
-          <p>Logo can be added to header on far left of header</p>
-          <br />
-          <hr />
-          <br />
           {/* the first route will be selected by default 
                           localhost:3000/login is the login page etc */}
           <Routes>
