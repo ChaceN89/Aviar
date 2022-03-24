@@ -132,7 +132,7 @@
 <details><summary>Delete User</summary>
 
 #### Delete User - Private
-	DELETE http://localhost:8000/api/users/id
+	DELETE http://localhost:8000/api/users/:id
 	- Fields: none
 	- Authorization: JWT 
 	- Returns: Status 200 OK  // user deleted
@@ -266,7 +266,7 @@
 <details><summary>Get Post</summary>	
 
 #### getPost - public
-	GET http://localhost:8000/api/posts/id
+	GET http://localhost:8000/api/posts/:id
 	- Fields:  id
 	- Authorization: 
 	- Returns:{ Status 200 OK   // jsut gets a post
@@ -296,7 +296,7 @@
 <details><summary>Delete Post</summary>
 
 #### deletePost - Private
-	DELETE http://localhost:8000/api/posts/id
+	DELETE http://localhost:8000/api/posts/:id
 	- Fields:  id
 	- Authorization: jwt
 	- Returns:{
@@ -434,7 +434,7 @@
 <details><summary>Add comment to post</summary>
 
 #### addComment -private
-	POST http://localhost:8000/api/posts/comment/id
+	POST http://localhost:8000/api/posts/comment/:id
 	- Fields:  id, comment
 	- Authorization: JWT
 	- Returns:{  200 status ok  // doens't retrun latest object but updates database
@@ -715,7 +715,7 @@
 
 #### add Post To Collection  - private
 		-- using post id and collection id
-	POST http://localhost:8000/api/Collections/id
+	POST http://localhost:8000/api/Collections/:id
 	- Fields:  pid, cid 
 	- Authorization: JWT
 	- Returns:{  200 status ok // adds post pid to collection cid 
@@ -758,7 +758,7 @@
 
 #### remove Post From Collection - private
 			-- using post id and collection id
-	DELETE http://localhost:8000/api/Collections/id
+	DELETE http://localhost:8000/api/Collections/:id
 	- Fields:  pid, cid 
 	- Authorization: JWT
 	- Returns:{  200 status ok // removes post pid to collection cid 
