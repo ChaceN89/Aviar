@@ -16,48 +16,23 @@
 
 }
 
-
-
-
-
-
-/* .headerText{
-    background: -webkit-linear-gradient(to right, #000000 0%, #810808 100%);
-    background: -moz-linear-gradient(to right, #000000 0%, #810808 100%);
-    background: linear-gradient(to right, #000000 0%, #810808 100%);
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-     
-} */
-
-
-
-
+/* animation for header components */
 .pulseAccount{
     animation: HeaderAnim 1.5s linear 0s 1 normal none;
     animation-fill-mode: both;
-   
 }
-
 .pulseCollection{
     animation: HeaderAnim 1.5s linear 0.75s 1 normal none;
     animation-fill-mode: both;
-
 }
-
 .pulseSearch{
     animation: HeaderAnim 1.5s linear 1.5s 1 normal none;
     animation-fill-mode: both;
-
 }
-
 .pulseUpload{
     animation: HeaderAnim 1.5s linear 2.25s 1 normal none;
     animation-fill-mode: both;
-
 }
-
-
 @keyframes HeaderAnim {
     0% {
       animation-timing-function: ease-in;
