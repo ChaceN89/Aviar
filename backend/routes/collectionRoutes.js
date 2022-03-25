@@ -16,16 +16,16 @@ const {
 const { protect } = require('../middleware/authMiddleware') // to make routes private (need JWT)
 
 //create colelctions and delte collection
-router.post('/post', protect, addCollectionAndPost) // add collection and post
+router.post('/:id', protect, addCollectionAndPost) // add collection and post
 router.post('/', protect, addCollection) // add a new collection with no posts
-router.delete('/:id', protect, deleteCollection) // jacob
+router.delete('/:id', protect, deleteCollection)
 
-//update colelction
-router.put('/:id', protect, updateCollectionName) // jacob
+//update collection
+router.put('/:id', protect, updateCollectionName)
 
 //add or remove posts from a collection
-router.post('/:id', protect, addPostToCollection)
-router.delete('/:id', protect, removePostFromCollection)
+router.post('/:cid/:pid', protect, addPostToCollection)
+router.delete('/:cid/:pid', protect, removePostFromCollection)
 
 //get collections or posts of a collection  -- these aren't used since getCollections handles enough
 router.get('/names', protect, getCollectionNames)

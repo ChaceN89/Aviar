@@ -506,10 +506,10 @@
 <details><summary>Add Collection with initial post</summary>
 
 #### Add Collection and Post - private
-	POST http://localhost:8000/api/Collections/post
-	- Fields:  name, id
+	POST http://localhost:8000/api/collections/:id
+	- Fields:  name
 	- Authorization: JWT
-	- Returns:{   200 status ok    // adds post id to 
+	- Returns:{   200 status ok    // adds post id
 				"message": "collection added",
 				"postid": "623803231d1f4a44c1429e47",
 				"user": {
@@ -547,7 +547,7 @@
 <details><summary>Add empty Collection </summary>
 
 #### Add Collection -private
-	POST http://localhost:8000/api/Collections/post
+	POST http://localhost:8000/api/collections/
 	- Fields:  name, id
 	- Authorization: JWT
 	- Returns:{   200 status ok    
@@ -585,7 +585,7 @@
 <details><summary>get Collections</summary>
 
 #### get collections - private]
-	GET http://localhost:8000/api/Collections
+	GET http://localhost:8000/api/collections
 	- Fields: none
 	- Authorization: JWT
 	- Returns:[  200 status ok   -- returns all collections
@@ -616,7 +616,7 @@
 <details><summary>Update Collection name</summary>
 
 #### update Collection name using the collection id - private
-	PUT http://localhost:8000/api/Collections
+	PUT http://localhost:8000/api/collections/:id
 	- Fields:  id, name
 	- Authorization: JWT
 	- Returns:{  200 status ok  // cahnges name in database of specific collection
@@ -663,7 +663,7 @@
 <details><summary>Delete Collection</summary>
 
 #### Delete Collection -private
-	DELETE http://localhost:8000/api/Collections
+	DELETE http://localhost:8000/api/collections/:id
 	- Fields:  id
 	- Authorization: JWT
 	- Returns:{  200 status ok
@@ -715,7 +715,7 @@
 
 #### add Post To Collection  - private
 		-- using post id and collection id
-	POST http://localhost:8000/api/Collections/:id
+	POST http://localhost:8000/api/collections/:cid/:pid
 	- Fields:  pid, cid 
 	- Authorization: JWT
 	- Returns:{  200 status ok // adds post pid to collection cid 
@@ -758,7 +758,7 @@
 
 #### remove Post From Collection - private
 			-- using post id and collection id
-	DELETE http://localhost:8000/api/Collections/:id
+	DELETE http://localhost:8000/api/Collections/:cid/:pid
 	- Fields:  pid, cid 
 	- Authorization: JWT
 	- Returns:{  200 status ok // removes post pid to collection cid 

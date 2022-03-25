@@ -1,66 +1,58 @@
 const asyncHandler = require('express-async-handler')
 const Post = require('../models/postModel') // models
 const User = require('../models/userModel')
+const Collection = require('../models/collectionModel')
 const valid = require('../middleware/validateID')
 
-//@desc add collection and post
+//@desc add collection and post (:id is id of post)
 //@route  POST collection /api/collections/:id
 //@access private
 const addCollectionAndPost = asyncHandler(async (req, res) => {
-  if (!req.body.name || !req.body.id) {
+  if (!req.body || !req.params.id) {
     res.status(400)
     throw new Error('Need to add name or id')
   }
-  if (!valid.isValidObjectId(req.body.id)) {
+  if (!valid.isValidObjectId(req.params.id)) {
     res.status(400)
     throw new Error('Please enter valid Post id')
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id },
-    {
-      $push: {
-        savedPosts: {
-          collectionName: req.body.name,
-          PostList: req.body.id
-        }
-      } //add to array of collections
-    },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
+  const collection = await Collection.create({
+    collectionName: body,
+    PostList: [req.params.id]
+  })
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { $push: { savedPosts: collection._id } },
+    done
   )
 
   res.status(200).json({
     message: `collection added`,
-    postid: req.body.id,
+    postid: req.params.id,
     user
   })
 }) //end
 
-//@desc add collection and post
+//@desc add collection
 //@route  POST collection /api/collections/
 //@access private
 const addCollection = asyncHandler(async (req, res) => {
-  if (!req.body.name) {
+  if (!req.body) {
     res.status(400)
     throw new Error('Need to add name of collection')
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id },
-    {
-      $push: {
-        savedPosts: {
-          collectionName: req.body.name
-        }
-      } //add to array of collections
-    },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
+  const collection = await Collection.create({
+    collectionName: body,
+    PostList: []
+  })
+
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    { $push: { savedPosts: collection._id } },
+    done
   )
 
   res.status(200).json({
@@ -81,45 +73,31 @@ const deleteCollection = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please enter valid collection id')
   }
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id },
-    { $pull: { savedPosts: { _id: req.params.id } } },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
-  )
+  const user = await Collection.findByIdAndDelete(req.params.id)
 
   res.status(200).json(user.savedPosts)
 }) //end
 
 //@desc add Post to Collection
-//@route  POST collection /api/collections/:id
+//@route  POST collection /api/collections/:cid/:pid
 //@access private
 const addPostToCollection = asyncHandler(async (req, res) => {
-  if (!req.body || !req.params.id) {
+  if (!req.params.pid || !req.params.cid) {
     res.status(400)
     throw new Error('Need to add an id')
   }
   if (
-    !valid.isValidObjectId(req.body) ||
-    !valid.isValidObjectId(req.params.id)
+    !valid.isValidObjectId(req.params.pid) ||
+    !valid.isValidObjectId(req.params.cid)
   ) {
     res.status(400)
     throw new Error('Please enter valid id')
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id, 'savedPosts._id': req.params.id },
-    {
-      $push: {
-        'savedPosts.$.PostList': req.body
-      }
-    },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
+  const collection = await Collection.findByIdAndUpdate(
+    req.params.cid,
+    { $push: { PostList: req.params.pid } },
+    done
   )
 
   res.status(200).json({
@@ -129,7 +107,7 @@ const addPostToCollection = asyncHandler(async (req, res) => {
 }) //end
 
 //@desc Remove Post to Collection
-//@route  DELETE collection /api/collections/:id
+//@route  DELETE collection /api/collections/:cid/:pid
 //@access private
 const removePostFromCollection = asyncHandler(async (req, res) => {
   if (!req.body || !req.params.id) {
@@ -144,21 +122,14 @@ const removePostFromCollection = asyncHandler(async (req, res) => {
     throw new Error('Please enter valid id')
   }
 
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id, 'savedPosts._id': req.params.id },
-    {
-      $pull: {
-        'savedPosts.$.PostList': req.body
-      }
-    },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
+  const collection = await Collection.findByIdAndUpdate(
+    req.params.cid,
+    { $pull: { PostList: req.params.pid } },
+    done
   )
 
   res.status(200).json({
-    message: `post removed to collection`,
+    message: `post removed from collection`,
     user
   })
 }) //end
@@ -198,6 +169,16 @@ const getCollectionPosts = asyncHandler(async (req, res) => {
  */
 const getCollections = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not pupulate saved posts')
+  }
   res.status(200).json(user.savedPosts)
 }) //end getCollections
 
@@ -213,13 +194,10 @@ const updateCollectionName = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please enter valid collection id')
   }
-  const user = await User.findOneAndUpdate(
-    { _id: req.user.id, 'savedPosts._id': req.params.id },
-    { $set: { 'savedPosts.$.collectionName': req.body } },
-    {
-      new: true,
-      upsert: false // don't create new obeject
-    }
+  const user = await Collection.findByIdAndUpdate(
+    req.params.id,
+    { collectionName: req.body },
+    { new: true }
   )
 
   res.status(200).json(user.savedPosts)
