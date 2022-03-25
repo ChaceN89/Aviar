@@ -16,7 +16,8 @@ const initialState = {
 //This doesn't yet send in the new username, need to figure out how to do that, same with function below
 export const newName = createAsyncThunk('myAccount/something', async (username, thunkAPI) => {
   try {
-    return await changeService.newName(username)
+    const token = thunkAPI.getState().auth.user.token
+    return await changeService.newPass(username, token)
   } catch (error) {
     const message =
       (error.response && error.response.data && error.response.data.message) ||
@@ -29,7 +30,8 @@ export const newName = createAsyncThunk('myAccount/something', async (username, 
 // Change password
 export const newPass = createAsyncThunk('myAccount/something', async (password, thunkAPI) => {
     try {
-      return await changeService.newPass(password)
+      const token = thunkAPI.getState().auth.user.token
+      return await changeService.newPass(password, token)
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.message) ||
@@ -42,7 +44,8 @@ export const newPass = createAsyncThunk('myAccount/something', async (password, 
 // Delete user
 export const deleteAccount = createAsyncThunk('myAccount/something', async (thunkAPI) => {
     try {
-      return await changeService.delUser()
+      const token = thunkAPI.getState().auth.user.token
+      return await changeService.delUser(token)
     } catch (error) {
       const message =
         (error.response && error.response.data && error.response.data.message) ||
