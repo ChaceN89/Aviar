@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa'
 import { uploadPost, reset } from '../features/uploadPosts/uploadPostsSlice'
 import Spinner from '../components/Spinner'
 import { GrAdd } from 'react-icons/gr' // icons
@@ -15,29 +14,49 @@ function UploadPost() {
     medium: ''
   })
 
-  const { imgPath, caption, theme,medium } = formData
+  const {imgPath,  caption, theme, medium } = formData
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user } = useSelector(state => state.auth)
+  const { user } = useSelector(
+    state => state.auth
+  )
+  const { post, isLoading, isError, isSuccess, message } = useSelector(
+    state => state.uploadPosts
+  )
 
   useEffect(() => {
+    if (isError) {   // error in handling things if not all fields are filled
+      toast.error(message)
+    }
 
-    if (!user) {
+    if (!user) {   // shouldn';t need this part
       navigate('/login')
     }
 
-    return () => {
-      dispatch(reset())
+    if (isSuccess ) {  // everything worked
+      toast('Post Uploaded')
+      navigate('/') // go to dashboard
     }
-  }, [user, navigate,dispatch])
 
-  const onChange = e => {
-    setFormData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }))
+    return () => {
+      dispatch(reset()) // reset the variables
+    }
+  }, [user, post, isLoading, isError, isSuccess, message, dispatch, navigate])
+
+
+  const onChange = (e) => {  // for changing the form data as you type 
+    setFormData({
+      ...formData,[e.target.name]: e.target.value
+    })
+  }
+
+  const handlePhoto = (e) =>{ // for handling the change in file
+    setFormData({
+      ...formData, imgPath: e.target.files[0] // sets photo to fornt data
+    })
+ 
   }
 
   const onSubmit = e => {
@@ -50,11 +69,13 @@ function UploadPost() {
       medium
       }
 
-      dispatch(uploadPost(postData))
-    
+      dispatch(uploadPost(postData)) // send data to upload post
   }
 
 
+  if (isLoading) { // for loading
+    return <Spinner />
+  }
 
   return (
     <>
@@ -68,20 +89,19 @@ function UploadPost() {
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <input
-              type='imgPath'
-              className='form-control'
+            <input className='search search_symbol'
+              type="file" 
+              accept=".png, .jpeg, .jpg"
               id='imgPath'
               name='imgPath'
-              value={imgPath}
-              placeholder='Enter your imgPath'
-              onChange={onChange}
+              onChange={handlePhoto}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='caption'
-              className='form-control'
+              className='form-control search'
               id='caption'
               name='caption'
               value={caption}
@@ -89,10 +109,11 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='theme'
-              className='form-control'
+              className='form-control search'
               id='theme'
               name='theme'
               value={theme}
@@ -100,10 +121,11 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='medium'
-              className='form-control'
+              className='form-control search'
               id='medium'
               name='medium'
               value={medium}
@@ -111,11 +133,13 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+
           <div className='form-group'>
             <button type='submit' className='btn btn-block'>
               Submit
             </button>
           </div>
+
         </form>
       </section>
     </>
