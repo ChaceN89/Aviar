@@ -14,7 +14,6 @@ import { FaPen } from 'react-icons/fa'
 import {
   deleteCollection,
   getCollections,
-  getPostsByCollection,
   reset,
   updateCollectionName
 } from '../features/collections/collectionSlice'
@@ -48,8 +47,6 @@ const BodyTpl = props => {
       </div>
     )
   }
-
-  return <div>testing</div>
 }
 
 const modalStyle = {
@@ -90,15 +87,6 @@ function MyCollections () {
     }
 
     dispatch(getCollections())
-
-    // const retrieveCollections = async () => {
-    //   await dispatch(getCollections())
-    // }
-    // retrieveCollections()
-
-    // retrieveCollections().then(() => {
-    //   dispatch(getPostsByCollection())
-    // })
 
     return () => {
       dispatch(reset())
@@ -141,7 +129,12 @@ function MyCollections () {
   const handleRenameSubmit = e => {
     e.preventDefault()
 
-    dispatch(updateCollectionName(selectedCol._id, colName))
+    dispatch(
+      updateCollectionName({
+        id: selectedCol._id,
+        name: colName
+      })
+    )
 
     closeModal()
   }
@@ -176,6 +169,8 @@ function MyCollections () {
                     horizontalAlignment='centerSpaceBetween'
                     verticalAlignment='center'
                   >
+                    <div></div>
+                    <div>{collection.collectionName}</div>
                     <div onClick={e => e.stopPropagation()}>
                       <button
                         className='btn'
@@ -281,12 +276,9 @@ function MyCollections () {
                         </Modal>
                       </div>
                     </div>
-                    <div>{collection.collectionName}</div>
-                    <div></div>
                   </AccordionHeader>
                   <AccordionPanel>
                     <BodyTpl posts={collection.PostList} />
-                    {/* <BodyTpl /> */}
                   </AccordionPanel>
                 </AccordionNode>
               )

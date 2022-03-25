@@ -3,7 +3,6 @@ import collectionService from './collectionService'
 
 const initialState = {
   collections: [],
-  // postsByCollection: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -29,30 +28,12 @@ export const getCollections = createAsyncThunk(
   }
 )
 
-// // Get posts by collections
-// export const getPostsByCollection = createAsyncThunk(
-//   'collections/getPosts',
-//   async (_, thunkAPI) => {
-//     try {
-//       const collections = thunkAPI.getState().collections.collections
-//       return await collectionService.getPostsByCollection(collections)
-//     } catch (error) {
-//       const message =
-//         (error.response &&
-//           error.response.data &&
-//           error.response.data.message) ||
-//         error.message ||
-//         error.toString()
-//       return thunkAPI.rejectWithValue(message)
-//     }
-//   }
-// )
-
 // Update collection name
 export const updateCollectionName = createAsyncThunk(
   'collections/updateCollection',
-  async (id, name, thunkAPI) => {
+  async (data, thunkAPI) => {
     try {
+      const { id, name } = data
       const token = thunkAPI.getState().auth.user.token
       return await collectionService.updateCollectionName(id, name, token)
     } catch (error) {
@@ -107,19 +88,6 @@ export const collectionSlice = createSlice({
         state.isError = true
         state.message = action.payload
       })
-      // .addCase(getPostsByCollection.pending, state => {
-      //   state.isLoading = true
-      // })
-      // .addCase(getPostsByCollection.fulfilled, (state, action) => {
-      //   state.isLoading = false
-      //   state.isSuccess = true
-      //   state.postsByCollection = action.payload
-      // })
-      // .addCase(getPostsByCollection.rejected, (state, action) => {
-      //   state.isLoading = false
-      //   state.isError = true
-      //   state.message = action.payload
-      // })
       .addCase(updateCollectionName.pending, state => {
         state.isLoading = true
       })

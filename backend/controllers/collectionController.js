@@ -73,7 +73,23 @@ const deleteCollection = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please enter valid collection id')
   }
-  const user = await Collection.findByIdAndDelete(req.params.id)
+  const collection = await Collection.findByIdAndDelete(req.params.id)
+
+  await User.findByIdAndUpdate(req.user.id, {
+    $pull: { savedPosts: req.params.id }
+  })
+
+  const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not pupulate saved posts')
+  }
 
   res.status(200).json(user.savedPosts)
 }) //end
@@ -186,7 +202,7 @@ const getCollections = asyncHandler(async (req, res) => {
 //@route  PUT collection /api/collections/:id
 //@access private
 const updateCollectionName = asyncHandler(async (req, res) => {
-  if (!req.body.name || !req.params.id) {
+  if (!req.body.collectionName || !req.params.id) {
     res.status(400)
     throw new Error('Need new collection name')
   }
@@ -194,12 +210,23 @@ const updateCollectionName = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Please enter valid collection id')
   }
-  const user = await Collection.findByIdAndUpdate(
+  const collection = await Collection.findByIdAndUpdate(
     req.params.id,
-    { collectionName: req.body.name },
+    { collectionName: req.body.collectionName },
     { new: true }
   )
 
+  const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not pupulate saved posts')
+  }
   res.status(200).json(user.savedPosts)
 }) //end getCollections
 
