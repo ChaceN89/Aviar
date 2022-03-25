@@ -2,9 +2,14 @@ import axios from 'axios'
 
 const API_URL = '/api/users/' //Ask what this needs to change to
 
-// Login user
-const newName = async userData => {
-  const response = await axios.post(API_URL + 'username', userData)
+// Change username
+const newName = async (username, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+  const response = await axios.put(API_URL + 'username', config, username)
 
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data))
@@ -13,9 +18,9 @@ const newName = async userData => {
   return response.data
 }
 
-// Login user
-const newPass = async userData => {
-    const response = await axios.post(API_URL + 'password', userData)
+// Change password
+const newPass = async (password, token) => {
+    const response = await axios.put(API_URL + 'password', token, password)
   
     if (response.data) {
       localStorage.setItem('user', JSON.stringify(response.data))
@@ -25,14 +30,19 @@ const newPass = async userData => {
   }
 
 // Delete user
-const delUser = () => {
-    const response = axios.post(API_URL + 'id')
-
-    if (response.data) {
-        localStorage.setItem('user', JSON.stringify(response.data))
+const delUser = async token => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
     }
+  }
+  const response = axios.delete(API_URL + 'id', config)
+
+  if (response.data) {
+      localStorage.setItem('user', JSON.stringify(response.data))
+  }
   
-    return response.data
+  return response.data
 }
 
 const changeService = {
