@@ -15,6 +15,7 @@ Summary for backend - all in root folder
     npm install jsonwebtoken
     npm install bcryptjs 
     npm install express-async-handler
+    npm i express-fileupload
 
 ===================================================================
 Summary for frontend
