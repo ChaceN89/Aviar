@@ -72,7 +72,7 @@ const MyAccount = (props) => {
   }
 
   const handleDelete = () => {
-    dispatch(deleteAccount(nameData.name))
+    dispatch(deleteAccount())
   }
 
   const changeName = e => {
@@ -93,11 +93,11 @@ const MyAccount = (props) => {
   const [modalIsOpen, setModalState] = useState(false)
 
   function openModal () {
-    setModalState({ modalIsOpen: true })
+    setModalState(true)
   }
 
   function closeModal () {
-    setModalState({ modalIsOpen: false })
+    setModalState(false)
   }
 
   if (isLoading) {
@@ -169,7 +169,7 @@ const MyAccount = (props) => {
           >
             <div className='modal'>
               <p>Are you sure? This cannot be undone</p>
-              <button onClick={closeModal} className='close'>
+              <button onClick={() => closeModal()} className='close'>
                 X
               </button>
               <hr style={{ marginBottom: '10px' }} />
@@ -178,7 +178,7 @@ const MyAccount = (props) => {
                 name="finalDelete"
                 className={` ${styles['button4']} ${projectStyles['button']} `}
                 type="button"
-                onClick={handleDelete}
+                onClick={() => handleDelete()}
               >
                 DELETE
               </button>
