@@ -18,10 +18,10 @@ const { protect } = require('../middleware/authMiddleware') // to make routes pr
 //create colelctions and delte collection
 router.post('/post', protect, addCollectionAndPost) // add collection and post
 router.post('/', protect, addCollection) // add a new collection with no posts
-router.delete('/', protect, deleteCollection) // jacob
+router.delete('/:id', protect, deleteCollection) // jacob
 
 //update colelction
-router.put('/', protect, updateCollectionName) // jacob
+router.put('/:id', protect, updateCollectionName) // jacob
 
 //add or remove posts from a collection
 router.post('/:id', protect, addPostToCollection)
