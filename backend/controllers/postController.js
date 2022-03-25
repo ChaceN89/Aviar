@@ -18,8 +18,9 @@ const createPost = asyncHandler(async (req, res) => {
   }
 
   const file = req.files.file;
-  const newFileName = Date.now() + file.name
+  const newFileName = Date.now() + file.name // new unique name
 
+  // set file to a directory with a specific name in that directory
   file.mv(`${__dirname}/../../frontend/public/uploads/${newFileName}`, err => {
     if (err) {
       console.error(err);
@@ -36,6 +37,7 @@ const createPost = asyncHandler(async (req, res) => {
 
     caption: req.body.caption,
     //no comments to start
+    //no ratings 
     numLikes: 0,
     theme: req.body.theme,
     medium: req.body.medium

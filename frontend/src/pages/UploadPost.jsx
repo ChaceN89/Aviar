@@ -142,14 +142,15 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
-
+          
+          {/* Submit button */}
           <div className='form-group'>
             <button type='submit' className='btn btn-block'>
               Submit
             </button>
           </div>
 
-        {/* disaply preview of upload */}
+          {/* display preview of upload */}
           <label className='custom-file-label' htmlFor='customFile'>
             <h2>{filename}</h2>
           </label>    
