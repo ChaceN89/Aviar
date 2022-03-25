@@ -15,21 +15,21 @@ const getCollections = async token => {
   return response.data
 }
 
-// Get posts by collections
-const getPostsByCollection = async collections => {
-  let response = []
+// // Get posts by collections
+// const getPostsByCollection = async collections => {
+//   let response = []
 
-  for (const collection of collections) {
-    let postArr = []
-    for (const post of collection.PostList) {
-      const postResponse = await axios.get('/api/posts/' + post)
-      postArr.push(postResponse.data)
-    }
-    response.push(postArr)
-  }
+//   for (const collection of collections) {
+//     let postArr = []
+//     for (const post of collection.PostList) {
+//       const postResponse = await axios.get('/api/posts/' + post)
+//       postArr.push(postResponse.data)
+//     }
+//     response.push(postArr)
+//   }
 
-  return response
-}
+//   return response
+// }
 
 const updateCollectionName = async (colId, name, token) => {
   const config = {
@@ -57,7 +57,7 @@ const deleteCollection = async (colId, token) => {
 
 const collectionService = {
   getCollections,
-  getPostsByCollection,
+  // getPostsByCollection,
   updateCollectionName,
   deleteCollection
 }

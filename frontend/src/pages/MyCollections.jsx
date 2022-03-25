@@ -48,6 +48,8 @@ const BodyTpl = props => {
       </div>
     )
   }
+
+  return <div>testing</div>
 }
 
 const modalStyle = {
@@ -72,7 +74,7 @@ function MyCollections () {
   const { user } = useSelector(state => state.auth)
   const {
     collections,
-    postsByCollection,
+    // postsByCollection,
     isLoading,
     isError,
     message
@@ -87,14 +89,16 @@ function MyCollections () {
       navigate('/login')
     }
 
-    const retrieveCollections = async () => {
-      await dispatch(getCollections())
-    }
-    retrieveCollections()
+    dispatch(getCollections())
 
-    retrieveCollections().then(() => {
-      dispatch(getPostsByCollection())
-    })
+    // const retrieveCollections = async () => {
+    //   await dispatch(getCollections())
+    // }
+    // retrieveCollections()
+
+    // retrieveCollections().then(() => {
+    //   dispatch(getPostsByCollection())
+    // })
 
     return () => {
       dispatch(reset())
@@ -281,7 +285,8 @@ function MyCollections () {
                     <div></div>
                   </AccordionHeader>
                   <AccordionPanel>
-                    <BodyTpl posts={postsByCollection[i]} />
+                    <BodyTpl posts={collection.PostList} />
+                    {/* <BodyTpl /> */}
                   </AccordionPanel>
                 </AccordionNode>
               )
