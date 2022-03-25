@@ -7,17 +7,32 @@ const valid = require('../middleware/validateID')
 //@route  POST /api/posts
 //@access private
 const createPost = asyncHandler(async (req, res) => {
-  if (!req.user.id || !req.body.imgPath || !req.body.caption) {
+  if (!req.user.id || !req.body.caption  || !req.body.theme || !req.body.medium  ) {
     res.status(400)
     throw new Error('Please add Post Information')
   }
+  
+  if (req.files === null) { // check that there is a file attached
+    res.status(400)
+    throw new Error('No File Selected') // this doens't work but i can't see a reason my not
+  }
+
+  const file = req.files.file;
+  const newFileName = Date.now() + file.name
+
+  file.mv(`${__dirname}/../../frontend/public/uploads/${newFileName}`, err => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send(err); // server error
+    }
+  });
+  // file is in directory 
 
   // create post
   const post = await Post.create({
     user: req.user.id, // set user as well
 
-    imgPath: req.body.imgPath, // might need to change to
-    // image handling
+    imgPath: newFileName, // name of new image
 
     caption: req.body.caption,
     //no comments to start
