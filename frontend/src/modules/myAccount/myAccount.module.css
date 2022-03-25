@@ -1,0 +1,77 @@
+.container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-size: cover;
+  justify-content: center;
+  position: relative;
+}
+.button {
+  top: 50px;
+  left: 710px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.button1 {
+  top: 250px;
+  left: 710px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.text {
+  top: 0px;
+  left: 250px;
+  width: 300px;
+  height: 35px;
+  position: absolute;
+  font-size: 20px;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  background-color: var(--dl-color-gray-white);
+  background-color: #ffffff;
+}
+.text1 {
+  top: 150px;
+  left: 250px;
+  width: 300px;
+  height: 35px;
+  position: absolute;
+  font-size: 20px;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  background-color: var(--dl-color-gray-white);
+  background-color: #ffffff;
+}
+.textinput {
+  top: 0px;
+  left: 600px;
+  width: 280px;
+  z-index: 100;
+  position: absolute;
+  border-radius: 0px;
+  background-color: #ffffff;
+}
+.textinput1 {
+  top: 150px;
+  left: 600px;
+  width: 280px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.textinput2 {
+  top: 200px;
+  left: 600px;
+  width: 280px;
+  position: absolute;
+  background-color: #ffffff;
+}
+.button3 {
+  top: 250px;
+  left: 175px;
+  color: #ffffff;
+  position: absolute;
+  background-color: #ff0000;
+}
