@@ -8,7 +8,7 @@ const valid = require('../middleware/validateID')
 //@route  POST collection /api/collections/:id
 //@access private
 const addCollectionAndPost = asyncHandler(async (req, res) => {
-  if (!req.body || !req.params.id) {
+  if (!req.body.name || !req.params.id) {
     res.status(400)
     throw new Error('Need to add name or id')
   }
@@ -18,7 +18,7 @@ const addCollectionAndPost = asyncHandler(async (req, res) => {
   }
 
   const collection = await Collection.create({
-    collectionName: body,
+    collectionName: body.name,
     PostList: [req.params.id]
   })
 
@@ -39,13 +39,13 @@ const addCollectionAndPost = asyncHandler(async (req, res) => {
 //@route  POST collection /api/collections/
 //@access private
 const addCollection = asyncHandler(async (req, res) => {
-  if (!req.body) {
+  if (!req.body.name) {
     res.status(400)
     throw new Error('Need to add name of collection')
   }
 
   const collection = await Collection.create({
-    collectionName: body,
+    collectionName: body.name,
     PostList: []
   })
 
@@ -110,13 +110,13 @@ const addPostToCollection = asyncHandler(async (req, res) => {
 //@route  DELETE collection /api/collections/:cid/:pid
 //@access private
 const removePostFromCollection = asyncHandler(async (req, res) => {
-  if (!req.body || !req.params.id) {
+  if (!req.params.cid || !req.params.pid) {
     res.status(400)
     throw new Error('Need to add an id')
   }
   if (
-    !valid.isValidObjectId(req.body) ||
-    !valid.isValidObjectId(req.params.id)
+    !valid.isValidObjectId(req.params.cid) ||
+    !valid.isValidObjectId(req.params.pid)
   ) {
     res.status(400)
     throw new Error('Please enter valid id')
@@ -186,7 +186,7 @@ const getCollections = asyncHandler(async (req, res) => {
 //@route  PUT collection /api/collections/:id
 //@access private
 const updateCollectionName = asyncHandler(async (req, res) => {
-  if (!req.body || !req.params.id) {
+  if (!req.body.name || !req.params.id) {
     res.status(400)
     throw new Error('Need new collection name')
   }
@@ -196,7 +196,7 @@ const updateCollectionName = asyncHandler(async (req, res) => {
   }
   const user = await Collection.findByIdAndUpdate(
     req.params.id,
-    { collectionName: req.body },
+    { collectionName: req.body.name },
     { new: true }
   )
 
