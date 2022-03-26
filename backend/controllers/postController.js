@@ -20,6 +20,14 @@ const createPost = asyncHandler(async (req, res) => {
   const file = req.files.file;
   const newFileName = Date.now() + file.name // new unique name
 
+  const acceptedImageTypes = ['image/gif', 'image/jpeg', 
+  'image/png', 'image/jpg','image/x-icon'];
+
+  if(!acceptedImageTypes.includes(file.mimetype)){ // handle file of the wrong format
+    res.status(400)
+    throw new Error('Incorrect File Format') // this doens't work but i can't see a reason my not
+  }
+
   // set file to a directory with a specific name in that directory
   file.mv(`${__dirname}/../../frontend/public/uploads/${newFileName}`, err => {
     if (err) {
@@ -27,7 +35,7 @@ const createPost = asyncHandler(async (req, res) => {
       return res.status(500).send(err); // server error
     }
   });
-  // file is in directory 
+  // file is in directory now
 
   // create post
   const post = await Post.create({
