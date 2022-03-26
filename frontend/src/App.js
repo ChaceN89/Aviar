@@ -14,11 +14,10 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import MyAccount from './pages/MyAccount'
 import MyCollections from './pages/MyCollections'
-import Post from './pages/PostPage'
+import Post from './pages/PostPage'  // don't ned this here post is a component used by other pages
 import Register from './pages/Register'
 import UploadPost from './pages/UploadPost'
 import PostPage from './pages/PostPage'
-
 
 function App() {
   return (
@@ -33,10 +32,9 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/myAccount' element={<MyAccount />} />
             <Route path='/myCollections' element={<MyCollections />} />
-            {/* <Route path='/post' element={<Post />} /> */}
+            {/* <Route path='/post' element={<Post />} /> */}{/* don't need this route since post isn't a page but a component */}
             <Route path='/register' element={<Register />} />
             <Route path='/uploadPost' element={<UploadPost />} />
-
             <Route path='/post/:id' element={<PostPage />} />
 
           </Routes>
