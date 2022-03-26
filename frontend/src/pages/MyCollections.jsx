@@ -26,7 +26,7 @@ const BodyTpl = props => {
         <li key={post.imgPath} className='galleryLi'>
           <Link to={'/post/' + post._id}>
             <img
-              src={process.env.PUBLIC_URL + '/' + post.imgPath}
+              src={process.env.PUBLIC_URL + '/uploads/' + post.imgPath}
               alt={post.imgPath}
             ></img>
           </Link>
