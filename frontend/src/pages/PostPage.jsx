@@ -59,6 +59,7 @@ function PostPage() {
   // [ user, isSuccess, isError,  navigate, dispatch])
 
 
+  
   // if (isLoading) { // this might cause an error if post doens't exisit not sure why but its hjsut for show so its not nessaesary 
   //   return <Spinner />
   // }
@@ -71,32 +72,21 @@ function PostPage() {
 
   return (
     <>
-    <div>PostPage</div>
     
-    {isSuccess ?( // post has been found
+    {post ?( // post has been found
       <>
+      {/* display the post */}
+        <Post key={id} postId={post._id} user={user} 
+          caption={post.caption} medium={post.medium} 
+          theme={post.theme} imageURL={post.imgPath} comments={post.comments} 
+        />
+        <br /><br /><br /><br />
         
-        {/* // not sure is this is going to work */}
-  <Post key={post.id} postId={post.id} user={user.id} 
-  creator={user.username} statement={post.caption} imageURL={post.imgPath} />
-
-        {/* general inforamtion for post to use after formating css and stuff */}
-
-        <h2>Got Post</h2>
-        <h5>Just need to format the post</h5>
-        <p>the Post component has a lot of fields we aren't using so im not sure how its going to work</p>
-        <h5>Signed in {user.username}- {user._id}</h5>
-        <h4>Post id - {post._id} // imgPath -{post.imgPath}</h4>
-        <h5>Caption: {post.caption}</h5>
-        <h5>Theme: {post.theme}</h5>
-        <h5>Medium: {post.medium}</h5>
-        <img src={process.env.PUBLIC_URL + '/uploads/' +post.imgPath} alt={post.imgPath} ></img>
-       
       </>
     ):(
       <>
       {/* can't find the post so display this */}
-      <h1>Post <small><small> {id} </small></small>  Not Found!!</h1>
+      <h1>Post</h1> <small> {id} </small>  <h1>Not Found!</h1>
       <h3>Looks like your trying to access a resource that no longer exists</h3>
       </>
     )}

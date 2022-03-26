@@ -25,25 +25,41 @@ function Dashboard() {
   const posts = [
     {
       id: 123,
-      user: "tester",
-      creator: "betaCreator",
-      statement: "Glorious Sunset",
-      imageURL: 'https://www.artranked.com/images/4b/4b18840d83f9a59964defbf1a9abe764.jpeg'
+      user: "cahce",
+      imgPath: '1648279225962green_beaach.jpg',
+      caption: 'Glorious Beach',
+      theme: 'Tropics',
+      medium: 'Photo',
+      comments:[
+        "great photo",
+        'I love that'  
+      ],
     },
     {
-      id: 124,
-      user: "tester",
-      creator: "alphaCreator",
-      statement: "Glorious Colours",
-      imageURL: 'https://cdn.shopify.com/s/files/1/0950/0728/products/glorious-colors-6-michaels-lyric_1024x1024.jpg?v=1575645351'
+      id: 1234,
+      user: "chacen",
+      imgPath: '1648274857555chgery_blosum_2.png',
+      caption: 'Cherry Blossums',
+      theme: 'Japan',
+      medium: 'Art',
+      comments:[
+        "I travelled to Japan last summer"  
+      ],
+
     },
     {
-      id: 125,
-      user: "tester",
-      creator: "omegaCreator",
-      statement: "Glorious Sky",
-      imageURL: 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/2/glorious-sky-lydia-falletti.jpg'
-    }
+      id: 12345,
+      user: "chacen",
+      imgPath: '1648274176881dragon.png',
+      caption: 'Dragon',
+      theme: 'Japan',
+      medium: 'Art',
+      comments:[
+         
+      ],
+
+    },
+    
   ];
 
 
@@ -74,7 +90,9 @@ function Dashboard() {
       {posts.map(post => (
         //key allows reredners of the only posts that are updated instead of all posts
         <Fade left>
-          <Post key={post.id} postId={post.id} user={post.user} creator={post.creator} statement={post.statement} imageURL={post.imageURL} />
+          <Post key={post.id} postId={post.id} user={post.user} 
+          caption={post.caption} medium={post.medium} 
+          theme={post.theme} imageURL={post.imgPath} comments={post.comments} />
         </Fade>
       ))}
 
