@@ -43,14 +43,10 @@ const MyAccount = (props) => {
 
   const [nameData, setNameData] = useState('')
 
-  const { name } = nameData
-
   const [passData, setPassData] = useState({
     pass1: '',
     pass2: ''
   })
-
-  const { pass1, pass2 } = passData
 
   const nameUpdate = e => {
     setNameData(prevState => ({
@@ -78,14 +74,14 @@ const MyAccount = (props) => {
   const changeName = e => {
     e.preventDefault()
 
-    dispatch(newName(name))
+    dispatch(newName(nameData))
   }
 
   const changePass = e => {
     e.preventDefault()
 
-    if (pass1 === pass2) {
-      dispatch(newPass(pass1))
+    if (passData.pass1 === passData.pass2) {
+      dispatch(newPass(passData.pass1))
     }
   }
 
