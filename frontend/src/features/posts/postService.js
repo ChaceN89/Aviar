@@ -10,8 +10,25 @@ const getPost = async (postId) => {
   return response.data
 }
 
+//add comment to post
+const addComment =  async (postId, newComment, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const data= {// set comment data
+    comment:newComment
+  }
+    
+  const response = await axios.post(API_URL+'comment/'+ postId, data, config) 
+  return response.data
+}
+
 const PostService = {
-    getPost
+    getPost,
+    addComment
 }
   
 export default PostService
