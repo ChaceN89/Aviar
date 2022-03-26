@@ -26,6 +26,7 @@ Summary for frontend
         npm i axios react-toastify
         npm i react-accordion-with-header
         npm i react-modal
+        npm i react-reveal
 
     root folder
         npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler
