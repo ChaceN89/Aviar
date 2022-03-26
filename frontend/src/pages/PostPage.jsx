@@ -41,39 +41,19 @@ function PostPage() {
       })
     )
 
-      //for testing
-     // id:id                                //works
-        // id:'623eada98485221571014321 _ '  // doens't work
-        // id:'623eada98485221571014321'     // works
-        // id:'623eab003b4cdd233f609bd7'     // works
-
-    // if(isSuccess){ // same as having a post
-    //   // toast("got post")
-    // }
-
     return () => {
       dispatch(reset())
     }
 
-  },[user, isError, navigate, dispatch])
-  // [ user, isSuccess, isError,  navigate, dispatch])
+  },[]) // only one time 
 
-
-  
-  // if (isLoading) { // this might cause an error if post doens't exisit not sure why but its hjsut for show so its not nessaesary 
-  //   return <Spinner />
-  // }
-
-
-    // test path statements
-    // const path = process.env.PUBLIC_URL + '/favicon.ico' 
-    // const path2 = process.env.PUBLIC_URL + '/uploads/' +post.imgPath
-
+  if (isLoading) { // this might cause an error if post doens't exisit not sure why but its hjsut for show so its not nessaesary 
+    return <Spinner />
+  }
 
   return (
     <>
-    
-    {post ?( // post has been found
+    {isSuccess ?( // post has been found
       <>
       {/* display the post */}
         <Post key={id} postId={post._id} user={user} 
@@ -87,7 +67,7 @@ function PostPage() {
       <>
       {/* can't find the post so display this */}
       <h1>Post</h1> <small> {id} </small>  <h1>Not Found!</h1>
-      <h3>Looks like your trying to access a resource that no longer exists</h3>
+      <h3>Looks like your trying to access a resource that may not be available</h3>
       </>
     )}
     </>
