@@ -18,7 +18,11 @@ const createPost = asyncHandler(async (req, res) => {
   }
 
   const file = req.files.file;
-  const newFileName = Date.now() + file.name // new unique name
+  const newFileNameSpaces = Date.now() + file.name // new unique name
+
+  
+
+  const newFileName = newFileNameSpaces.replace(/\s/g, '_')
 
   const acceptedImageTypes = ['image/gif', 'image/jpeg', 
   'image/png', 'image/jpg','image/x-icon'];
