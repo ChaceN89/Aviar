@@ -285,20 +285,20 @@ h3 {
 }
 
 .post__commentBox {
-  color: white;
+  color: black;
   display: flex;
   
 }
 
 .post__input {
-  color: white;
+  color: black;
   flex: 1;
   border: none;
   padding: 10px;
 }
 
 .post__button {
-  color: white;
+  color: black;
   max-width: 70px;
 }
 
