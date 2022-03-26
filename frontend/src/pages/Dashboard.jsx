@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import Zoom from 'react-reveal/Zoom'; // Importing Zoom effect
 import Fade from 'react-reveal/Fade';
-import Post from './Post';
+import Post from '../components/Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
