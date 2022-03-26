@@ -8,9 +8,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import {
-  getPost,
-  
-  reset,
+  addComment,
+  reset
 } from '../features/posts/postSlice'
 
 function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
@@ -21,23 +20,32 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const  { // get post inforamtion   
+    const  { // get post status inforamtion 
       isError,
+      commentAdded,
       isSuccess,
       isLoading,
       message
     }= useSelector(state => state.post)
 
-
   useEffect(() => {
-    if(isError){
-      toast.error('Couldn\'t add Comment')
+
+    if(commentAdded){ // if the comemnt is added
+      window.location.reload(); // refresh the page
+
     }
 
+    if(isError && isSuccess){ // error with comment and there is a post to comment on 
+      toast.error('Couldn\'t add Comment')
+    }
+    
+    return () => { // might not be able to call this reset
+      // dispatch(reset()) // refresh will take can of reset in 
+                    //PostPage
+    }
 
-  },[])
+  },[isError, dispatch, commentAdded])
   
-
 
   const onChange = e => {
     setNewComment(e.target.value)
@@ -45,18 +53,24 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
   
   const onSubmit = async e => {
     e.preventDefault();
-    toast("submitted comment")
-    toast(postId)
-    toast(newComment)
 
-    // / have new comment need to dispatchto add it to database
+    //need post data
+    const formData = new FormData();  // set form data
+    formData.append('postId', postId);
+    formData.append('newComment', newComment);
 
-    //need to add some usecase ad other stuff
+    dispatch(addComment({
+      postId:postId,
+      newComment:newComment
+    })) 
 
   }
-  
 
-  
+  // does this on the page calling it 
+  // if (isLoading) { // this might cause an error if post doens't exisit not sure why but its hjsut for show so its not nessaesary 
+  //   return <Spinner />
+  // }
+
   return (
     <div className="post">
       {/* image  this works on dashboard with hard coded inforamtion*/}
@@ -87,7 +101,7 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
           ))
         }
       </div>
-      {user && (
+      {user && ( // if user then comment is available
         <form className="post__commentBox " onSubmit={onSubmit}>
           <input className="post__input"
             type="text"
