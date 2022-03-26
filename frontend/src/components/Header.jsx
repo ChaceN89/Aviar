@@ -3,7 +3,7 @@ import React from 'react' // don't need this done automatically
 
 import { FaSignInAlt, FaSignOutAlt, FaUser, FaSearch } from 'react-icons/fa' // icons
 import { GrAdd } from 'react-icons/gr' // icons
-import { BsPersonPlusFill, BsCardList } from 'react-icons/bs' // icons
+import { BsPersonPlusFill, BsCardList, BsFileEarmarkPost } from 'react-icons/bs' // icons
 
 import { useSelector, useDispatch } from 'react-redux' // for logout
 import { logout, reset } from '../features/auth/authSlice'
@@ -53,6 +53,10 @@ function Header() {
     navigate('/')
   }
 
+//!!!!!!!!!!!!!!!!!!!!!!
+const id = '623e64b6b128d076a86cf623'
+//!!!!!!!!!!!!!!!!!!!!!!
+
   return (
     <header className='header '>
       <div className='logo'>
@@ -62,6 +66,17 @@ function Header() {
         {/* <img alt="Logo" src="aviarLogo.png"  />  */}
       </div>
       <ul>
+
+
+{/* !!!!!!!!!!!!!!!!! */}
+      <li>
+        {/* <Link to={{pathname:'/post/'+ id}}>  other way to do it*/}
+        <Link to={'/post/' + id}>
+          <BsFileEarmarkPost /> 
+        </Link>
+      </li>
+
+{/* !!!!!!!!!!!!!!!!! */}
 
         {user ? (
           <>
