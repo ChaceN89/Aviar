@@ -9,7 +9,7 @@ const newName = async (username, token) => {
       Authorization: `Bearer ${token}`
     }
   }
-  const response = await axios.put(API_URL + 'username', config, username)
+  const response = await axios.put(API_URL + 'username', username, config)
 
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data))
@@ -20,7 +20,7 @@ const newName = async (username, token) => {
 
 // Change password
 const newPass = async (password, token) => {
-    const response = await axios.put(API_URL + 'password', token, password)
+    const response = await axios.put(API_URL + 'password', password, config)
   
     if (response.data) {
       localStorage.setItem('user', JSON.stringify(response.data))
@@ -37,10 +37,6 @@ const delUser = async token => {
     }
   }
   const response = axios.delete(API_URL + 'id', config)
-
-  if (response.data) {
-      localStorage.setItem('user', JSON.stringify(response.data))
-  }
   
   return response.data
 }
