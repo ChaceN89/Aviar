@@ -10,12 +10,13 @@ const initialState = {
     message: ''
   }
 
-// get
+// get a post 
 export const getPost = createAsyncThunk(
-  'Posts/Post',
-  async (post, thunkAPI) => {
+  'posts/post',
+  async (data, thunkAPI) => {
     try {
-      return await postService.getPost(post._id)
+      const { id } = data 
+      return await postService.getPost(id)
     } catch (error) {
       const message = 
         (error.response &&
@@ -30,7 +31,7 @@ export const getPost = createAsyncThunk(
 )
 
 export const postSlice = createSlice({
-  name: 'Posts',
+  name: 'post',
   initialState,
   reducers: {
     reset: state => initialState
@@ -43,7 +44,7 @@ export const postSlice = createSlice({
       .addCase(getPost.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.collections = action.payload
+        state.post = action.payload
       })
       .addCase(getPost.rejected, (state, action) => {
         state.isLoading = false
@@ -52,7 +53,6 @@ export const postSlice = createSlice({
       })
   }
 })
-
 
 export const { reset } = postSlice.actions
 export default postSlice.reducer
