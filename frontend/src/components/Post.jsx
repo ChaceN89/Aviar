@@ -4,10 +4,16 @@ import { Avatar } from '@material-ui/core';
 function Post({ postId, creator, user, statement, imageURL }) {
   return (
     <div className="post">
-      {/* image */}
+      {/* image  this works on dashboard with hard coded inforamtion*/}
       <img className="post__piece"
         src={imageURL}
         alt={imageURL} />
+
+{/* this works with database inforamtion */}
+{/* <img src={process.env.PUBLIC_URL + '/uploads/' +imageURL} alt={imageURL} ></img> */}
+
+
+
 
       {/* avatar + artist */}
       <div className="post__bottom">

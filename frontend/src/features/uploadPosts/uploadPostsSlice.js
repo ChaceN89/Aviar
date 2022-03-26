@@ -55,7 +55,7 @@ export const uploadPostSlice = createSlice({
       .addCase(uploadPost.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
-        state.collections = action.payload
+        state.post = action.payload
       })
       .addCase(uploadPost.rejected, (state, action) => {
         state.isLoading = false
