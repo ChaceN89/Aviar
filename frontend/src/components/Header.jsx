@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux' // for logout
 import { logout, reset } from '../features/auth/authSlice'
 import { Link, useNavigate } from 'react-router-dom' // routing
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 function Header() {
@@ -33,29 +33,28 @@ function Header() {
   const onSubmit = e => { // submitting the search form 
     e.preventDefault()
 
-    const userData = {
-      search
+    if(search ==''){
+      localStorage.setItem('searchTerm', '');
+    }else{
+      localStorage.setItem('searchTerm', search);
+
     }
 
-
     // probbaly set a local storage variable and use it in dashboard
-
-
-    toast.error("Searched for " + search + "|" + userData.search)
-
-    // dispatch( search function using userData) // not sure if i need to use this or do it all in header.jsx
+    navigate('/')
   }
 
   const onLogout = () => {
     // logout function
     dispatch(logout()) // needed case in reducer
     dispatch(reset())
-    navigate('/')
+    navigate('/login')
   }
 
-//!!!!!!!!!!!!!!!!!!!!!!
-const id = '623e64b6b128d076a86cf623'
-//!!!!!!!!!!!!!!!!!!!!!!
+  useEffect(() => {
+
+  },[search] )
+
 
   return (
     <header className='header '>
@@ -66,16 +65,6 @@ const id = '623e64b6b128d076a86cf623'
       </div>
       <ul>
 
-
-{/* !!!!!!!!!!!!!!!!! */}
-      <li>
-        {/* <Link to={{pathname:'/post/'+ id}}>  other way to do it*/}
-        <Link to={'/post/' + id}>
-          <BsFileEarmarkPost /> 
-        </Link>
-      </li>
-
-{/* !!!!!!!!!!!!!!!!! */}
 
         {user ? (
           <>
