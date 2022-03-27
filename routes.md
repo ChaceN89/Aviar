@@ -389,7 +389,7 @@
 
 #### getPostsByTerm - public
 	returns all posts where caption contains the key word term
-	GET http://localhost:8000/api/posts/search
+	GET http://localhost:8000/api/posts/search/:term
 	- Fields: term
 	- Authorization: none 
 	- Returns:[  // array of returned posts

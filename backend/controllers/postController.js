@@ -78,7 +78,7 @@ const createPost = asyncHandler(async (req, res) => {
 const getAllPosts = asyncHandler(async (req, res) => {
   const filter = {}
   const all = await Post.find(filter)
-  const allPosts = await Post.find()
+  const allPosts = await Post.find().sort({"createdAt": -1})
   res.status(200).json(allPosts)
 })
 
@@ -196,14 +196,25 @@ const removeComment = asyncHandler(async (req, res) => {
 //@route  get /api/posts/search
 //@access public
 const getPostsByTerm = asyncHandler(async (req, res) => {
-  if (!req.body.term) {
+  
+  console.log(req.params.term)
+  const  {term} = req.params
+  console.log(term)
+  if (!term) {
     res.status(400)
     throw new Error('no search Term')
   }
-  //jsut change caption to tag or theme to change fucntionality
-  const post = await Post.find({ caption: { $regex: `${req.body.term}` } })
 
-  res.status(200).json(post)
+  const filter ={ $or:[
+                    {theme: { $regex: `${term}`,'$options' : 'i' } },
+                    {caption: { $regex: `${term}`,'$options' : 'i' } },
+                    {medium: { $regex: `${term}`,'$options' : 'i' } },
+                    {imgPath: { $regex: `${term}`,'$options' : 'i' } },
+                    ]
+                  } 
+ 
+  const search = await Post.find(filter).sort({"createdAt": -1})
+  res.status(200).json(search)
 })
 
 //@desc add like post
