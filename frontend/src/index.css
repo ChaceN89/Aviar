@@ -54,19 +54,18 @@ h3 {
 
 .container {
   width: 100%;
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 20px;
   text-align: center;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
+  align-content: center;
   align-items: center;
-  padding: 20px 0;
+  padding: 20px 20px;
+  max-width: 960px;
   border-bottom: 1px solid #e6e6e6;
-  margin-bottom: 60px;
+  margin: 0 auto;
 }
 
 .header ul {
@@ -101,6 +100,10 @@ h3 {
 
 .heading p {
   color: #828282;
+}
+
+.logo {
+  max-width: 120px;
 }
 
 .form,

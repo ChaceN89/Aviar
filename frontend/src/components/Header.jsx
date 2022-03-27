@@ -59,11 +59,10 @@ const id = '623e64b6b128d076a86cf623'
 
   return (
     <header className='header '>
-      <div className='logo'>
-        <Link to='/'>Aviar</Link>
-
-        {/* can add logo here */}
-        {/* <img alt="Logo" src="aviarLogo.png"  />  */}
+      <div>
+        <Link to='/'>
+          <img className='logo' alt="Logo" src="aviarLogo.png" />
+        </Link>
       </div>
       <ul>
 
