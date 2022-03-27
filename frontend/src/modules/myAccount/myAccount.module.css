@@ -7,28 +7,22 @@
   flex-direction: column;
   background-size: cover;
   justify-content: center;
-  background-image: url('https://i.scdn.co/image/ab67616d0000b2735c1006595ae973f763d4f5ed');
+  position: relative;
 }
 .button {
-  top: 150px;
+  top: 50px;
   left: 710px;
   position: absolute;
+  background-color: #ffffff;
 }
 .button1 {
-  top: 350px;
+  top: 250px;
   left: 710px;
   position: absolute;
-}
-.button2 {
-  top: 10px;
-  left: 25px;
-  width: 91px;
-  height: 41px;
-  position: absolute;
-  align-self: flex-start;
+  background-color: #ffffff;
 }
 .text {
-  top: 100px;
+  top: 0px;
   left: 250px;
   width: 300px;
   height: 35px;
@@ -37,9 +31,10 @@
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   background-color: var(--dl-color-gray-white);
+  background-color: #ffffff;
 }
 .text1 {
-  top: 250px;
+  top: 150px;
   left: 250px;
   width: 300px;
   height: 35px;
@@ -48,30 +43,33 @@
   border-color: var(--dl-color-gray-black);
   border-width: 1px;
   background-color: var(--dl-color-gray-white);
+  background-color: #ffffff;
 }
 .textinput {
-  top: 100px;
+  top: 0px;
   left: 600px;
   width: 280px;
-  z-index: 100;
   position: absolute;
   border-radius: 0px;
+  background-color: #ffffff;
 }
 .textinput1 {
-  top: 250px;
+  top: 150px;
   left: 600px;
   width: 280px;
   position: absolute;
+  background-color: #ffffff;
 }
 .textinput2 {
-  top: 300px;
+  top: 200px;
   left: 600px;
   width: 280px;
   position: absolute;
+  background-color: #ffffff;
 }
 .button3 {
-  top: 500px;
-  left: 250px;
+  top: 250px;
+  left: 175px;
   color: #ffffff;
   position: absolute;
   background-color: #ff0000;

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import authService from './authService'
+import changeService from '../change/changeService'
 
 // Get user from localStorage
 const user = JSON.parse(localStorage.getItem('user'))
@@ -47,6 +48,62 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   await authService.logout()
 })
 
+export const newName = createAsyncThunk(
+  'myAccount/newName',
+  async (username, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await changeService.newName(username, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Change password
+export const newPass = createAsyncThunk(
+  'myAccount/newPass',
+  async (password, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await changeService.newPass(password, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Delete user
+export const deleteAccount = createAsyncThunk(
+  'myAccount/deleteAccount',
+  async (_, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await changeService.delUser(token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -90,6 +147,46 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, state => {
         state.user = null
+      })
+      // My account reducers
+      .addCase(newName.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(newName.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.user = action.payload
+      })
+      .addCase(newName.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(newPass.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(newPass.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.message = action.payload
+      })
+      .addCase(newPass.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteAccount.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(deleteAccount.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.user = null
+      })
+      .addCase(deleteAccount.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
       })
   }
 })
