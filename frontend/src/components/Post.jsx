@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 import Spinner from '../components/Spinner'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 import {
   addComment,
@@ -14,43 +14,43 @@ import {
 
 function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
   const [newComment, setNewComment] = useState()
-  
-  // const { user } = useSelector(state => state.auth) // get user
-    //don't need already got error from arguments
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
 
-    const  { // get post status inforamtion 
-      isError,
-      commentAdded,
-      isSuccess,
-      isLoading,
-      message
-    }= useSelector(state => state.post)
+  // const { user } = useSelector(state => state.auth) // get user
+  //don't need already got error from arguments
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { // get post status inforamtion 
+    isError,
+    commentAdded,
+    isSuccess,
+    isLoading,
+    message
+  } = useSelector(state => state.post)
 
   useEffect(() => {
 
-    if(commentAdded){ // if the comemnt is added
+    if (commentAdded) { // if the comemnt is added
       window.location.reload(); // refresh the page
 
     }
 
-    if(isError && isSuccess){ // error with comment and there is a post to comment on 
+    if (isError && isSuccess) { // error with comment and there is a post to comment on 
       toast.error('Couldn\'t add Comment')
     }
-    
+
     return () => { // might not be able to call this reset
       // dispatch(reset()) // refresh will take can of reset in 
-                    //PostPage
+      //PostPage
     }
 
-  },[isError, dispatch, commentAdded])
-  
+  }, [isError, dispatch, commentAdded])
+
 
   const onChange = e => {
     setNewComment(e.target.value)
   };
-  
+
   const onSubmit = async e => {
     e.preventDefault();
 
@@ -60,9 +60,9 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
     formData.append('newComment', newComment);
 
     dispatch(addComment({
-      postId:postId,
-      newComment:newComment
-    })) 
+      postId: postId,
+      newComment: newComment
+    }))
 
   }
 
@@ -74,11 +74,13 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
   return (
     <div className="post">
       {/* image  this works on dashboard with hard coded inforamtion*/}
-      <img className="post__piece"
-        src={process.env.PUBLIC_URL + '/uploads/' +imageURL}
-        alt={imageURL} 
-        width="768" height="520"
+      <Link to={'/post/' + postId}>
+        <img className="post__piece"
+          src={process.env.PUBLIC_URL + '/uploads/' + imageURL}
+          alt={imageURL}
+          width="768" height="520"
         />
+      </Link>
 
       {/* avatar + artist */}
       <div className="post__bottom">
@@ -91,7 +93,7 @@ function Post({ postId, user, caption, theme, medium, imageURL, comments }) {
         {/* caption */}
         <h4 className='post__text'><strong>{theme}</strong> - {medium}</h4>
       </div>
-        <h3 className='post__text'><strong>{caption}</strong> </h3>
+      <h3 className='post__text'><strong>{caption}</strong> </h3>
       <div className="post__comments">
         {
           comments.map((comment) => (

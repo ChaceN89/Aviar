@@ -8,7 +8,7 @@ import Post from '../components/Post';
 import { makeStyles } from '@material-ui/core/styles';
 import Spinner from '../components/Spinner';
 import Modal from '@material-ui/core/Modal';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAllPosts, reset } from '../features/dashboard/dashboardSlice'
 
 const useStyles = makeStyles((theme) => ({//Modal Styling
@@ -52,66 +52,22 @@ function Dashboard() {
     return <Spinner />
   }
 
-  // Temporary mock data
-  const posts2 = [
-    {
-      id: 123,
-      user: "cahce",
-      imgPath: '1648279225962green_beaach.jpg',
-      caption: 'Glorious Beach',
-      theme: 'Tropics',
-      medium: 'Photo',
-      comments: [
-        "great photo",
-        'I love that'
-      ],
-    },
-    {
-      id: 1234,
-      user: "chacen",
-      imgPath: '1648274857555chgery_blosum_2.png',
-      caption: 'Cherry Blossums',
-      theme: 'Japan',
-      medium: 'Art',
-      comments: [
-        "I travelled to Japan last summer"
-      ],
-
-    },
-    {
-      id: 12345,
-      user: "chacen",
-      imgPath: '1648274176881dragon.png',
-      caption: 'Dragon',
-      theme: 'Japan',
-      medium: 'Art',
-      comments: [
-
-      ],
-
-    },
-
-  ];
-
   return (
     // <div>Home</div>
     <div className="App">
-      <Zoom>{/*Using Zoom Effect*/}
-        {/* piece upload time */}
-        {/* art upload time file picker*/}
-        {/* statement upload time */}
-        {/* button upload time */}
+      <Zoom>
+        {/*Using Zoom Effect*/}
       </Zoom>
       <Fade right>
         <h1 className='todayGallery'>Today's Gallery</h1>
       </Fade>
-      {isSuccess ? (
+      {(isSuccess && posts.length > 0) ? (
         posts.map((post) => (
-          //key allows reredners of the only posts that are updated instead of all posts
           <Fade left>
-            <Post key={post.id} postId={post.id} user={post.user}
+            <Post key={post._id} postId={post._id} user={post.user}
               caption={post.caption} medium={post.medium}
-              theme={post.theme} imageURL={post.imgPath} comments={post.comments} />
+              theme={post.theme} imageURL={post.imgPath} comments={post.comments}
+            />
           </Fade>
         ))) : (
         <>
