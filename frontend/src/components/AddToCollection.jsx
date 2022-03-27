@@ -2,11 +2,10 @@ import React from 'react'
 
 
 function AddToCollection({ postId, user, post }) {
-    const collections = false; // test for 
+    const collections = true; // test for 
             //this will be a determination of failure or success for getting users colelctionss
   
         //functionality to get collections 
-
 
     return (
     <>

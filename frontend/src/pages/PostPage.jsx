@@ -62,11 +62,13 @@ function PostPage() {
 
   return (
     <>
-    <AddToCollection  postId={id} user= {user} post={post}/>
-    <br />
 
     {isSuccess ?( // post has been found
+      //tools to display add to collection options
       <>
+      <AddToCollection  postId={id} user= {user} post={post} />
+      <br />
+
       {/* display the post */}
         <Post key={id} postId={post._id} user={user} 
           caption={post.caption} medium={post.medium} 
