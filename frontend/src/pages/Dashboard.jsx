@@ -47,10 +47,8 @@ function Dashboard() {
    term = localStorage.getItem('searchTerm');
    
    if(term == ''){
-     toast("Not searching "+ term)   
      dispatch(getAllPosts());
     }else{
-      toast("searching for " +  term)   
       const data= {term}
 
      dispatch(getPostsByTerm(data))
