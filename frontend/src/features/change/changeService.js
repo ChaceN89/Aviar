@@ -12,10 +12,9 @@ const newName = async (username, token) => {
   const response = await axios.put(API_URL + 'username', username, config)
 
   if (response.data) {
+    response.data.token = token
     localStorage.setItem('user', JSON.stringify(response.data))
   }
-
-  response.data.token = token
 
   return response.data
 }
@@ -30,10 +29,9 @@ const newPass = async (password, token) => {
   const response = await axios.put(API_URL + 'password', password, config)
 
   if (response.data) {
+    response.data.token = token
     localStorage.setItem('user', JSON.stringify(response.data))
   }
-
-  response.data.token = token
 
   return response.data
 }
