@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Spinner from '../components/Spinner';
 import Modal from '@material-ui/core/Modal';
 import { useNavigate } from 'react-router-dom';
-import { getPosts, reset } from '../features/posts/postSlice'
+import { getAllPosts, reset } from '../features/dashboard/dashboardSlice'
 
 const useStyles = makeStyles((theme) => ({//Modal Styling
   paper: {
@@ -29,7 +29,7 @@ function Dashboard() {
   const dispatch = useDispatch();
 
   const { user } = useSelector(state => state.auth);
-  const { posts, isLoading, isError, message } = useSelector(
+  const { posts, isLoading, isError, isSuccess, message } = useSelector(
     state => state.posts
   );
 
@@ -41,7 +41,7 @@ function Dashboard() {
     if (!user) {
       navigate('/login')
     }
-    dispatch(getPosts());
+    dispatch(getAllPosts());
 
     return () => {
       dispatch(reset())
@@ -61,9 +61,9 @@ function Dashboard() {
       caption: 'Glorious Beach',
       theme: 'Tropics',
       medium: 'Photo',
-      comments:[
+      comments: [
         "great photo",
-        'I love that'  
+        'I love that'
       ],
     },
     {
@@ -73,8 +73,8 @@ function Dashboard() {
       caption: 'Cherry Blossums',
       theme: 'Japan',
       medium: 'Art',
-      comments:[
-        "I travelled to Japan last summer"  
+      comments: [
+        "I travelled to Japan last summer"
       ],
 
     },
@@ -85,25 +85,13 @@ function Dashboard() {
       caption: 'Dragon',
       theme: 'Japan',
       medium: 'Art',
-      comments:[
-         
+      comments: [
+
       ],
 
     },
-    
+
   ];
-
-
-  // useEffect(() => {
-  //     //code here
-  //     db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-  //         //code to fire off via listener
-  //         setPosts(snapshot.docs.map(doc => ({
-  //             id: doc.id,
-  //             post: doc.data()
-  //         })))
-  //     })//snapShot is a powerful listener
-  // }, []);
 
   return (
     // <div>Home</div>
@@ -117,17 +105,19 @@ function Dashboard() {
       <Fade right>
         <h1 className='todayGallery'>Today's Gallery</h1>
       </Fade>
-      {/*post loop*/}
-      {posts2 && posts2.map(post => (
-        //key allows reredners of the only posts that are updated instead of all posts
-        <Fade left>
-          <Post key={post.id} postId={post.id} user={post.user} 
-          caption={post.caption} medium={post.medium} 
-          theme={post.theme} imageURL={post.imgPath} comments={post.comments} />
-        </Fade>
-      ))}
-
-      {/* Posts HARDCODED*/}
+      {isSuccess ? (
+        posts.map((post) => (
+          //key allows reredners of the only posts that are updated instead of all posts
+          <Fade left>
+            <Post key={post.id} postId={post.id} user={post.user}
+              caption={post.caption} medium={post.medium}
+              theme={post.theme} imageURL={post.imgPath} comments={post.comments} />
+          </Fade>
+        ))) : (
+        <>
+          <h2 className='post__text'>Posts not found! Please try again...</h2>
+        </>
+      )}
 
     </div>
   )
