@@ -1,10 +1,15 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify'
 import Zoom from 'react-reveal/Zoom'; // Importing Zoom effect
 import Fade from 'react-reveal/Fade';
 import Post from './Post';
 import { makeStyles } from '@material-ui/core/styles';
+import Spinner from '../components/Spinner';
 import Modal from '@material-ui/core/Modal';
+import { useNavigate } from 'react-router-dom';
+import { getPosts, reset } from '../features/posts/postSlice'
 
 const useStyles = makeStyles((theme) => ({//Modal Styling
   paper: {
@@ -20,9 +25,35 @@ const useStyles = makeStyles((theme) => ({//Modal Styling
 function Dashboard() {
   // postId, creator, user, statement, imageURL
   // const [posts, setPosts] = useState([]); //Short term memory in react AKA Hooks
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user } = useSelector(state => state.auth);
+  const { posts, isLoading, isError, message } = useSelector(
+    state => state.posts
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message)
+    }
+
+    if (!user) {
+      navigate('/login')
+    }
+    dispatch(getPosts());
+
+    return () => {
+      dispatch(reset())
+    }
+  }, []);
+
+  if (isLoading) {
+    return <Spinner />
+  }
 
   // Temporary mock data
-  const posts = [
+  const posts2 = [
     {
       id: 123,
       user: "tester",
@@ -71,7 +102,7 @@ function Dashboard() {
         <h1 className='todayGallery'>Today's Gallery</h1>
       </Fade>
       {/*post loop*/}
-      {posts.map(post => (
+      {posts2 && posts2.map(post => (
         //key allows reredners of the only posts that are updated instead of all posts
         <Fade left>
           <Post key={post.id} postId={post.id} user={post.user} creator={post.creator} statement={post.statement} imageURL={post.imageURL} />
