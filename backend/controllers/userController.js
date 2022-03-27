@@ -115,12 +115,11 @@ const getMe = asyncHandler(async (req, res) => {
  * @access private
  */
 const deleteMe = asyncHandler(async (req, res) => {
-  const deletedUser = await User.findOneAndDelete({ _id: req.user.id }) // delete one user and return info
+  await User.findOneAndDelete({ _id: req.user.id }) // delete one user and return info
 
   res.status(200).json({
     // return information
-    message: 'User Deleted',
-    deletedUser
+    message: 'User Deleted'
   })
 }) //end deleteMe
 
@@ -144,16 +143,23 @@ const updateUsername = asyncHandler(async (req, res) => {
 
   //set up fields to update
   const filter = { _id: req.user.id }
-  const update = { username: username }
+  const update = { username }
 
-  const updatedUser = await User.findByIdAndUpdate(filter, update, {
+  const {
+    _id,
+    username: user,
+    userPosts,
+    savedPosts
+  } = await User.findByIdAndUpdate(filter, update, {
     new: true
-  }) // updatew trhe user
+  }) // update the user
 
   res.status(200).json({
-    //retrun object
-    message: 'Updated Username',
-    updatedUser
+    // return user
+    _id: _id,
+    username: user,
+    userPosts,
+    savedPosts
   })
 }) //end updateUsername
 
@@ -181,14 +187,20 @@ const updatePassword = asyncHandler(async (req, res) => {
   const filter = { _id: req.user.id }
   const update = { password: hashedPassword }
 
-  const updatedUser = await User.findByIdAndUpdate(filter, update, {
-    new: true
-  }) //update the users password
+  const { _id, username, userPosts, savedPosts } = await User.findByIdAndUpdate(
+    filter,
+    update,
+    {
+      new: true
+    }
+  ) //update the users password
 
   res.status(200).json({
-    //retrun object
-    message: 'Updated Username',
-    updatedUser
+    // return user
+    _id: _id,
+    username,
+    userPosts,
+    savedPosts
   })
 }) //end updateUsername
 

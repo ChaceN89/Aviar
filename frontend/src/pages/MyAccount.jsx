@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { reset } from '../features/auth/authSlice'
 import projectStyles from '../modules/myAccount/style.module.css'
 import styles from '../modules//myAccount/myAccount.module.css'
-import { newName, newPass, deleteAccount } from '../features/change/changeSlice'
+import { newName, newPass, deleteAccount } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
 const modalStyle = {
@@ -24,8 +24,7 @@ const modalStyle = {
   }
 }
 
-const MyAccount = (props) => {
-
+const MyAccount = props => {
   const { user, isLoading, isError, isSuccess, message } = useSelector(
     state => state.auth
   )
@@ -38,50 +37,54 @@ const MyAccount = (props) => {
       toast.error(message)
     }
 
-    dispatch(reset())
+    if (!user) {
+      dispatch(reset())
+      navigate('/')
+    }
+
+    return () => {
+      dispatch(reset())
+    }
   }, [user, isError, isSuccess, message, navigate, dispatch])
 
-  const [nameData, setNameData] = useState('')
-
-  const [passData, setPassData] = useState({
-    pass1: '',
-    pass2: ''
+  const [formData, setFormData] = useState({
+    username: '',
+    password: '',
+    password2: ''
   })
 
-  const nameUpdate = e => {
-    setNameData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }))
-  }
+  const { username, password, password2 } = formData
 
-  const passUpdate = e => {
-    setPassData(prevState => ({
+  const onChange = e => {
+    setFormData(prevState => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
-    if (passData.pass1 === passData.pass2) {
-      document.getElementById("pass2").className = document.getElementById("pass2").className.replace(" error", "")
-    } else {
-      document.getElementById("pass2").className = document.getElementById("pass2").className + " error"
-    }
   }
 
   const handleDelete = () => {
     dispatch(deleteAccount())
+    dispatch(reset())
+    navigate('/')
   }
 
   const changeName = e => {
     e.preventDefault()
 
-    dispatch(newName(nameData))
+    const name = { username }
+
+    dispatch(newName(name))
   }
 
   const changePass = e => {
     e.preventDefault()
 
-    if (passData.pass1 === passData.pass2) {
-      dispatch(newPass(passData.pass1))
+    if (password !== password2) {
+      toast.error('Passwords do not match')
+    } else {
+      const pass = { password }
+
+      dispatch(newPass(pass))
     }
   }
 
@@ -104,87 +107,90 @@ const MyAccount = (props) => {
     <>
       <section>
         <div className={styles['container']}>
-          <p id="message"></p>
-          <p className={styles['text']}>Username: { user.username }</p>
+          <p id='message'></p>
+          <p className={styles['text']}>Username: {user.username}</p>
           <form onSubmit={changeName}>
             <input
-              type="text"
-              id="newusername"
-              name="newUsername"
-              placeholder="New username"
+              type='text'
+              id='username'
+              name='username'
+              value={username}
+              placeholder='New username'
               className={` ${styles['textinput']} ${projectStyles['input']} `}
-              onChange={nameUpdate}
+              onChange={onChange}
             />
             <button
-              type="submit"
-              name="nameButton"
+              type='submit'
+              name='nameButton'
               className={` ${styles['button']} ${projectStyles['button']} `}
             >
               Change username
             </button>
-          </form>
-          <form onSubmit={changePass}>
             <input
-              type="password"
-              id="pass1"
-              name="newPassword1"
-              placeholder="New password"
+              type='password'
+              id='password'
+              name='password'
+              value={password}
+              placeholder='New password'
               className={` ${styles['textinput1']} ${projectStyles['input']} `}
-              onChange={passUpdate}
+              onChange={onChange}
             />
             <input
-              type="password"
-              id="pass2"
-              name="newPassword2"
-              placeholder="Confirm password"
+              type='password'
+              id='password'
+              name='password2'
+              value={password2}
+              placeholder='Confirm password'
               className={` ${styles['textinput2']} ${projectStyles['input']} `}
-              onChange={passUpdate}
+              onChange={onChange}
             />
             <button
-              type="submit"
-              name="passwordButton"
+              name='passwordButton'
               className={` ${styles['button1']} ${projectStyles['button']} `}
+              onClick={changePass}
             >
               Change password
             </button>
           </form>
-      
-          <button
-            name="deleteButton"
-            type="button"
-            className={` ${styles['button3']} ${projectStyles['button']} `}
-            onClick={() => openModal()}
-          >
-            DELETE ACCOUNT
-          </button>
-          <Modal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            ariaHideApp={false}
-            style={modalStyle}
-          >
-            <div className='modal'>
-              <p>Are you sure? This cannot be undone</p>
-              <button onClick={() => closeModal()} className='close'>
-                X
-              </button>
-              <hr style={{ marginBottom: '10px' }} />
 
-              <button
-                name="finalDelete"
-                className={` ${styles['button4']} ${projectStyles['button']} `}
-                type="button"
-                onClick={() => handleDelete()}
+          <div onClick={e => e.stopPropagation()}>
+            <button
+              name='deleteButton'
+              type='button'
+              className={` ${styles['button3']} ${projectStyles['button']} `}
+              onClick={() => openModal()}
+            >
+              DELETE ACCOUNT
+            </button>
+            <div onClick={e => e.stopPropagation()}>
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                ariaHideApp={false}
+                style={modalStyle}
               >
-                DELETE
-              </button>
+                <div className='modal'>
+                  <p>Are you sure? This cannot be undone</p>
+                  <button onClick={() => closeModal()} className='close'>
+                    X
+                  </button>
+                  <hr style={{ marginBottom: '10px' }} />
+
+                  <button
+                    name='finalDelete'
+                    className={` ${styles['button4']} ${projectStyles['button']} `}
+                    type='button'
+                    onClick={handleDelete}
+                  >
+                    DELETE
+                  </button>
+                </div>
+              </Modal>
             </div>
-          </Modal>
+          </div>
         </div>
       </section>
     </>
-    
-    
   )
 }
 
