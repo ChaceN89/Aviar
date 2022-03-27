@@ -28,6 +28,24 @@ export const getAllPosts = createAsyncThunk(
     }
 )
 
+export const getPostsByTerm = createAsyncThunk(
+    'posts/search',
+    async (data,thunkAPI) =>{
+        try {
+            return await dashboardService.getPostsByTerm(data) // need to change
+        } catch (error) {
+            const message =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString()
+
+            return thunkAPI.rejectWithValue(message)
+        }
+    }   
+)
+
 export const dashboardSlice = createSlice({
     name: 'dashboard',
     initialState,
@@ -45,6 +63,19 @@ export const dashboardSlice = createSlice({
                 state.posts = action.payload
             })
             .addCase(getAllPosts.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload
+            })
+            .addCase(getPostsByTerm.pending, state => {
+                state.isLoading = true
+            })
+            .addCase(getPostsByTerm.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.posts = action.payload
+            })
+            .addCase(getPostsByTerm.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
