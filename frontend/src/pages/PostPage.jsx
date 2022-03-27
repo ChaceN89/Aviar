@@ -77,6 +77,7 @@ function PostPage () {
             comments={post.comments}
             context='page'
           />
+          <hr style={{ marginTop: '75px' }} />
         </>
       ) : (
         <>
