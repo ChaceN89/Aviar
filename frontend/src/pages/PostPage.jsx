@@ -58,7 +58,7 @@ function PostPage () {
   //probbaly need an add to colelction component
 
   return (
-    <>
+    <div className='container'>
       {isSuccess ? ( // post has been found
         //tools to display add to collection options
         <>
@@ -88,7 +88,7 @@ function PostPage () {
           </h3>
         </>
       )}
-    </>
+    </div>
   )
 }
 

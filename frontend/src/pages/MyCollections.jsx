@@ -151,7 +151,7 @@ function MyCollections () {
   }
 
   return (
-    <>
+    <div className='container'>
       <section className='heading'>
         <h1>My Collections</h1>
         <p>Where your dreams come together.</p>
@@ -286,7 +286,7 @@ function MyCollections () {
           </AccordionWithHeader>
         )}
       </section>
-    </>
+    </div>
   )
 }
 

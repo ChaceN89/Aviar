@@ -54,7 +54,7 @@ function Dashboard() {
 
   return (
     // <div>Home</div>
-    <div className="App">
+    <div className="container">
       <Zoom>
         {/*Using Zoom Effect*/}
       </Zoom>

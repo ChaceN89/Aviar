@@ -22,7 +22,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container'>
+        <div className='App'>
           <Header />
           {/* the first route will be selected by default 
                           localhost:3000/login is the login page etc */}

@@ -87,7 +87,7 @@ function UploadPost() {
   }
 
   return (
-    <>
+    <div className='container'>
       <section className='heading'>
         <h1>
           <GrAdd /> Add Post
@@ -158,7 +158,7 @@ function UploadPost() {
 
         </form>
       </section>
-    </>
+    </div>
   )
 }
 

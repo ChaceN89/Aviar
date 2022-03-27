@@ -21,6 +21,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   height: 100%;
+  color: white
 }
 
 body {
@@ -54,6 +55,9 @@ h3 {
 
 .container {
   width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 20px;
   text-align: center;
 }
 
@@ -64,7 +68,7 @@ h3 {
   align-items: center;
   padding: 20px 20px;
   max-width: 960px;
-  border-bottom: 1px solid #e6e6e6;
+  background-color: white;
   margin: 0 auto;
 }
 

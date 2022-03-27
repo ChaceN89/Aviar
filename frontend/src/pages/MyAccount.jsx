@@ -104,7 +104,7 @@ const MyAccount = props => {
   }
 
   return (
-    <>
+    <div className='container'>
       <section>
         <div className={styles['container']}>
           <p id='message'></p>
@@ -190,7 +190,7 @@ const MyAccount = props => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
 
