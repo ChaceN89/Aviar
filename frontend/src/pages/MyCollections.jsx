@@ -60,7 +60,7 @@ const modalStyle = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-    width: '15%'
+    width: '350px'
   }
 }
 
@@ -168,6 +168,7 @@ function MyCollections () {
                   <AccordionHeader
                     horizontalAlignment='centerSpaceBetween'
                     verticalAlignment='center'
+                    className='accordion'
                   >
                     <div></div>
                     <div>{collection.collectionName}</div>
