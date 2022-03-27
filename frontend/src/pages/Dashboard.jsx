@@ -58,12 +58,12 @@ function Dashboard() {
       <Zoom>
         {/*Using Zoom Effect*/}
       </Zoom>
-      <Fade right>
+      <Fade top>
         <h1 className='todayGallery'>Today's Gallery</h1>
       </Fade>
       {(isSuccess && posts.length > 0) ? (
         posts.map((post) => (
-          <Fade left>
+          <Fade bottom>
             <Post key={post._id} postId={post._id} user={post.user}
               caption={post.caption} medium={post.medium}
               theme={post.theme} imageURL={post.imgPath} comments={post.comments}
