@@ -23,15 +23,17 @@ const useStyles = makeStyles((theme) => ({//Modal Styling
 }));
 
 function Dashboard() {
-  // postId, creator, user, statement, imageURL
-  // const [posts, setPosts] = useState([]); //Short term memory in react AKA Hooks
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
+  let term = localStorage.getItem('searchTerm');
 
   const { user } = useSelector(state => state.auth);
   const { posts, isLoading, isError, isSuccess, message } = useSelector(
     state => state.posts
   );
+
 
   useEffect(() => {
     if (isError) {
@@ -41,12 +43,22 @@ function Dashboard() {
     if (!user) {
       navigate('/login')
     }
-    dispatch(getAllPosts());
+
+   term = localStorage.getItem('searchTerm');
+   
+   if(term == ''){
+     toast("Not searching "+term)   
+     dispatch(getAllPosts());
+    }else{
+      toast("searching for " +term)   
+      
+    //  dispatch(getPostsByTerm(term))
+    }
 
     return () => {
       dispatch(reset())
     }
-  }, []);
+  }, [term]);
 
   if (isLoading) {
     return <Spinner />
