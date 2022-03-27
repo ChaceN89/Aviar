@@ -12,6 +12,9 @@ import { toast } from 'react-toastify';
 import Post from '../components/Post'
 import Fade from 'react-reveal/Fade';
 
+import AddToCollection from '../components/AddToCollection'
+
+
 function PostPage() {
 //get post id
   const {id} = useParams()
@@ -51,8 +54,17 @@ function PostPage() {
     return <Spinner />
   }
 
+
+  //also need to 
+
+  //probbaly need an add to colelction component 
+
+
   return (
     <>
+    <AddToCollection  postId={id} user= {user} post={post}/>
+    <br />
+
     {isSuccess ?( // post has been found
       <>
       {/* display the post */}
@@ -70,6 +82,9 @@ function PostPage() {
       <h3>Looks like your trying to access a resource that may not be available</h3>
       </>
     )}
+    
+
+
     </>
   )
 }
