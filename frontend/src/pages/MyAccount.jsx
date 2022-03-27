@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import React from 'react'
 import Modal from 'react-modal'
+import { FaUser } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import { reset } from '../features/auth/authSlice'
@@ -20,7 +21,8 @@ const modalStyle = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    width: '350px'
   }
 }
 
@@ -66,6 +68,7 @@ const MyAccount = props => {
     dispatch(deleteAccount())
     dispatch(reset())
     navigate('/')
+    toast.success('Account has been deleted')
   }
 
   const changeName = e => {
@@ -74,6 +77,9 @@ const MyAccount = props => {
     const name = { username }
 
     dispatch(newName(name))
+
+    setFormData({ username: '' })
+    toast.success('Username successfully changed')
   }
 
   const changePass = e => {
@@ -85,6 +91,8 @@ const MyAccount = props => {
       const pass = { password }
 
       dispatch(newPass(pass))
+      setFormData({ password: '', password2: '' })
+      toast.success('Password successfully changed')
     }
   }
 
@@ -105,88 +113,125 @@ const MyAccount = props => {
 
   return (
     <div className='container'>
-      <section>
-        <div className={styles['container']}>
-          <p id='message'></p>
-          <p className={styles['text']}>Username: {user.username}</p>
-          <form onSubmit={changeName}>
+      <section className='heading' style={{ marginTop: '15px' }}>
+        <h1>
+          <FaUser /> My Account
+        </h1>
+        <p>Change your account information</p>
+      </section>
+
+      <section className='form'>
+        <p id='message'></p>
+        <label for='username'>
+          Current username: <strong>{user.username}</strong>
+        </label>
+        <form onSubmit={changeName}>
+          <div className='form-group'>
             <input
               type='text'
               id='username'
               name='username'
               value={username}
               placeholder='New username'
-              className={` ${styles['textinput']} ${projectStyles['input']} `}
               onChange={onChange}
             />
-            <button
-              type='submit'
-              name='nameButton'
-              className={` ${styles['button']} ${projectStyles['button']} `}
-            >
+          </div>
+
+          <div className='form-group'>
+            <button type='submit' name='nameButton' className='btn btn-block'>
               Change username
             </button>
+          </div>
+        </form>
+
+        <form onSubmit={changePass}>
+          <div className='form-group'>
             <input
               type='password'
               id='password'
               name='password'
               value={password}
               placeholder='New password'
-              className={` ${styles['textinput1']} ${projectStyles['input']} `}
               onChange={onChange}
             />
+          </div>
+
+          <div className='form-group'>
             <input
               type='password'
               id='password'
               name='password2'
               value={password2}
               placeholder='Confirm password'
-              className={` ${styles['textinput2']} ${projectStyles['input']} `}
               onChange={onChange}
             />
+          </div>
+
+          <div className='form-group'>
             <button
+              type='submit'
               name='passwordButton'
-              className={` ${styles['button1']} ${projectStyles['button']} `}
-              onClick={changePass}
+              className='btn btn-block'
             >
               Change password
             </button>
-          </form>
+          </div>
+        </form>
 
+        <div onClick={e => e.stopPropagation()}>
+          <button
+            name='deleteButton'
+            type='button'
+            className='btn'
+            onClick={() => openModal()}
+            style={{
+              float: 'right',
+              backgroundColor: '#E23636',
+              border: '0px'
+            }}
+          >
+            DELETE ACCOUNT
+          </button>
           <div onClick={e => e.stopPropagation()}>
-            <button
-              name='deleteButton'
-              type='button'
-              className={` ${styles['button3']} ${projectStyles['button']} `}
-              onClick={() => openModal()}
+            <Modal
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              ariaHideApp={false}
+              style={modalStyle}
             >
-              DELETE ACCOUNT
-            </button>
-            <div onClick={e => e.stopPropagation()}>
-              <Modal
-                isOpen={modalIsOpen}
-                onRequestClose={closeModal}
-                ariaHideApp={false}
-                style={modalStyle}
-              >
-                <div className='modal'>
-                  <p>Are you sure? This cannot be undone</p>
-                  <button onClick={() => closeModal()} className='close'>
-                    X
-                  </button>
-                  <hr style={{ marginBottom: '10px' }} />
-
+              <div className='modal' style={{ textAlign: 'center' }}>
+                <h4>Are you sure you want to delete your account?</h4>
+                <button onClick={closeModal} className='close'>
+                  X
+                </button>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    flexWrap: 'nowrap'
+                  }}
+                >
                   <button
-                    name='finalDelete'
-                    className={` ${styles['button4']} ${projectStyles['button']} `}
-                    type='button'
+                    className='btn btn-box'
+                    style={{
+                      margin: '10px',
+                      background: '#E6E6E6',
+                      color: '#000'
+                    }}
                     onClick={handleDelete}
                   >
-                    DELETE
+                    Yes
+                  </button>
+                  <button
+                    className='btn btn-box'
+                    style={{ margin: '10px' }}
+                    onClick={closeModal}
+                  >
+                    No
                   </button>
                 </div>
-              </Modal>
-            </div>
+              </div>
+            </Modal>
           </div>
         </div>
       </section>
