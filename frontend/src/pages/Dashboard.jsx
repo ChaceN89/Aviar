@@ -9,7 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Spinner from '../components/Spinner';
 import Modal from '@material-ui/core/Modal';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAllPosts, reset } from '../features/dashboard/dashboardSlice'
+import { getAllPosts, getPostsByTerm, reset } from '../features/dashboard/dashboardSlice'
 
 const useStyles = makeStyles((theme) => ({//Modal Styling
   paper: {
@@ -37,7 +37,7 @@ function Dashboard() {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      toast.error(message) // get rid of this later
     }
 
     if (!user) {
@@ -47,12 +47,13 @@ function Dashboard() {
    term = localStorage.getItem('searchTerm');
    
    if(term == ''){
-     toast("Not searching "+term)   
+     toast("Not searching "+ term)   
      dispatch(getAllPosts());
     }else{
-      toast("searching for " +term)   
-      
-    //  dispatch(getPostsByTerm(term))
+      toast("searching for " +  term)   
+      const data= {term}
+
+     dispatch(getPostsByTerm(data))
     }
 
     return () => {
