@@ -15,6 +15,7 @@ Summary for backend - all in root folder
     npm install jsonwebtoken
     npm install bcryptjs 
     npm install express-async-handler
+    npm i express-fileupload
 
 ===================================================================
 Summary for frontend
@@ -25,6 +26,8 @@ Summary for frontend
         npm i axios react-toastify
         npm i react-accordion-with-header
         npm i react-modal
+        npm i react-reveal
+        npm i react-router
 
     root folder
         npm i -D concurrently // not needed as you can run two command promts to run server and client but its simpiler

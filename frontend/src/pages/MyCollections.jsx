@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import Spinner from '../components/Spinner'
 import {
@@ -11,50 +11,42 @@ import {
 } from 'react-accordion-with-header'
 import Modal from 'react-modal'
 import { FaPen } from 'react-icons/fa'
-import { getCollections, reset } from '../features/collections/collectionSlice'
+import {
+  deleteCollection,
+  getCollections,
+  reset,
+  updateCollectionName
+} from '../features/collections/collectionSlice'
 
 const BodyTpl = props => {
-  // dispatch(getCollectionPosts(props.item)) // NEED TO GET POSTS HERE
-
-  let posts
-  // TEMPORARY
-  switch (props.col) {
-    case 0:
-      posts = [
-        { url: '/testimgs/1.jpg' },
-        { url: '/testimgs/2.jpg' },
-        { url: '/testimgs/3.jpg' }
-      ]
-      break
-    case 1:
-      posts = [{ url: '/testimgs/4.jpg' }, { url: '/testimgs/5.jpg' }]
-      break
-    case 2:
-      posts = [
-        { url: '/testimgs/6.jpg' },
-        { url: '/testimgs/7.jpg' },
-        { url: '/testimgs/8.jpg' },
-        { url: '/testimgs/1.jpg' },
-        { url: '/testimgs/3.jpg' }
-      ]
-      break
-    default:
-      posts = []
-  }
-
-  const imgList = posts.map(d => {
+  const posts = props.posts
+  if (posts) {
+    const imgList = posts.map(post => {
+      return (
+        <li key={post.imgPath} className='galleryLi'>
+          <Link to={'/post/' + post._id}>
+            <img
+              src={process.env.PUBLIC_URL + '/uploads/' + post.imgPath}
+              alt={post.imgPath}
+            ></img>
+          </Link>
+        </li>
+      )
+    })
     return (
-      <li key={d.url} className='galleryLi'>
-        <img src={process.env.PUBLIC_URL + d.url} alt={d.url}></img>
-      </li>
+      <div>
+        <ul className='galleryUl'>{imgList}</ul>
+      </div>
     )
-  })
-
-  return (
-    <div>
-      <ul className='galleryUl'>{imgList}</ul>
-    </div>
-  )
+  } else {
+    return (
+      <div>
+        <p style={{ minHeight: '1000px' } /*Fixes accordion bug*/}>
+          Couldn't load posts
+        </p>
+      </div>
+    )
+  }
 }
 
 const modalStyle = {
@@ -67,20 +59,23 @@ const modalStyle = {
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
-    transform: 'translate(-50%, -50%)'
+    transform: 'translate(-50%, -50%)',
+    width: '15%'
   }
 }
-
-const galleryStyle = {}
 
 function MyCollections () {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   const { user } = useSelector(state => state.auth)
-  const { collections, isLoading, isError, message } = useSelector(
-    state => state.collections
-  )
+  const {
+    collections,
+    // postsByCollection,
+    isLoading,
+    isError,
+    message
+  } = useSelector(state => state.collections)
 
   useEffect(() => {
     if (isError) {
@@ -99,7 +94,7 @@ function MyCollections () {
   }, [user, navigate, isError, message, dispatch])
 
   // setup modal
-  const [{ modalIsOpen, selectedCol }, setModalState] = React.useState({
+  const [{ modalIsOpen, selectedCol }, setModalState] = useState({
     modalIsOpen: false,
     selectedCol: null
   })
@@ -110,6 +105,45 @@ function MyCollections () {
 
   function closeModal () {
     setModalState({ modalIsOpen: false, selectedCol: null })
+  }
+
+  const [confirmIsOpen, setConfirmState] = useState(false)
+
+  function openConfirm (col) {
+    setConfirmState(true)
+  }
+
+  function closeConfirm () {
+    setConfirmState(false)
+  }
+
+  const [colName, setColName] = useState('')
+
+  const handleRenameChange = e => {
+    setColName(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleRenameSubmit = e => {
+    e.preventDefault()
+
+    dispatch(
+      updateCollectionName({
+        id: selectedCol._id,
+        name: colName
+      })
+    )
+
+    closeModal()
+  }
+
+  const handleDelete = () => {
+    dispatch(deleteCollection(selectedCol._id))
+
+    closeConfirm()
+    closeModal()
   }
 
   if (isLoading) {
@@ -132,9 +166,11 @@ function MyCollections () {
               return (
                 <AccordionNode key={i}>
                   <AccordionHeader
-                    horizontalAlignment='centerSpaceAround'
+                    horizontalAlignment='centerSpaceBetween'
                     verticalAlignment='center'
                   >
+                    <div></div>
+                    <div>{collection.collectionName}</div>
                     <div onClick={e => e.stopPropagation()}>
                       <button
                         className='btn'
@@ -149,14 +185,13 @@ function MyCollections () {
                           onRequestClose={closeModal}
                           ariaHideApp={false}
                           style={modalStyle}
-                          id={i}
                         >
                           <div className='modal'>
                             <h2>Edit your collection</h2>
                             <button onClick={closeModal} className='close'>
                               X
                             </button>
-                            <form>
+                            <form onSubmit={handleRenameSubmit}>
                               <p>Collection name</p>
                               <div className='form-group'>
                                 <input
@@ -167,11 +202,14 @@ function MyCollections () {
                                   placeholder={
                                     selectedCol && selectedCol.collectionName
                                   }
+                                  onChange={handleRenameChange}
                                 />
                               </div>
-
                               <div className='form-group'>
-                                <button type='submit' className='btn btn-block'>
+                                <button
+                                  onClick={handleRenameSubmit}
+                                  className='btn btn-block'
+                                >
                                   Rename
                                 </button>
                               </div>
@@ -180,20 +218,67 @@ function MyCollections () {
 
                             <button
                               className='btn btn-block'
+                              onClick={openConfirm}
                               style={{ background: '#E23636', border: '0px' }}
                             >
                               Delete
                             </button>
+                            <Modal
+                              isOpen={confirmIsOpen}
+                              onRequestClose={closeConfirm}
+                              ariaHideApp={false}
+                              style={modalStyle}
+                            >
+                              <div
+                                className='modal'
+                                style={{ textAlign: 'center' }}
+                              >
+                                <h4>
+                                  Are you sure you want to delete this
+                                  collection?
+                                </h4>
+
+                                <button
+                                  onClick={closeConfirm}
+                                  className='close'
+                                >
+                                  X
+                                </button>
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    flexWrap: 'nowrap'
+                                  }}
+                                >
+                                  <button
+                                    className='btn btn-box'
+                                    style={{
+                                      margin: '10px',
+                                      background: '#E6E6E6',
+                                      color: '#000'
+                                    }}
+                                    onClick={handleDelete}
+                                  >
+                                    Yes
+                                  </button>
+                                  <button
+                                    className='btn btn-box'
+                                    style={{ margin: '10px' }}
+                                    onClick={closeConfirm}
+                                  >
+                                    No
+                                  </button>
+                                </div>
+                              </div>
+                            </Modal>
                           </div>
                         </Modal>
                       </div>
                     </div>
-                    <div>{collection.collectionName}</div>
-                    <div>Preview of art here</div>
                   </AccordionHeader>
                   <AccordionPanel>
-                    <BodyTpl item={collection.PostList} col={i} />
-                    {/* REMOVE col={i} AFTER GET POST IS IMPLEMENTED */}
+                    <BodyTpl posts={collection.PostList} />
                   </AccordionPanel>
                 </AccordionNode>
               )

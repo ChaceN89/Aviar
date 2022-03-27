@@ -28,11 +28,50 @@ export const getCollections = createAsyncThunk(
   }
 )
 
+// Update collection name
+export const updateCollectionName = createAsyncThunk(
+  'collections/updateCollection',
+  async (data, thunkAPI) => {
+    try {
+      const { id, name } = data
+      const token = thunkAPI.getState().auth.user.token
+      return await collectionService.updateCollectionName(id, name, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Delete user collection
+export const deleteCollection = createAsyncThunk(
+  'collections/deleteCollection',
+  async (id, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await collectionService.deleteCollection(id, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const collectionSlice = createSlice({
   name: 'collection',
   initialState,
   reducers: {
-    reset: state => initialState
+    reset: () => initialState
   },
   extraReducers: builder => {
     builder
@@ -45,6 +84,32 @@ export const collectionSlice = createSlice({
         state.collections = action.payload
       })
       .addCase(getCollections.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(updateCollectionName.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(updateCollectionName.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.collections = action.payload
+      })
+      .addCase(updateCollectionName.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(deleteCollection.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(deleteCollection.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.collections = action.payload
+      })
+      .addCase(deleteCollection.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

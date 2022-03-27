@@ -15,8 +15,34 @@ const getCollections = async token => {
   return response.data
 }
 
+const updateCollectionName = async (colId, name, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.put(API_URL + colId, name, config)
+
+  return response.data
+}
+
+const deleteCollection = async (colId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios.delete(API_URL + colId, config)
+
+  return response.data
+}
+
 const collectionService = {
-  getCollections
+  getCollections,
+  updateCollectionName,
+  deleteCollection
 }
 
 export default collectionService

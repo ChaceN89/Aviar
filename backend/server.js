@@ -15,6 +15,10 @@ const app = express(); // app represents express stuff
 app.use(express.json()); // very important to parse requests from Post, Get etc
 app.use(express.urlencoded({extended: false})); // need this for the type coming accross 
 
+//file upload
+const fileupload =require('express-fileupload');
+app.use(fileupload())
+
 //routes/endpoints
 app.use('/api/users', require('./routes/userRoutes')); // all user routes
 app.use('/api/posts', require('./routes/postRoutes')); // all Post routes

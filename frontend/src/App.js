@@ -14,10 +14,9 @@ import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import MyAccount from './pages/MyAccount'
 import MyCollections from './pages/MyCollections'
-import Post from './pages/Post'
 import Register from './pages/Register'
 import UploadPost from './pages/UploadPost'
-
+import PostPage from './pages/PostPage'
 
 function App() {
   return (
@@ -25,13 +24,6 @@ function App() {
       <Router>
         <div className='container'>
           <Header />
-          <h1> My App - Aviar</h1>
-          <p>This section will not be in finsihed product</p>
-          <p>not all nav bar elements will be on the screen at same time</p>
-          <p>Logo can be added to header on far left of header</p>
-          <br />
-          <hr />
-          <br />
           {/* the first route will be selected by default 
                           localhost:3000/login is the login page etc */}
           <Routes>
@@ -39,9 +31,10 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/myAccount' element={<MyAccount />} />
             <Route path='/myCollections' element={<MyCollections />} />
-            <Route path='/post' element={<Post />} />
             <Route path='/register' element={<Register />} />
             <Route path='/uploadPost' element={<UploadPost />} />
+            <Route path='/post/:id' element={<PostPage />} />
+
           </Routes>
         </div>
       </Router>

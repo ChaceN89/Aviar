@@ -2,59 +2,89 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa'
 import { uploadPost, reset } from '../features/uploadPosts/uploadPostsSlice'
 import Spinner from '../components/Spinner'
 import { GrAdd } from 'react-icons/gr' // icons
+import axios from 'axios';
 
 function UploadPost() {
+  //using hooks
+  const [file, setFile] = useState('');
+  const [filename, setFilename] = useState('Choose a File'); // saves file name in onChangePhoto but not used currently
+  const [preview, setPreview] = useState()
+
   const [formData, setFormData] = useState({
-    imgPath: '',
     caption: '',
     theme: '',
     medium: ''
   })
+  const { caption, theme, medium } = formData
 
-  const { imgPath, caption, theme,medium } = formData
+  const { user } = useSelector( // get user information
+    state => state.auth
+  )
+  const { post, isLoading, isError, isSuccess, message } = useSelector(
+    state => state.uploadPosts
+  )
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const { user } = useSelector(state => state.auth)
-
   useEffect(() => {
+    if (!file) {
+      setPreview(undefined)
+      setFilename('Choose a File') // set the current file name back if not file
+    }else{
+      setPreview(URL.createObjectURL(file)) // for setting a preview of the photo
+    }
 
-    if (!user) {
+    if (isError) {   // error in handling things if not all fields are filled
+      toast.error(message)
+    }
+
+    if (!user) {   // shouldn't need this part but good to have
       navigate('/login')
     }
 
-    return () => {
-      dispatch(reset())
+    if (isSuccess ) {  // everything worked
+      toast('Post Uploaded')
+      navigate('/') // go to dashboard
     }
-  }, [user, navigate,dispatch])
 
+    return () => {
+      dispatch(reset()) // reset the variables
+    }
+  }, [file, user, post, isLoading, isError, isSuccess, message, dispatch, navigate])
+
+  //change text data
   const onChange = e => {
-    setFormData(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-    }))
-  }
+    setFormData({
+      ...formData,[e.target.name]: e.target.value
+    })
+  };
 
-  const onSubmit = e => {
-    e.preventDefault()
+  //change photo 
+  const onChangePhoto = e => {
+    setFile(e.target.files[0]);
+    setFilename(e.target.files[0].name); // setting the name  not the file   
+  };
 
-    const postData = {
-      imgPath,
-      caption,
-      theme,
-      medium
-      }
+  //SUBMITTION OF files
+  const onSubmit = async e => {
+    e.preventDefault();
+    const formData = new FormData();  // set form data
+    formData.append('file', file);
+    formData.append('caption', caption);
+    formData.append('theme', theme);
+    formData.append('medium', medium);
 
-      dispatch(uploadPost(postData))
+    dispatch(uploadPost(formData)) // send data to upload post
     
+  };
+
+  if (isLoading) { // for loading
+    return <Spinner />
   }
-
-
 
   return (
     <>
@@ -68,20 +98,19 @@ function UploadPost() {
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <input
-              type='imgPath'
-              className='form-control'
-              id='imgPath'
-              name='imgPath'
-              value={imgPath}
-              placeholder='Enter your imgPath'
-              onChange={onChange}
+            <input className='search search_symbol'
+              type="file" 
+              accept=".png, .jpeg, .jpg"
+              id='customFile'
+              name='customFile'
+              onChange={onChangePhoto}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='caption'
-              className='form-control'
+              className='form-control search'
               id='caption'
               name='caption'
               value={caption}
@@ -89,10 +118,11 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='theme'
-              className='form-control'
+              className='form-control search'
               id='theme'
               name='theme'
               value={theme}
@@ -100,10 +130,11 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+
           <div className='form-group'>
             <input
               type='medium'
-              className='form-control'
+              className='form-control search'
               id='medium'
               name='medium'
               value={medium}
@@ -111,11 +142,20 @@ function UploadPost() {
               onChange={onChange}
             />
           </div>
+          
+          {/* Submit button */}
           <div className='form-group'>
             <button type='submit' className='btn btn-block'>
               Submit
             </button>
           </div>
+
+          {/* display preview of upload */}
+          <label className='custom-file-label' htmlFor='customFile'>
+            <h2>{filename}</h2>
+          </label>    
+          <img style={{ width: '100%' }} src = {preview} alt='' />
+
         </form>
       </section>
     </>
