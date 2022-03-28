@@ -57,7 +57,7 @@ function Login () {
 
   return (
     <div className='container'>
-      <section className='heading'>
+      <section className='heading' style={{ marginTop: '15px' }}>
         <h1>
           <FaSignInAlt /> Login
         </h1>
@@ -69,7 +69,7 @@ function Login () {
           <div className='form-group'>
             <input
               type='username'
-              className='form-control'
+              className='form-control textGradient'
               id='username'
               name='username'
               value={username}
@@ -80,7 +80,7 @@ function Login () {
           <div className='form-group'>
             <input
               type='password'
-              className='form-control'
+              className='form-control textGradient'
               id='password'
               name='password'
               value={password}

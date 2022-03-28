@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { FaUser } from 'react-icons/fa'
+import { BsPersonPlusFill } from 'react-icons/bs'
 import { register, reset } from '../features/auth/authSlice'
 import Spinner from '../components/Spinner'
 
@@ -62,9 +62,9 @@ function Register () {
 
   return (
     <div className='container'>
-      <section className='heading'>
+      <section className='heading' style={{ marginTop: '15px' }}>
         <h1>
-          <FaUser /> Register
+          <BsPersonPlusFill /> Register
         </h1>
         <p>Please create an account</p>
       </section>
@@ -74,7 +74,7 @@ function Register () {
           <div className='form-group'>
             <input
               type='username'
-              className='form-control'
+              className='form-control textGradient'
               id='username'
               name='username'
               value={username}
@@ -85,7 +85,7 @@ function Register () {
           <div className='form-group'>
             <input
               type='password'
-              className='form-control'
+              className='form-control textGradient'
               id='password'
               name='password'
               value={password}
@@ -96,7 +96,7 @@ function Register () {
           <div className='form-group'>
             <input
               type='password'
-              className='form-control'
+              className='form-control textGradient'
               id='password2'
               name='password2'
               value={password2}
