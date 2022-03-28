@@ -74,7 +74,7 @@ function Dashboard () {
         <section className='form'>
           <img
             style={{ height: '75vh' }}
-            src={process.env.PUBLIC_URL + '/aviarTall.png'}
+            src={process.env.PUBLIC_URL + '/aviarTallLight.png'}
             alt=''
           />
         </section>
