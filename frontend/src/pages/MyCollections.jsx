@@ -18,6 +18,9 @@ import {
   updateCollectionName
 } from '../features/collections/collectionSlice'
 
+import { BsCardList } from 'react-icons/bs' // icons
+
+
 const BodyTpl = props => {
   const posts = props.posts
   if (posts) {
@@ -152,8 +155,10 @@ function MyCollections () {
 
   return (
     <div className='container'>
-      <section className='heading'>
-        <h1>My Collections</h1>
+      <section className='heading' style={{ marginTop: '15px' }}>
+        <h1>
+        <BsCardList/> My Collections
+        </h1>
         <p>Where your dreams come together.</p>
       </section>
 
@@ -168,7 +173,7 @@ function MyCollections () {
                   <AccordionHeader
                     horizontalAlignment='centerSpaceBetween'
                     verticalAlignment='center'
-                    className='accordion'
+                    className='accordion textGradient'
                   >
                     <div></div>
                     <div>{collection.collectionName}</div>
