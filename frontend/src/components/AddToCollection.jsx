@@ -79,6 +79,9 @@ function AddToCollection ({ postId, user, post }) {
     const data = { id: postId, name: nameInput }
 
     dispatch(createCollection(data))
+
+    toast.success(`${nameInput} collection created`)
+    setNameInput('')
   }
 
   const handleAddToCollection = e => {
@@ -95,6 +98,7 @@ function AddToCollection ({ postId, user, post }) {
     const data = { pid: postId, cid: colId }
 
     dispatch(addToCollection(data))
+    toast.success('Post added to collection')
   }
 
   const handleRemoveFromCollection = e => {
@@ -111,6 +115,7 @@ function AddToCollection ({ postId, user, post }) {
     const data = { pid: postId, cid: colId }
 
     dispatch(removeFromCollection(data))
+    toast.success('Post removed from collection')
   }
 
   const checkIfPostExists = () => {
