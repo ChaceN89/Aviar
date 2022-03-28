@@ -5,9 +5,29 @@
   background: linear-gradient(30deg, #000000 45%, #6793bd 100%);  
 }
 
-.textBoxRounded{
-  border-radius: 8px;
+.HeaderGradient{
+  background: linear-gradient(30deg, #c3d9ee 45%, #6793bd 100%);  
 }
+
+.textBoxRounded{
+  border-radius: 0px 30px 30px 0px;
+  height:25px;
+  width:140px;
+}
+
+
+.search_icon{
+  border-radius: 20px 0px 0px 20px;
+  background: #ffffff;
+    color: rgb(0, 0, 0);
+    width:40px;
+    height:25px;
+}
+
+.search_icon:hover{
+  background-color: #6793bd;
+}
+
 
 /* animation for header components */
 .pulseAccount{
