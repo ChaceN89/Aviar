@@ -267,10 +267,12 @@ h3 {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  width: fit-content;
 
-  background-color: rgb(17, 10, 44);
+
+  background-color: black;
   max-width: 700px;
-  border: 1px solid lightgray;
+  border: 1px solid white;
   margin-bottom: 200px;
 }
 
@@ -280,9 +282,10 @@ h3 {
 
 .post__piece {
   width: 100%;
+  object-position: top;
   object-fit: contain;
   color: white;
-  border-top: 1px solid lightgray;
+  border-top: 1px solid white;
 }
 
 .post__text {
