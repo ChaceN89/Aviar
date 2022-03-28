@@ -48,6 +48,7 @@
 - Collections info can be editted
 - Gallery to display all posts
 - Users can search form posts by a search term
+- User search persists untill they change the search
 - Users can upload their own posts
 - Users can comment on any post
 
