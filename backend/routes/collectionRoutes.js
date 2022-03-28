@@ -24,8 +24,8 @@ router.delete('/:id', protect, deleteCollection)
 router.put('/:id', protect, updateCollectionName)
 
 //add or remove posts from a collection
-router.post('/:cid/:pid', protect, addPostToCollection)
-router.delete('/:cid/:pid', protect, removePostFromCollection)
+router.post('/post/:cid', protect, addPostToCollection)
+router.delete('/post/:cid', protect, removePostFromCollection)
 
 //get collections or posts of a collection  -- these aren't used since getCollections handles enough
 router.get('/names', protect, getCollectionNames)

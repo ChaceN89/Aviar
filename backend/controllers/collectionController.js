@@ -18,21 +18,26 @@ const addCollectionAndPost = asyncHandler(async (req, res) => {
   }
 
   const collection = await Collection.create({
-    collectionName: body.name,
+    collectionName: req.body.name,
     PostList: [req.params.id]
   })
 
-  const user = await User.findByIdAndUpdate(
-    req.user.id,
-    { $push: { savedPosts: collection._id } },
-    done
-  )
-
-  res.status(200).json({
-    message: `collection added`,
-    postid: req.params.id,
-    user
+  await User.findByIdAndUpdate(req.user.id, {
+    $push: { savedPosts: collection._id }
   })
+
+  const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not populate saved posts')
+  }
+  res.status(200).json(user.savedPosts)
 }) //end
 
 //@desc add collection
@@ -45,15 +50,13 @@ const addCollection = asyncHandler(async (req, res) => {
   }
 
   const collection = await Collection.create({
-    collectionName: body.name,
+    collectionName: req.body.name,
     PostList: []
   })
 
-  const user = await User.findByIdAndUpdate(
-    req.user.id,
-    { $push: { savedPosts: collection._id } },
-    done
-  )
+  const user = await User.findByIdAndUpdate(req.user.id, {
+    $push: { savedPosts: collection._id }
+  })
 
   res.status(200).json({
     message: `collection added`,
@@ -88,66 +91,78 @@ const deleteCollection = asyncHandler(async (req, res) => {
 
   if (!user.populated('savedPosts')) {
     res.status(400)
-    throw new Error('Could not pupulate saved posts')
+    throw new Error('Could not populate saved posts')
   }
 
   res.status(200).json(user.savedPosts)
 }) //end
 
 //@desc add Post to Collection
-//@route  POST collection /api/collections/:cid/:pid
+//@route  POST collection /api/collections/post/:cid
 //@access private
 const addPostToCollection = asyncHandler(async (req, res) => {
-  if (!req.params.pid || !req.params.cid) {
+  if (!req.body.postId || !req.params.cid) {
     res.status(400)
     throw new Error('Need to add an id')
   }
   if (
-    !valid.isValidObjectId(req.params.pid) ||
+    !valid.isValidObjectId(req.body.postId) ||
     !valid.isValidObjectId(req.params.cid)
   ) {
     res.status(400)
     throw new Error('Please enter valid id')
   }
 
-  const collection = await Collection.findByIdAndUpdate(
-    req.params.cid,
-    { $push: { PostList: req.params.pid } },
-    done
-  )
-
-  res.status(200).json({
-    message: `post added to collection`,
-    user
+  const collection = await Collection.findByIdAndUpdate(req.params.cid, {
+    $push: { PostList: req.body.postId }
   })
+
+  const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not populate saved posts')
+  }
+  res.status(200).json(user.savedPosts)
 }) //end
 
 //@desc Remove Post to Collection
-//@route  DELETE collection /api/collections/:cid/:pid
+//@route  DELETE collection /api/collections/post/:cid
 //@access private
 const removePostFromCollection = asyncHandler(async (req, res) => {
-  if (!req.params.cid || !req.params.pid) {
+  if (!req.params.cid || !req.body.postId) {
     res.status(400)
     throw new Error('Need to add an id')
   }
   if (
     !valid.isValidObjectId(req.params.cid) ||
-    !valid.isValidObjectId(req.params.pid)
+    !valid.isValidObjectId(req.body.postId)
   ) {
     res.status(400)
     throw new Error('Please enter valid id')
   }
 
-  const collection = await Collection.findByIdAndUpdate(
-    req.params.cid,
-    { $pull: { PostList: req.params.pid } },
-    done
-  )
-
-  res.status(200).json({
-    message: `post removed from collection`,
-    user
+  const collection = await Collection.findByIdAndUpdate(req.params.cid, {
+    $pull: { PostList: req.body.postId }
   })
+
+  const user = await User.findById(req.user.id)
+    .populate({
+      path: 'savedPosts',
+      populate: { path: 'PostList' }
+    })
+    .exec()
+
+  if (!user.populated('savedPosts')) {
+    res.status(400)
+    throw new Error('Could not populate saved posts')
+  }
+  res.status(200).json(user.savedPosts)
 }) //end
 
 //-----------------------------------------------------------------
@@ -193,7 +208,7 @@ const getCollections = asyncHandler(async (req, res) => {
 
   if (!user.populated('savedPosts')) {
     res.status(400)
-    throw new Error('Could not pupulate saved posts')
+    throw new Error('Could not populate saved posts')
   }
   res.status(200).json(user.savedPosts)
 }) //end getCollections
@@ -225,7 +240,7 @@ const updateCollectionName = asyncHandler(async (req, res) => {
 
   if (!user.populated('savedPosts')) {
     res.status(400)
-    throw new Error('Could not pupulate saved posts')
+    throw new Error('Could not populate saved posts')
   }
   res.status(200).json(user.savedPosts)
 }) //end getCollections
