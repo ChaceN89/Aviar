@@ -57,10 +57,11 @@ function Header() {
 
 
   return (
-    <header className='header '>
+    <header className='header'>
       <div>
         <Link to='/'>
-          <img className='logo' alt="Logo" src="aviarLogo.png" />
+          <img className='logo' alt="Logo" src={process.env.PUBLIC_URL + '/aviarLong.png'}  />
+          {/* change to new logo */}
         </Link>
       </div>
       <ul>
@@ -78,11 +79,11 @@ function Header() {
             <li className='pulseSearch'>
               <form onSubmit={onSubmit}>
                 <div  >
-                  <button className='search_symbol' type='submit' >
+                  <button className='' type='submit' >
                     <FaSearch />
                   </button >
                   <input
-                    className='search'
+                    className='textGradient'
                     type='search'
                     id='search'
                     name='search'
