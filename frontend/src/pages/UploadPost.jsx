@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { uploadPost, reset } from '../features/uploadPosts/uploadPostsSlice'
 import Spinner from '../components/Spinner'
-import { GrAdd } from 'react-icons/gr' // icons
+import { AiOutlinePlus } from 'react-icons/ai' // icons
+import { FaUser } from 'react-icons/fa' // icons
 import axios from 'axios';
 
 function UploadPost() {
@@ -88,17 +89,19 @@ function UploadPost() {
 
   return (
     <div className='container'>
-      <section className='heading'>
+      <section className='heading' style={{ marginTop: '15px' }}>
         <h1>
-          <GrAdd /> Add Post
+          <AiOutlinePlus  color="white"/> Add Post
         </h1>
         <p>Please add necessary fields </p>
       </section>
 
+
+
       <section className='form'>
         <form onSubmit={onSubmit}>
           <div className='form-group'>
-            <input className='search search_symbol'
+            <input className='form-control textGradient2'
               type="file" 
               accept=".png, .jpeg, .jpg"
               id='customFile'
@@ -110,7 +113,7 @@ function UploadPost() {
           <div className='form-group'>
             <input
               type='caption'
-              className='form-control search'
+              className='form-control textGradient'
               id='caption'
               name='caption'
               value={caption}
@@ -122,7 +125,7 @@ function UploadPost() {
           <div className='form-group'>
             <input
               type='theme'
-              className='form-control search'
+              className='form-control textGradient'
               id='theme'
               name='theme'
               value={theme}
@@ -134,7 +137,7 @@ function UploadPost() {
           <div className='form-group'>
             <input
               type='medium'
-              className='form-control search'
+              className='form-control textGradient'
               id='medium'
               name='medium'
               value={medium}

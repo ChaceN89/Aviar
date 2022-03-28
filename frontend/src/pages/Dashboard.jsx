@@ -41,7 +41,7 @@ function Dashboard() {
     }
 
     if (!user) {
-      navigate('/login')
+      // navigate('/login')
     }
 
     term = localStorage.getItem('searchTerm');
@@ -61,6 +61,19 @@ function Dashboard() {
 
   if (isLoading) {
     return <Spinner />
+  }
+
+  if (!user) { // display logo instead or redirect to login
+    return (
+    <div className='container'>
+      <br />
+      <section className='form'>
+
+          <img style={{ width: '100%' }} src={process.env.PUBLIC_URL + '/aviarTall.png' } alt='' />
+
+      </section>
+    </div>
+    )
   }
 
   return (

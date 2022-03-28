@@ -177,6 +177,7 @@ function AddToCollection ({ postId, user, post }) {
             <form>
               <div className='form-group'>
                 <select
+                  className='textGradient'
                   onChange={onChange}
                   style={{ backgroundColor: 'white', textAlign: 'center' }}
                   value={formSelection}
@@ -194,6 +195,7 @@ function AddToCollection ({ postId, user, post }) {
         <form onSubmit={onSubmit}>
           <div className='form-group'>
             <input
+              className='textGradient'
               type='text'
               id='colName'
               name='colName'

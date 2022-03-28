@@ -12,6 +12,15 @@ import { Link, useNavigate } from 'react-router-dom' // routing
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import styles from '../modules/searchBar/search.module.css'
+
+
+import { HiSearchCircle,HiSearch,HiOutlineSearchCircle } from 'react-icons/hi' // icons
+import { MdManageSearch } from 'react-icons/md' // icons
+
+
+
+
 function Header() {
   const [formData, setFormData] = useState({
     search: '', //defaul
@@ -57,10 +66,11 @@ function Header() {
 
 
   return (
-    <header className='header '>
+    <header className='header HeaderGradient'>
       <div>
         <Link to='/'>
-          <img className='logo' alt="Logo" src="aviarLogo.png" />
+          <img className='logo' alt="Logo" src={process.env.PUBLIC_URL + '/aviarLong.png'}  />
+          {/* change to new logo */}
         </Link>
       </div>
       <ul>
@@ -72,17 +82,16 @@ function Header() {
               <Link to='/uploadPost'>
                 <GrAdd /> Add Post
               </Link>
-
             </li>
 
             <li className='pulseSearch'>
               <form onSubmit={onSubmit}>
                 <div  >
-                  <button className='search_symbol' type='submit' >
+                  <button className='search_icon' type='submit' >
                     <FaSearch />
                   </button >
                   <input
-                    className='search'
+                    className='textGradient textBoxRounded'
                     type='search'
                     id='search'
                     name='search'

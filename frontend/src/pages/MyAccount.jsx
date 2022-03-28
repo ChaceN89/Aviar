@@ -128,6 +128,7 @@ const MyAccount = props => {
         <form onSubmit={changeName}>
           <div className='form-group'>
             <input
+              className='textGradient'
               type='text'
               id='username'
               name='username'
@@ -147,6 +148,7 @@ const MyAccount = props => {
         <form onSubmit={changePass}>
           <div className='form-group'>
             <input
+              className='textGradient'
               type='password'
               id='password'
               name='password'
@@ -158,6 +160,7 @@ const MyAccount = props => {
 
           <div className='form-group'>
             <input
+              className='textGradient'
               type='password'
               id='password'
               name='password2'
