@@ -20,7 +20,7 @@ import {
 
 const BodyTpl = props => {
   const posts = props.posts
-  if (posts) {
+  if (posts[0]) {
     const imgList = posts.map(post => {
       return (
         <li key={post.imgPath} className='galleryLi'>
@@ -41,9 +41,7 @@ const BodyTpl = props => {
   } else {
     return (
       <div>
-        <p style={{ minHeight: '1000px' } /*Fixes accordion bug*/}>
-          Couldn't load posts
-        </p>
+        <h3>No posts</h3>
       </div>
     )
   }
