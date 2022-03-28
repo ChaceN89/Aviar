@@ -26,7 +26,7 @@ function Dashboard() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
+
   let term = localStorage.getItem('searchTerm');
 
   const { user } = useSelector(state => state.auth);
@@ -44,14 +44,14 @@ function Dashboard() {
       navigate('/login')
     }
 
-   term = localStorage.getItem('searchTerm');
-   
-   if(term == ''){
-     dispatch(getAllPosts());
-    }else{
-      const data= {term}
+    term = localStorage.getItem('searchTerm');
 
-     dispatch(getPostsByTerm(data))
+    if (term === null || term === '') {
+      dispatch(getAllPosts());
+    } else {
+      const data = { term }
+
+      dispatch(getPostsByTerm(data))
     }
 
     return () => {
