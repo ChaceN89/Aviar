@@ -10,7 +10,7 @@
 .App {
   overflow: hidden; /* Hide scrollbars */
   background-color: black;
-  background-image: url("./assets/starBack.png");
+  background-image: url("./assets/starBack.jpg");
   background-repeat: no-repeat, repeat;
   /* Set a specific height */
   min-height: 100vh;
