@@ -79,7 +79,13 @@ function Post ({
   // }
 
   return (
-    <div className='post'>
+    <div
+      className='post'
+      style={{
+        marginBottom: context === 'page' ? '20px' : null,
+        marginTop: context === 'page' ? '40px' : null
+      }}
+    >
       {/* image  this works on dashboard with hard coded inforamtion*/}
       {context === 'page' ? (
         <img

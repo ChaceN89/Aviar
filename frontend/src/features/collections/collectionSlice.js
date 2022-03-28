@@ -88,6 +88,26 @@ export const addToCollection = createAsyncThunk(
 )
 
 // Update collection name
+export const removeFromCollection = createAsyncThunk(
+  'collections/removeFromCollection',
+  async (data, thunkAPI) => {
+    try {
+      const { pid, cid } = data
+      const token = thunkAPI.getState().auth.user.token
+      return await collectionService.removePostFromCollection(pid, cid, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
+// Update collection name
 export const createCollection = createAsyncThunk(
   'collections/createCollection',
   async (data, thunkAPI) => {
@@ -163,6 +183,19 @@ export const collectionSlice = createSlice({
         state.collections = action.payload
       })
       .addCase(addToCollection.rejected, (state, action) => {
+        state.isLoading = false
+        state.isError = true
+        state.message = action.payload
+      })
+      .addCase(removeFromCollection.pending, state => {
+        state.isLoading = true
+      })
+      .addCase(removeFromCollection.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.isSuccess = true
+        state.collections = action.payload
+      })
+      .addCase(removeFromCollection.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

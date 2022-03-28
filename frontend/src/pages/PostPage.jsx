@@ -62,9 +62,6 @@ function PostPage () {
       {isSuccess ? ( // post has been found
         //tools to display add to collection options
         <>
-          <AddToCollection postId={id} user={user} post={post} />
-          <br />
-
           {/* display the post */}
           <Post
             key={id}
@@ -77,6 +74,7 @@ function PostPage () {
             comments={post.comments}
             context='page'
           />
+          <AddToCollection postId={id} user={user} post={post} />
           <hr style={{ marginTop: '75px' }} />
         </>
       ) : (

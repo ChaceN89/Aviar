@@ -46,7 +46,28 @@ const addPostToCollection = async (postId, colId, token) => {
     }
   }
 
-  const response = await axios.put(`${API_URL}${postId}/${colId}`, config)
+  const postObj = { postId }
+
+  const response = await axios.post(API_URL + 'post/' + colId, postObj, config)
+
+  return response.data
+}
+
+const removePostFromCollection = async (postId, colId, token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  }
+
+  const response = await axios({
+    method: 'delete',
+    url: API_URL + 'post/' + colId,
+    data: {
+      postId: postId
+    },
+    headers: { Authorization: 'Bearer ' + token }
+  })
 
   return response.data
 }
@@ -58,17 +79,19 @@ const createCollection = async (postId, name, token) => {
     }
   }
 
-  const response = await axios.post(API_URL + postId, name, config)
+  const nameObj = { name }
+
+  const response = await axios.post(API_URL + postId, nameObj, config)
 
   return response.data
 }
-
 
 const collectionService = {
   getCollections,
   updateCollectionName,
   deleteCollection,
   addPostToCollection,
+  removePostFromCollection,
   createCollection
 }
 
