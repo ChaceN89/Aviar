@@ -33,6 +33,10 @@ const createPost = asyncHandler(async (req, res) => {
   }
 
   // set file to a directory with a specific name in that directory
+  // file.mv(`${__dirname}/../../frontend/pulic/uploads/${newFileName}`, err => {
+    //above for regular work
+    //below for build online
+
   file.mv(`${__dirname}/../../frontend/build/uploads/${newFileName}`, err => {
     if (err) {
       console.error(err);
