@@ -56,7 +56,12 @@
 
 
 ## Screenshots
-![Example screenshot](./img/screenshot.png)
+![Main Screen](./Notes/readmeImages/mainscreen.png)
+![Login](./Notes/readmeImages/login.png)
+![Main Gallery](./Notes/readmeImages/gallery.png)
+![User Collections](./Notes/readmeImages/collections.png)
+![User Account](./Notes/readmeImages/myAccount.png)
+![AddPost](./Notes/readmeImages/addPost.png)
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 
