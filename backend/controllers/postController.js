@@ -33,7 +33,7 @@ const createPost = asyncHandler(async (req, res) => {
   }
 
   // set file to a directory with a specific name in that directory
-  file.mv(`${__dirname}/../../frontend/uploads/${newFileName}`, err => {
+  file.mv(`${__dirname}/../../frontend/build/uploads/${newFileName}`, err => {
     if (err) {
       console.error(err);
       return res.status(500).send(err); // server error
