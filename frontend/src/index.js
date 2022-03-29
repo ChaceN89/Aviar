@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css'; // very important 
-import './header.css'; // for search bar
 import App from './App';
 import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
-
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +14,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root') //get index.html
 );
-
 
 //this section came by default i don't think i need it
 
