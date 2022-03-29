@@ -1,6 +1,5 @@
 # Aviar
-> Outline a brief description of your project.
-> Live demo [_here_](https://www.example.com). 
+> Project Site [_here_](https://aviar.herokuapp.com/). 
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -8,8 +7,6 @@
 * [Features](#features)
 * [Screenshots](#screenshots)
 * [Setup](#setup)
-* [Usage](#usage)
-* [Project Status](#project-status)
 * [Room for Improvement](#room-for-improvement)
 * [Acknowledgements](#acknowledgements)
 
@@ -19,7 +16,8 @@
 - Git Hub Repository -> https://github.com/kar2fast/Aviar
 - Essentially an Instagram clone meant to let users display their various form of image files through posts.
 - Lets people share posts about their personal art projects
-- For SENG 401 at the University of Calgary Winter 2022
+- For SENG 401 at the University of Calgary in the Winter 2022 semester
+- Hosted online using Heroku
 
 
 
@@ -35,6 +33,7 @@
  - HTML
  - CSS
  - Redux toolkit
+ - Heroku
 
 
 
@@ -48,9 +47,10 @@
 - Collections info can be editted
 - Gallery to display all posts
 - Users can search form posts by a search term
-- User search persists untill they change the search
+- User can reset search by clicking on dashboard logo
 - Users can upload their own posts
 - Users can comment on any post
+- Can click on a post to go to the main screen
 
 
 
@@ -99,10 +99,13 @@ __How to use__
 - Enter the frontend folder 
 - Run npm install
 - Return to the root folder
-- Add the .env file to the root directory
+- Add the .env file to the root directory 
+    - .env file contains database information JWT secret, Port number and development type 
 - Run npm run client to run just the frontend
 - Run npm run server to run just the backend
 - Run npm run dev to run the complete project
+
+The Project is also deployed at this link https://aviar.herokuapp.com/
 
 
 ## Room for Improvement
@@ -111,12 +114,15 @@ Room for improvement:
     - view your own posts
     - delete your own posts
     - A rating system for liking posts
-- A better understanding of The Mern stac ktechnologies would have helped the planning 
+    - system for password recovery
+    - Display user information on header and on the users posts
+- A better understanding of The Mern stack technologies would have helped the planning process
 - A better dashboard to display more posts on the screen at on time (or an option to select differnt views)
 
 
 ## Acknowledgements
 Give credit here.
+This project was a great learning proccess and Helped the group learn about the Mern Stack and how it can be used for development
 - This project was based on [this tutorial](https://www.youtube.com/playlist?list=PLx5VofXGboI3keWyKVqmEDXT4Fk-utH2P).
 - Many thanks to Tim Reiner for the help with diagrams and advice for the project
 
