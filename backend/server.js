@@ -26,6 +26,22 @@ app.use('/api/collections', require('./routes/collectionRoutes')); // all collec
 
 app.use(errorHandler); // override default error handlers
 
+const path = require('path')
+//serve frontend
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static(path.join(__dirname, '../frontend/build')))
+    
+    app.get('*', (req, res) =>
+        res.sendFile( // point to index.html if not user made routes
+            path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+        )
+    )
+
+}else{
+    app.get('/', (req, res) => res.send('Please set to production'))
+}
+
+
 //listen() function is used to bind and listen the connections on the specified host and port.
 app.listen(port, ()=> console.log("server started on http://localhost:" + port));
 

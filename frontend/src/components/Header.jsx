@@ -69,7 +69,10 @@ function Header() {
     <header className='header HeaderGradient'>
       <div>
         <Link to='/'>
-          <img className='logo' alt="Logo" src={process.env.PUBLIC_URL + '/aviarLong.png'}  />
+        <span onClick={()=>localStorage.setItem('searchTerm', '')}>
+          
+          <img  className='logo' alt="Logo" src={process.env.PUBLIC_URL + '/aviarLong.png'}  />
+        </span>
           {/* change to new logo */}
         </Link>
       </div>
@@ -103,6 +106,7 @@ function Header() {
               </form>
 
             </li>
+
 
             <li className='pulseCollection'>
               <Link to='/myCollections'>
