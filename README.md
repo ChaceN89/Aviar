@@ -126,6 +126,12 @@ Room for improvement:
 - A better understanding of The Mern stack technologies would have helped the planning process
 - A better dashboard to display more posts on the screen at on time (or an option to select differnt views)
 
+- **One issue with using Heroku to deploy is that Heroku is not suitable for persistent storage of data within the file system.** 
+    - "Any changes to the filesystem whilst the dyno is running only last until that dyno is shut down or restarted"
+    - Since this system uses the file system to store uploaded user posts, those images are removed as the system resets everyday.  
+    - This issue is talked about [__here__](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted)
+    - Solutions to solve the problem can be found here [__here__](https://devcenter.heroku.com/articles/s3-upload-node)
+
 
 ## Acknowledgements
 Give credit here.
