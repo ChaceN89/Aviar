@@ -2,6 +2,8 @@
 > Project Site [_here_](https://aviar.herokuapp.com/). 
 > 
 > Video Demonstration [_here_](https://youtu.be/mktAIV4sjFQ)
+> 
+> There is one issue in the project with regards to how heroku handles the file system of the deployed project which is [disscussed here](#room-for-improvement)
 
 ## Table of Contents
 * [General Info](#general-information)
@@ -126,11 +128,14 @@ Room for improvement:
 - A better understanding of The Mern stack technologies would have helped the planning process
 - A better dashboard to display more posts on the screen at on time (or an option to select differnt views)
 
+
 - **One issue with using Heroku to deploy is that Heroku is not suitable for persistent storage of data within the file system.** 
     - "Any changes to the filesystem whilst the dyno is running only last until that dyno is shut down or restarted"
-    - Since this system uses the file system to store uploaded user posts, those images are removed as the system resets everyday.  
+    - Since this system uses the file system to store uploaded user posts, those images are removed as the system resets everyday  
     - This issue is talked about [__here__](https://help.heroku.com/K1PPS2WM/why-are-my-file-uploads-missing-deleted)
     - Solutions to solve the problem can be found here [__here__](https://devcenter.heroku.com/articles/s3-upload-node)
+    - The issue itself was not known untill Heroku hit a refresh point and removed the images stored that had been storred in the file system. 
+    - When the system pulls post information from the database it can't locate any image path relating to it, therfore no uploaded images can remain in the file system for more than a day
 
 
 ## Acknowledgements
