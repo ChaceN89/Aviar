@@ -139,7 +139,6 @@ Room for improvement:
 
 
 ## Acknowledgements
-Give credit here.
 This project was a great learning proccess and Helped the group learn about the Mern Stack and how it can be used for development
 - This project was based on [this tutorial](https://www.youtube.com/playlist?list=PLx5VofXGboI3keWyKVqmEDXT4Fk-utH2P).
 - Many thanks to Tim Reiner for the help with diagrams and advice for the project
